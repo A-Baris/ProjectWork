@@ -1,0 +1,15 @@
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Restaurant.TestCA.exe
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Restaurant.TestCA.deps.json
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Restaurant.TestCA.runtimeconfig.json
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Restaurant.TestCA.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Restaurant.TestCA.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.GeneratedMSBuildEditorConfig.editorconfig
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.AssemblyInfoInputs.cache
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.AssemblyInfo.cs
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.csproj.CoreCompileInputs.cache
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.sourcelink.json
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\refint\Restaurant.TestCA.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.genruntimeconfig.cache
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\ref\Restaurant.TestCA.dll

@@ -1,0 +1,12 @@
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\bin\Debug\net7.0\Restaurant.Entity.deps.json
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\bin\Debug\net7.0\Restaurant.Entity.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\bin\Debug\net7.0\Restaurant.Entity.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\Restaurant.Entity.GeneratedMSBuildEditorConfig.editorconfig
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\Restaurant.Entity.AssemblyInfoInputs.cache
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\Restaurant.Entity.AssemblyInfo.cs
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\Restaurant.Entity.csproj.CoreCompileInputs.cache
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\Restaurant.Entity.sourcelink.json
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\Restaurant.Entity.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\refint\Restaurant.Entity.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\Restaurant.Entity.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Entity\obj\Debug\net7.0\ref\Restaurant.Entity.dll
