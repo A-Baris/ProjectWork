@@ -2,6 +2,7 @@
 using Restaurant.Entity.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ namespace Entity.Entities
 {
     public class Order:BaseEntity
     {
-        public string Description { get; set; }
+        [MaxLength(200)]
+        public string? Description { get; set; }
         public OrderStatus Status { get; set; }
         public int TableofRestaurantId { get;set; }
         public int WaiterId { get;set; }

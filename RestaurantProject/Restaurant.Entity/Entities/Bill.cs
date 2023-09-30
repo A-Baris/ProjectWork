@@ -9,7 +9,7 @@ namespace Entity.Entities
 {
     public class Bill:BaseEntity    
     {
-        public decimal Subtotal { get; set; }
+        public decimal? Subtotal { get; set; }
         public decimal TotalPrice { get; set; }
 
         public int CashAccountId { get; set; }
