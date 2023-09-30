@@ -8,6 +8,10 @@ namespace Entity.Entities
 {
     public class Dish:BaseEntity
     {
+        public string DishName { get; set; }
+        public decimal Price { get;set; }
+        public string Quantity { get;set; }
+        public string Description { get; set; }
         public int DishCategoryId { get;set; }
         public int KitchenId { get; set; }
         public Kitchen Kitchen { get; set; }

@@ -9,13 +9,11 @@ namespace Entity.Entities
 {
     public class TableOfRestaurant : BaseEntity
     {
+
+
+
         public ReservationStatus Status { get; set; }
-
-
         public int WaiterId { get; set; }
-
-
-
         public Waiter Waiter { get; set; }
         public virtual List<Customer> Customers { get; set; }
         public virtual List<Bill> Bills { get; set; }

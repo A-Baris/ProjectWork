@@ -8,6 +8,7 @@ namespace Entity.Entities
 {
     public class DrinkCategory : BaseEntity
     {
+        public decimal CategoryName { get; set; }
         public virtual List<Drink> Drinks { get; set; }
     }
 }

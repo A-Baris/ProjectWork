@@ -8,6 +8,7 @@ namespace Entity.Entities
 {
     public class DishCategory:BaseEntity
     {
+        public string CategoryName { get; set; }
         public virtual List<Dish> Dishes { get; set; }
     }
 }

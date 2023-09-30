@@ -9,6 +9,8 @@ namespace Entity.Entities
 {
     public class Drink : BaseEntity
     {
+        public string DrinkName { get; set; }
+        public decimal Price { get; set; }
         public int DrinkCategoryId { get; set; }
         public DrinkCategory DrinkCategory { get; set; }
         public int KitchenId { get; set; }

@@ -28,6 +28,9 @@ namespace Restaurant.DAL.Context
         public DbSet<DishIngredient> DishIngredients { get; set; }
         public DbSet<MenuDish> MenuDishes { get; set; }
         public DbSet<MenuDrink> MenuDrinks { get; set; }
+        public DbSet<MenuBill> MenuBills { get; set; }
+        public DbSet<MenuOrder> MenuOrders { get; set; }
+        public DbSet<IngredientCategory> IngredientCategories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -45,14 +48,15 @@ namespace Restaurant.DAL.Context
               .HasMany(w => w.TableOfRestaurants)
               .WithOne(t => t.Waiter)
               .HasForeignKey(t => t.WaiterId);
-              
+
 
 
             modelBuilder.Entity<Waiter>()
                 .HasMany(w => w.Orders)
                 .WithOne(o => o.Waiter)
                 .HasForeignKey(o => o.WaiterId)
-                 .OnDelete(DeleteBehavior.ClientSetNull);
+              .OnDelete(DeleteBehavior.Restrict);
+
 
 
             modelBuilder.Entity<TableOfRestaurant>()
@@ -70,6 +74,8 @@ namespace Restaurant.DAL.Context
            .WithOne(c => c.TableOfRestaurant)
            .HasForeignKey(c => c.TableOfRestaurantId);
 
+          
+
             modelBuilder.Entity<MenuDish>()
                 .HasKey(md => new { md.MenuId, md.DishId });
 
@@ -77,7 +83,7 @@ namespace Restaurant.DAL.Context
                 .HasOne(md => md.Menu)
                 .WithMany(m => m.MenuDishes)
                 .HasForeignKey(md => md.MenuId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
 
 
@@ -85,7 +91,7 @@ namespace Restaurant.DAL.Context
               .HasOne(md => md.Dish)
               .WithMany(d => d.MenuDishes)
               .HasForeignKey(md => md.DishId)
-                  .OnDelete(DeleteBehavior.ClientSetNull);
+               .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<DishCategory>()
@@ -100,12 +106,15 @@ namespace Restaurant.DAL.Context
                 .HasOne(di => di.Dish)
                 .WithMany(d => d.DishIngredients)
                 .HasForeignKey(di => di.DishId)
-                   .OnDelete(DeleteBehavior.ClientSetNull);
+                  .OnDelete(DeleteBehavior.Restrict);
+
+
 
             modelBuilder.Entity<DishIngredient>()
               .HasOne(di => di.Ingredient)
               .WithMany(d => d.DishIngredients)
-               .OnDelete(DeleteBehavior.ClientSetNull);
+               .OnDelete(DeleteBehavior.Restrict);
+
 
 
             modelBuilder.Entity<DrinkCategory>()
@@ -119,15 +128,15 @@ namespace Restaurant.DAL.Context
             modelBuilder.Entity<BillCustomer>()
                 .HasOne(bc => bc.Bill)
                 .WithMany(b => b.BillCustomers)
-                .HasForeignKey(bc => bc.BillId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                .HasForeignKey(bc => bc.BillId);
+                 
 
 
             modelBuilder.Entity<BillCustomer>()
                 .HasOne(bc => bc.Customer)
                 .WithMany(b => b.BillCustomers)
                 .HasForeignKey(bc => bc.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                  .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<CashAccount>()
@@ -157,14 +166,51 @@ namespace Restaurant.DAL.Context
                 .HasOne(md => md.Drink)
                 .WithMany(d => d.MenuDrinks)
                 .HasForeignKey(md => md.DrinkId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                 .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<MenuDrink>()
                 .HasOne(md => md.Menu)
                 .WithMany(m => m.MenuDrinks)
                 .HasForeignKey(md => md.MenuId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
+
+                modelBuilder.Entity<MenuBill>()
+                .HasKey(md => new { md.BillId, md.MenuId });
+
+            modelBuilder.Entity<MenuBill>()
+                .HasOne(md => md.Bill)
+                .WithMany(b => b.MenuBills)
+                .HasForeignKey(md => md.BillId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<MenuBill>()
+                .HasOne(md => md.Menu)
+                .WithMany(m => m.MenuBills)
+                .HasForeignKey(md => md.MenuId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MenuOrder>()
+                .HasKey(md => new { md.OrderId, md.MenuId });
+
+            modelBuilder.Entity<MenuOrder>()
+                .HasOne(md => md.Order)
+                .WithMany(d => d.MenuOrders)
+                .HasForeignKey(md => md.OrderId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<MenuOrder>()
+                .HasOne(md => md.Menu)
+                .WithMany(m => m.MenuOrders)
+                .HasForeignKey(md => md.MenuId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<IngredientCategory>()
+                .HasMany(c => c.Ingredients)
+                .WithOne(i => i.IngredientCategory)
+                .HasForeignKey(c => c.IngredientCatgoryId);
 
 
 
