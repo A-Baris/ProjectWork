@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "Restaurant.MVC/1.0.0": {
         "dependencies": {
-          "IOC": "1.0.0"
+          "Restaurant.IOC": "1.0.0"
         },
         "runtime": {
           "Restaurant.MVC.dll": {}
@@ -556,15 +556,6 @@
           }
         }
       },
-      "IOC/1.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
-          "Restaurant.BLL": "1.0.0"
-        },
-        "runtime": {
-          "IOC.dll": {}
-        }
-      },
       "Restaurant.BLL/1.0.0": {
         "dependencies": {
           "Restaurant.DAL": "1.0.0"
@@ -587,6 +578,15 @@
       "Restaurant.Entity/1.0.0": {
         "runtime": {
           "Restaurant.Entity.dll": {}
+        }
+      },
+      "Restaurant.IOC/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
+          "Restaurant.BLL": "1.0.0"
+        },
+        "runtime": {
+          "Restaurant.IOC.dll": {}
         }
       }
     }
@@ -1010,11 +1010,6 @@
       "path": "system.windows.extensions/6.0.0",
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
     },
-    "IOC/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Restaurant.BLL/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -1026,6 +1021,11 @@
       "sha512": ""
     },
     "Restaurant.Entity/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Restaurant.IOC/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

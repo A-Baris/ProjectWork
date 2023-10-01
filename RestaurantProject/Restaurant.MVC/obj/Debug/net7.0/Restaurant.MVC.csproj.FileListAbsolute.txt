@@ -81,5 +81,5 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Restaurant.DAL.pdb
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Restaurant.Entity.pdb
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\obj\Debug\net7.0\Restaurant.MVC.csproj.CopyComplete
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\IOC.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\IOC.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Restaurant.IOC.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Restaurant.IOC.pdb

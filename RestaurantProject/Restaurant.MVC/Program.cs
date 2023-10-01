@@ -4,7 +4,7 @@ using Restaurant.BLL.AbstractServices;
 using Restaurant.BLL.Repositories;
 using Restaurant.BLL.Services;
 using Restaurant.DAL.Context;
-using IOC;
+using Restaurant.IOC.Container;
 
 var builder = WebApplication.CreateBuilder(args);
 
