@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entity.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Restaurant.BLL.AbstractServices;
 using Restaurant.MVC.Models;
 using System.Diagnostics;
 
@@ -7,10 +9,12 @@ namespace Restaurant.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IDishCategoryService _dishCategory;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IDishCategoryService dishCategory  )
         {
             _logger = logger;
+            _dishCategory = dishCategory;
         }
 
         public IActionResult Index()
@@ -20,7 +24,9 @@ namespace Restaurant.MVC.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            var dishCategoryList = _dishCategory.GetAll();
+
+            return View(dishCategoryList);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

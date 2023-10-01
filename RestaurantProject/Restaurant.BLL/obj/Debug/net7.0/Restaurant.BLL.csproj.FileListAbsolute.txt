@@ -10,3 +10,9 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\obj\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\obj\Debug\net7.0\refint\Restaurant.BLL.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\obj\Debug\net7.0\Restaurant.BLL.pdb
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\obj\Debug\net7.0\ref\Restaurant.BLL.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\bin\Debug\net7.0\Restaurant.DAL.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\bin\Debug\net7.0\Restaurant.Entity.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\bin\Debug\net7.0\Restaurant.DAL.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\bin\Debug\net7.0\Restaurant.Entity.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\obj\Debug\net7.0\Restaurant.BLL.csproj.AssemblyReference.cache
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\obj\Debug\net7.0\Restaurant.BLL.csproj.CopyComplete
