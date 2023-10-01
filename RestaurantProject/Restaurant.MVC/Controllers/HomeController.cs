@@ -1,4 +1,4 @@
-﻿using Entity.Entities;
+﻿using Restaurant.Entity.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.MVC.Models;

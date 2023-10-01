@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Enum
+namespace Restaurant.Entity.Enums
 {
     public enum OrderStatus
     {

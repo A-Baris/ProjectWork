@@ -1,4 +1,4 @@
-﻿using Entity.Entities;
+﻿using Restaurant.Entity.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

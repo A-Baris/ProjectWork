@@ -1043,6 +1043,20 @@
           }
         }
       },
+      "IOC/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
+          "Restaurant.BLL": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/IOC.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IOC.dll": {}
+        }
+      },
       "Restaurant.BLL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -2822,6 +2836,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "IOC/1.0.0": {
+      "type": "project",
+      "path": "../IOC/IOC.csproj",
+      "msbuildProject": "../IOC/IOC.csproj"
+    },
     "Restaurant.BLL/1.0.0": {
       "type": "project",
       "path": "../Restaurant.BLL/Restaurant.BLL.csproj",
@@ -2840,7 +2859,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Restaurant.BLL >= 1.0.0"
+      "IOC >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2875,8 +2894,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.BLL\\Restaurant.BLL.csproj": {
-              "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.BLL\\Restaurant.BLL.csproj"
+            "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\IOC\\IOC.csproj": {
+              "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\IOC\\IOC.csproj"
             }
           }
         }

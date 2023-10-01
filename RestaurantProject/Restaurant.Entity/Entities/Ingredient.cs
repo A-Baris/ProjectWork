@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Entities
+namespace Restaurant.Entity.Entities
 {
     public class Ingredient:BaseEntity
     {

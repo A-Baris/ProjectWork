@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Entities
+namespace Restaurant.Entity.Entities
 {
     public class Menu : BaseEntity
     {
@@ -20,4 +20,5 @@ namespace Entity.Entities
         public IEnumerable<MenuOrder> MenuOrders { get; set; }
         public IEnumerable<MenuBill> MenuBills { get; set; }
     }
+
 }

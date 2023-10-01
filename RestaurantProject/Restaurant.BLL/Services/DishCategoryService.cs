@@ -1,4 +1,4 @@
-﻿using Entity.Entities;
+﻿using Restaurant.Entity.Entities;
 using Restaurant.BLL.AbstractRepositories;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.BLL.Repositories;
