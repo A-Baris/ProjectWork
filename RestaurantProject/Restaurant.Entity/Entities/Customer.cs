@@ -17,8 +17,9 @@ namespace Restaurant.Entity.Entities
         public string? Adress { get; set; }
         [MaxLength(11)]
         public string Phone { get; set; }
+        public DateTime ReservationDate { get; set; }
 
-        public int TableOfRestaurantId { get;set; }
+        public int? TableOfRestaurantId { get;set; }
         public TableOfRestaurant TableOfRestaurant { get;set; }
         public IEnumerable<BillCustomer> BillCustomers { get; set;}
 
