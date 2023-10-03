@@ -216,5 +216,31 @@ namespace Restaurant.DAL.Context
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public override int SaveChanges()
+        {
+            var modifierEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified || x.State == EntityState.Added);
+            try
+            {
+                foreach(var item in modifierEntries)
+                {
+                    var entityRepository = item.Entity as BaseEntity;
+                    
+                    if(item.State==EntityState.Added)
+                    {
+                        entityRepository.CreatedDate = DateTime.Now;
+                    }
+                    if (item.State == EntityState.Modified)
+                    {
+                        entityRepository.UpdatedDate = DateTime.Now;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            return base.SaveChanges();
+        }
     }
 }

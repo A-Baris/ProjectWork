@@ -18,6 +18,7 @@ namespace Restaurant.IOC.Container
         {
             services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IDishCategoryService, DishCategoryService>();
+            services.AddScoped<IWaiterService, WaiterService>();
         }
     }
 }

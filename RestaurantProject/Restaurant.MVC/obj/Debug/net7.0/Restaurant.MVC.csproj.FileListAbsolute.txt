@@ -262,3 +262,4 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\obj\Debug\net7.0\scopedcss\Areas\Manager\Views\Shared\_Layout.cshtml.rz.scp.css

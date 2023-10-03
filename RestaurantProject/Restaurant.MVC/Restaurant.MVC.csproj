@@ -15,17 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Cashier\Data\" />
-    <Folder Include="Areas\Cashier\Models\" />
-    <Folder Include="Areas\Cashier\Views\" />
-    <Folder Include="Areas\Manager\Controllers\" />
     <Folder Include="Areas\Manager\Data\" />
-    <Folder Include="Areas\Manager\Models\" />
-    <Folder Include="Areas\Manager\Views\" />
-    <Folder Include="Areas\Waiter\Controllers\" />
-    <Folder Include="Areas\Waiter\Data\" />
-    <Folder Include="Areas\Waiter\Models\" />
-    <Folder Include="Areas\Waiter\Views\" />
   </ItemGroup>
 
 </Project>

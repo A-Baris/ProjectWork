@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="margin-left:50px">
+<h2>Garson Listesi</h2>
+<h2><a href="/manager/waiter/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Tel</th>
+            <th>TCNO</th>
+        </tr>
+    </thead>
+    @foreach (var item in ViewBag.waiterList as List<Waiter>)
+    {
+
+
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Surname</td>
+            <td>@item.Phone</td>
+            <td>@item.TcNo</td>
+            <td>
+                <a href="/manager/waiter/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                <a href="/manager/waiter/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+            </td>
+
+
+
+        </tr>
+
+
+    }
+
+</table>
+
+</div>
