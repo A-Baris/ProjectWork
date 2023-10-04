@@ -1,0 +1,42 @@
+﻿@model List<Kitchen>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-left:50px">
+    <h2>Mutfak Listesi</h2>
+    <h2><a href="/manager/kitchen/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mutfak Adı</th>
+                <th>Açıklama</th>
+                
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>@item.KitchenName</td>
+                <td>@item.Description</td>
+             
+                <td>
+                    <a href="/manager/Kitchen/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/Kitchen/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+                </td>
+
+
+
+            </tr>
+
+
+        }
+
+    </table>
+
+</div>
