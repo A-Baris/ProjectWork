@@ -29,11 +29,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Waiters = _waiter.GetAll().Select(w => new SelectListItem
-            {
-                Text = w.Name + " " + w.Surname,
-                Value = w.Id.ToString()
-            });
+            WaiterList();
             return View();
         }
         [HttpPost]
@@ -51,15 +47,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 _tableOfRestaurant.Create(table);
                 return RedirectToAction("tableofrestaurant", "Manager", "Index");
             }
+            WaiterList();
             return View(restaurantVM);
         }
         public async Task<IActionResult> Update(int id)
         {
-            ViewBag.Waiters = _waiter.GetAll().Select(w => new SelectListItem
-            {
-                Text = w.Name + " " + w.Surname,
-                Value = w.Id.ToString()
-            });
+            WaiterList();
 
             var table = await _tableOfRestaurant.GetbyIdAsync(id);
             var updated = new TableOfRestaurantVM()
@@ -88,10 +81,9 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 TempData["UpdateMessage"] = "Updated is achieved";
                 return RedirectToAction("tableofrestaurant", "Manager", "Index");
             }
-            else
-            {
-                return View(updated);
-            }
+            WaiterList();
+            return View(updated);
+            
         }
         public async Task<IActionResult> Remove(int id)
         {
@@ -103,6 +95,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 return RedirectToAction("tableofrestaurant", "Manager", "Index");
             }
             return View();
+        }
+        void WaiterList()
+        {
+            ViewBag.Waiters = _waiter.GetAll().Select(w => new SelectListItem
+            {
+                Text = w.Name + " " + w.Surname,
+                Value = w.Id.ToString()
+            });
         }
 
     }

@@ -22,6 +22,7 @@ namespace Restaurant.IOC.Container
             services.AddScoped<ITableOfRestaurantService, TableOfRestaurantService>();
             services.AddScoped<IDishCategoryService, DishCategoryService>();
             services.AddScoped<IKitchenService, KitchenService>();
+            services.AddScoped<IDishService, DishService>();
         }
     }
 }
