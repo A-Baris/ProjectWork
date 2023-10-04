@@ -18,6 +18,8 @@ namespace Restaurant.Entity.Entities
         [MaxLength(11)]
         public string Phone { get; set; }
         public DateTime ReservationDate { get; set; }
+        [MaxLength(100)]
+        public string ReservationDescription { get; set; }
 
         public int? TableOfRestaurantId { get;set; }
         public TableOfRestaurant TableOfRestaurant { get;set; }

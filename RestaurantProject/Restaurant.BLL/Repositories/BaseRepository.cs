@@ -16,11 +16,13 @@ namespace Restaurant.BLL.Repositories
     {
 
         private readonly ProjectContext _context;
+      
 
         public BaseRepository(ProjectContext context)
         {
 
             _context = context;
+          
         }
         public string Create(T entity)
         {

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Restaurant.DAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a06ebe19889b1f35d2bcb97abeba86ffd3c8cc96")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3599d71c63ac961065796b5e88f707aa8b8bb01")]
 [assembly: System.Reflection.AssemblyProductAttribute("Restaurant.DAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Restaurant.DAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

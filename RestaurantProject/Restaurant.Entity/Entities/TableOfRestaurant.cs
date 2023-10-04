@@ -11,9 +11,11 @@ namespace Restaurant.Entity.Entities
 {
     public class TableOfRestaurant : BaseEntity
     {
-
+        [MaxLength(50)]
+        public string TableName { get; set; }
         [MaxLength(50)]
         public string TableLocation { get;set; }
+      
         public int TableCapacity { get;set; }
         public ReservationStatus Status { get; set; }
         public int WaiterId { get; set; }
