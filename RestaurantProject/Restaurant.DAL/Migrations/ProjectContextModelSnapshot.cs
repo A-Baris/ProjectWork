@@ -294,9 +294,10 @@ namespace Restaurant.DAL.Migrations
                     b.Property<int>("BaseStatus")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("CategoryName")
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -406,11 +407,6 @@ namespace Restaurant.DAL.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("KitchenName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("KitchenType")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");

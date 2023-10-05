@@ -1,0 +1,49 @@
+﻿@model List<Drink>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-left:50px">
+    <h2>İçecek Listesi</h2>
+    <h2><a href="/manager/drink/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>İçecek Adı</th>
+                <th>Fiyat</th>
+                <th>Adet</th>                
+                <th>İçecek Kategori</th>
+                <th>Mutfak</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>@item.DrinkName</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@item.DrinkCategory?.CategoryName</td>
+                <td>@item.Kitchen?.KitchenName</td>
+                <td>
+                    <a href="/manager/drink/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/drink/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+                </td>
+
+
+
+            </tr>
+
+
+        }
+
+
+    </table>
+
+</div>
+
