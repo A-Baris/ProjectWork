@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.BLL.Services
 {
-    internal class IngredientService : BaseService<Ingredient>, IIngredientService
+    public class IngredientService : BaseService<Ingredient>, IIngredientService
     {
         public IngredientService(IRepository<Ingredient> repository) : base(repository)
         {
