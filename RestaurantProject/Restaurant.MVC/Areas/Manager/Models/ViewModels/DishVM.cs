@@ -14,5 +14,6 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
         public string? Description { get; set; }
         public int DishCategoryId { get; set; }
         public int KitchenId { get; set; }
+        public int MenuId { get; set; }
     }
 }

@@ -13,12 +13,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IDishService _dishService;
         private readonly IDishCategoryService _dishCategoryService;
         private readonly IKitchenService _kitchenService;
+        private readonly IMenuService _menuService;
 
-        public DishController(IDishService dishService,IDishCategoryService dishCategoryService,IKitchenService kitchenService)
+        public DishController(IDishService dishService,IDishCategoryService dishCategoryService,IKitchenService kitchenService,IMenuService menuService)
         {
             _dishService = dishService;
             _dishCategoryService = dishCategoryService;
             _kitchenService = kitchenService;
+            _menuService = menuService;
         }
         public IActionResult Index()
         {
@@ -46,6 +48,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Description = dishVM.Description,
                     DishCategoryId = dishVM.DishCategoryId,
                     KitchenId = dishVM.KitchenId,
+                    MenuId = dishVM.MenuId,
                 };
                 _dishService.Create(dish);
                 return RedirectToAction("Dish","Manager","Index");
@@ -65,6 +68,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 Description = updated.Description,
                 DishCategoryId = updated.DishCategoryId,
                 KitchenId = updated.KitchenId,
+                MenuId= updated.MenuId,
             };
             
             return View(dishUpdate);
@@ -81,6 +85,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 entity.Description = dishUpdate.Description;
                 entity.DishCategoryId = dishUpdate.DishCategoryId;
                 entity.KitchenId = dishUpdate.KitchenId;
+                entity.MenuId = dishUpdate.MenuId;
                 _dishService.Update(entity);
                 return RedirectToAction("Dish", "Manager", "Index");
 
@@ -113,6 +118,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 Text = k.KitchenName,
                 Value = k.Id.ToString(),
+            });
+            ViewBag.MenuList=_menuService.GetAll().Select(m => new SelectListItem
+            {
+                Text = m.MenuName,
+                Value = m.Id.ToString(),
             });
         }
 

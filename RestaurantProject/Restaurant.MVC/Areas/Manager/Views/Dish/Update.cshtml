@@ -39,9 +39,13 @@
                     <select asp-items="ViewBag.DishCategoryList" asp-for="DishCategoryId" class="form-control">
                         <option selected="" disable value="@Model.DishCategoryId">Yemek Kategori Seçimi</option>
                     </select>
+                    <div class="form-group">
+                        <label>Menu Adı</label>
+                        <select asp-items="ViewBag.MenuList" asp-for="MenuId" class="form-control">
+                            <option selected="" disable value="@Model.MenuId">Menu  Seçimi </option>
+                        </select>
 
-
-
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Mutfak</label>

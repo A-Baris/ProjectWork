@@ -14,6 +14,7 @@
                 <th>Fiyat</th>
                 <th>Adet</th>                
                 <th>İçecek Kategori</th>
+                <th>Menu</th>
                 <th>Mutfak</th>
             </tr>
         </thead>
@@ -27,6 +28,7 @@
                 <td>@item.Price</td>
                 <td>@item.Quantity</td>
                 <td>@item.DrinkCategory?.CategoryName</td>
+                <td>@item.Menu?.MenuName</td>
                 <td>@item.Kitchen?.KitchenName</td>
                 <td>
                     <a href="/manager/drink/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>

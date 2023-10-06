@@ -15,6 +15,7 @@
                 <th>Adet</th>
                 <th>Açıklama</th>
                 <th>Yemek Kategori</th>
+                <th>Menu</th>
                 <th>Mutfak</th>
             </tr>
         </thead>
@@ -29,7 +30,8 @@
                 <td>@item.Quantity</td>
                 <td>@item.Description</td>
                 <td>@item.DishCategory?.CategoryName</td>
-                <td>@item.Kitchen.KitchenName</td>
+                <td>@item.Menu?.MenuName</td>
+                <td>@item.Kitchen?.KitchenName</td>
                 <td>
                     <a href="/manager/dish/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
                     <a href="/manager/dish/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.BLL.Services;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 
@@ -12,12 +13,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IDrinkService _drinkService;
         private readonly IDrinkCategoryService _categoryService;
         private readonly IKitchenService _kitchenService;
+        private readonly IMenuService _menuService;
 
-        public DrinkController(IDrinkService drinkService,IDrinkCategoryService categoryService,IKitchenService kitchenService)
+        public DrinkController(IDrinkService drinkService,IDrinkCategoryService categoryService,IKitchenService kitchenService,IMenuService menuService)
         {
             _drinkService = drinkService;
             _categoryService = categoryService;
             _kitchenService = kitchenService;
+           _menuService = menuService;
         }
         public IActionResult Index()
         {
@@ -45,7 +48,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Quantity = drinkVM.Quantity,
                     DrinkCategoryId = drinkVM.DrinkCategoryId,
                     KitchenId = drinkVM.KitchenId,
-                };
+                    MenuId=drinkVM.MenuId,
+    };
                 _drinkService.Create(drink);
                 return RedirectToAction("drink", "manager", "index");
                 
@@ -69,6 +73,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Quantity = drinkEntity.Quantity,
                     DrinkCategoryId = drinkEntity.DrinkCategoryId,
                     KitchenId = drinkEntity.KitchenId,
+                    MenuId = drinkEntity.MenuId,
 
                 };
                 return View(updated);
@@ -91,6 +96,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     drinkEntity.Quantity= drinkVM.Quantity;
                     drinkEntity.DrinkCategoryId= drinkVM.DrinkCategoryId;
                     drinkEntity.KitchenId= drinkVM.KitchenId;
+                    drinkEntity.MenuId= drinkVM.MenuId;
                     _drinkService.Update(drinkEntity);
     }
                 return RedirectToAction("drink", "manager", "index");
@@ -128,6 +134,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 Text = k.KitchenName,
                 Value = k.Id.ToString(),
+            });
+            ViewBag.MenuSelect = _menuService.GetAll().Select(m => new SelectListItem
+            {
+                Text = m.MenuName,
+                Value = m.Id.ToString(),
             });
         }
     }

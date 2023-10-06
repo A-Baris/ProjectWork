@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
 
-            <h1>Dish Create</h1>
+            <h1>Yemek Oluştur</h1>
             <form method="post">
                 <div class="form-group">
                     <label asp-for="DishName"></label>
@@ -40,7 +40,12 @@
                         <option selected="" disable>Yemek Kategori Seçimi</option>
                     </select>
 
-
+                </div>
+                <div class="form-group">
+                    <label>Menu Adı</label>
+                    <select asp-items="ViewBag.MenuList" asp-for="MenuId" class="form-control">
+                        <option selected="" disable>Menu  Seçimi</option>
+                    </select>
 
                 </div>
                 <div class="form-group">
@@ -48,8 +53,6 @@
                     <select asp-items="ViewBag.KitchenList" asp-for="KitchenId" class="form-control">
                         <option selected="" disable>Mutfak Seçimi</option>
                     </select>
-
-
 
                 </div>
                

@@ -8,5 +8,6 @@
         public decimal Quantity { get; set; }
         public  int DrinkCategoryId { get; set; }
         public int KitchenId { get;set; }
+        public int MenuId { get; set; }
     }
 }
