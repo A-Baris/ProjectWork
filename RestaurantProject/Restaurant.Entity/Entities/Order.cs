@@ -21,7 +21,8 @@ namespace Restaurant.Entity.Entities
         public Kitchen Kitchen { get; set; }
         public Waiter Waiter { get;set; }
         public TableOfRestaurant TableOfRestaurant { get; set; }
-        public IEnumerable<MenuOrder> MenuOrders { get; set; }
+        public IEnumerable<OrderDish> OrderDishes { get; set; }
+        public IEnumerable<OrderDrink> OrderDrinks { get; set; }
 
 
     }

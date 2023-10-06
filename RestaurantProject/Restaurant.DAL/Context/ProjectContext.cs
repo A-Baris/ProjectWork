@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.DAL.Context
 {
-    public class ProjectContext:DbContext
+    public class ProjectContext : DbContext
     {
         public DbSet<TableOfRestaurant> TableOfRestaurants { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -26,15 +26,16 @@ namespace Restaurant.DAL.Context
         public DbSet<CashAccount> CashAccounts { get; set; }
         public DbSet<BillCustomer> BillCustomers { get; set; }
         public DbSet<DishIngredient> DishIngredients { get; set; }
-        public DbSet<MenuDish> MenuDishes { get; set; }
-        public DbSet<MenuDrink> MenuDrinks { get; set; }
-        public DbSet<MenuBill> MenuBills { get; set; }
-        public DbSet<MenuOrder> MenuOrders { get; set; }
+
+        public DbSet<OrderDish> OrderDishes { get; set; }
+        public DbSet<OrderDrink> OrderDrinks { get; set; }
+        public DbSet<BillDish> BillDishes { get; set; }
+        public DbSet<BillDrink> BillDrinks { get; set; }
         public DbSet<IngredientCategory> IngredientCategories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(!optionsBuilder.IsConfigured)
+            if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("server=DESKTOP-KUQ9PNH;database=RestaurantDB;uid=sa;pwd=1234;TrustServerCertificate=True");
             }
@@ -74,24 +75,9 @@ namespace Restaurant.DAL.Context
            .WithOne(c => c.TableOfRestaurant)
            .HasForeignKey(c => c.TableOfRestaurantId);
 
-          
-
-            modelBuilder.Entity<MenuDish>()
-                .HasKey(md => new { md.MenuId, md.DishId });
-
-            modelBuilder.Entity<MenuDish>()
-                .HasOne(md => md.Menu)
-                .WithMany(m => m.MenuDishes)
-                .HasForeignKey(md => md.MenuId)
-                .OnDelete(DeleteBehavior.Cascade);
 
 
 
-            modelBuilder.Entity<MenuDish>()
-              .HasOne(md => md.Dish)
-              .WithMany(d => d.MenuDishes)
-              .HasForeignKey(md => md.DishId)
-               .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<DishCategory>()
@@ -129,7 +115,7 @@ namespace Restaurant.DAL.Context
                 .HasOne(bc => bc.Bill)
                 .WithMany(b => b.BillCustomers)
                 .HasForeignKey(bc => bc.BillId);
-                 
+
 
 
             modelBuilder.Entity<BillCustomer>()
@@ -159,58 +145,84 @@ namespace Restaurant.DAL.Context
               .WithOne(i => i.Kitchen)
               .HasForeignKey(k => k.KitchenId);
 
-            modelBuilder.Entity<MenuDrink>()
-                .HasKey(md => new { md.DrinkId, md.MenuId });
+            modelBuilder.Entity<OrderDish>()
+            .HasKey(od => new { od.OrderId, od.DishId });
 
-            modelBuilder.Entity<MenuDrink>()
-                .HasOne(md => md.Drink)
-                .WithMany(d => d.MenuDrinks)
-                .HasForeignKey(md => md.DrinkId)
-                 .OnDelete(DeleteBehavior.Cascade);
-
-
-            modelBuilder.Entity<MenuDrink>()
-                .HasOne(md => md.Menu)
-                .WithMany(m => m.MenuDrinks)
-                .HasForeignKey(md => md.MenuId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-                modelBuilder.Entity<MenuBill>()
-                .HasKey(md => new { md.BillId, md.MenuId });
-
-            modelBuilder.Entity<MenuBill>()
-                .HasOne(md => md.Bill)
-                .WithMany(b => b.MenuBills)
-                .HasForeignKey(md => md.BillId)
-                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<OrderDish>()
+                .HasOne(od => od.Order)
+                .WithMany(x => x.OrderDishes)
+                .HasForeignKey(od => od.OrderId);
+               
 
 
-            modelBuilder.Entity<MenuBill>()
-                .HasOne(md => md.Menu)
-                .WithMany(m => m.MenuBills)
-                .HasForeignKey(md => md.MenuId)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<OrderDish>()
+          .HasOne(od => od.Dish)
+          .WithMany(x => x.OrderDishes)
+          .HasForeignKey(od => od.DishId)
+           .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<MenuOrder>()
-                .HasKey(md => new { md.OrderId, md.MenuId });
+            modelBuilder.Entity<OrderDrink>()
+          .HasKey(od => new { od.OrderId, od.DrinkId });
 
-            modelBuilder.Entity<MenuOrder>()
-                .HasOne(md => md.Order)
-                .WithMany(d => d.MenuOrders)
-                .HasForeignKey(md => md.OrderId)
-                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<OrderDrink>()
+                .HasOne(od => od.Order)
+                .WithMany(x => x.OrderDrinks)
+                .HasForeignKey(od => od.OrderId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderDrink>()
+          .HasOne(od => od.Drink)
+          .WithMany(x => x.OrderDrinks)
+          .HasForeignKey(od => od.DrinkId)
+       .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BillDish>()
+           .HasKey(b => new { b.BillId, b.DishId });
+
+            modelBuilder.Entity<BillDish>()
+       .HasOne(bd => bd.Bill)
+       .WithMany(x => x.BillDishes)
+       .HasForeignKey(bd => bd.BillId)
+          .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BillDish>()
+          .HasOne(bd => bd.Dish)
+           .WithMany(x => x.BillDishes)
+          .HasForeignKey(bd => bd.DishId)
+              .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BillDrink>()
+       .HasKey(b => new { b.BillId, b.DrinkId });
+
+            modelBuilder.Entity<BillDrink>()
+       .HasOne(bd => bd.Bill)
+       .WithMany(x => x.BillDrinks)
+       .HasForeignKey(bd => bd.BillId)
+          .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BillDrink>()
+          .HasOne(bd => bd.Drink)
+           .WithMany(x => x.BillDrinks)
+          .HasForeignKey(bd => bd.DrinkId)
+              .OnDelete(DeleteBehavior.Restrict);
 
 
-            modelBuilder.Entity<MenuOrder>()
-                .HasOne(md => md.Menu)
-                .WithMany(m => m.MenuOrders)
-                .HasForeignKey(md => md.MenuId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<IngredientCategory>()
                 .HasMany(c => c.Ingredients)
                 .WithOne(i => i.IngredientCategory)
                 .HasForeignKey(c => c.IngredientCatgoryId);
+
+            modelBuilder.Entity<Menu>()
+                .HasMany(m => m.Dishes)
+                .WithOne(d => d.Menu)
+                .HasForeignKey(m => m.MenuId);
+
+            modelBuilder.Entity<Menu>()
+             .HasMany(m => m.Drinks)
+             .WithOne(d => d.Menu)
+             .HasForeignKey(m => m.MenuId);
+
 
 
 
@@ -219,24 +231,29 @@ namespace Restaurant.DAL.Context
 
         public override int SaveChanges()
         {
-            var modifierEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified || x.State == EntityState.Added);
+            var modifierEntries = ChangeTracker.Entries()
+                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Added);
             try
             {
-                foreach(var item in modifierEntries)
+                foreach (var item in modifierEntries)
                 {
                     var entityRepository = item.Entity as BaseEntity;
-                    
-                    if(item.State==EntityState.Added)
+                    if (entityRepository != null)
                     {
-                        entityRepository.CreatedDate = DateTime.Now;
-                    }
-                    if (item.State == EntityState.Modified)
-                    {
-                        entityRepository.UpdatedDate = DateTime.Now;
+
+                        if (item.State == EntityState.Added)
+                        {
+                            entityRepository.CreatedDate = DateTime.Now;
+                        }
+                        if (item.State == EntityState.Modified)
+                        {
+                            entityRepository.UpdatedDate = DateTime.Now;
+                        }
                     }
                 }
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }

@@ -39,7 +39,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 Ingredient ingredient = new Ingredient()
                 {
                     IngredientName = vM.IngredientName,
-                    UnitPrice = vM.UnitPrice,
+                    Price = vM.UnitPrice,
                     Quantity = vM.Quantity,
                     IngredientCatgoryId = vM.IngredientCatgoryId,
                     KitchenId = vM.KitchenId,
@@ -59,7 +59,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var updated = new IngredientVM()
                 {
                     IngredientName = ingredientEntity.IngredientName,
-                    UnitPrice = ingredientEntity.UnitPrice,
+                    UnitPrice = ingredientEntity.Price,
                     Quantity = ingredientEntity.Quantity,
                     IngredientCatgoryId = ingredientEntity.IngredientCatgoryId,
                     KitchenId = ingredientEntity.KitchenId
@@ -80,7 +80,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 if (entity != null)
                 {
                     entity.IngredientName= vM.IngredientName;
-                    entity.UnitPrice= vM.UnitPrice;
+                    entity.Price= vM.UnitPrice;
                     entity.Quantity= vM.Quantity;
                     entity.IngredientCatgoryId=vM.IngredientCatgoryId;
                     entity.KitchenId= vM.KitchenId;

@@ -12,8 +12,10 @@ namespace Restaurant.Entity.Entities
     {
         [MaxLength(100)]
         public string IngredientName { get; set; }
-        public decimal UnitPrice { get; set; }
+        public decimal Price { get; set; }
         public decimal Quantity { get; set; }
+        [MaxLength(200)]
+        public string? Description { get;set; }
        public int IngredientCatgoryId { get; set; } 
         public IngredientCategory IngredientCategory { get; set; }
         public IEnumerable<DishIngredient> DishIngredients { get; set; }

@@ -12,13 +12,9 @@ namespace Restaurant.Entity.Entities
     {
         [MaxLength(100)]
         public string MenuName { get; set; }
-        public Decimal Price { get; set; }
-        public int Quantity { get; set; }
-        public decimal? Discount { get; set; }
-        public IEnumerable<MenuDish> MenuDishes { get; set; }
-        public IEnumerable<MenuDrink> MenuDrinks { get; set; }
-        public IEnumerable<MenuOrder> MenuOrders { get; set; }
-        public IEnumerable<MenuBill> MenuBills { get; set; }
+        public List<Dish> Dishes { get; set; }
+        public List<Drink> Drinks { get; set; }
     }
+     
 
 }

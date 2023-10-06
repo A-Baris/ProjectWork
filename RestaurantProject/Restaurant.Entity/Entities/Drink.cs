@@ -13,13 +13,19 @@ namespace Restaurant.Entity.Entities
     {
         [MaxLength(100)]
         public string DrinkName { get; set; }
+        [MaxLength(200)]
+        public string? Description { get; set; }
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }
         public int DrinkCategoryId { get; set; }
         public DrinkCategory DrinkCategory { get; set; }
         public int KitchenId { get; set; }
         public Kitchen Kitchen { get; set; }
-        public IEnumerable<MenuDrink> MenuDrinks { get; set; }
-        
+        public int MenuId { get; set; }
+        public Menu Menu { get; set; }
+   
+        public IEnumerable<OrderDrink> OrderDrinks { get; set; }
+        public IEnumerable<BillDrink> BillDrinks { get; set; }
+
     }
 }
