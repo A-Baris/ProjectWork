@@ -28,6 +28,7 @@ namespace Restaurant.IOC.Container
             services.AddScoped<IIngredientCategoryService, IngredientCategoryService>();
             services.AddScoped<IIngredientService, IngredientService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<ICustomerService, CustomerService>();
         }
     }
 }

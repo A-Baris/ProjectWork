@@ -1,0 +1,68 @@
+﻿@model CustomerVM
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-top:40px">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+
+            <h1>Müşteri Güncelle</h1>
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" value="@Model.Name"/>
+                    <span asp-validation-for="Name" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname"></label>
+                    <input asp-for="Surname" class="form-control" value="@Model.Surname" />
+                    <span asp-validation-for="Surname" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone"></label>
+                    <input asp-for="Phone" class="form-control" value="@Model.Phone" />
+                    <span asp-validation-for="Phone" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Adress"></label>
+                    <input asp-for="Adress" class="form-control" value="@Model.Adress" />
+                    <span asp-validation-for="Adress" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReservationDate"></label>
+                    <input asp-for="ReservationDate" class="form-control" value="@Model.ReservationDate" />
+                    <span asp-validation-for="ReservationDate" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReservationDescription"></label>
+                    <input asp-for="ReservationDescription" class="form-control" value="@Model.ReservationDescription" />
+                    <span asp-validation-for="ReservationDescription" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Yemek Kategori</label>
+                    <select asp-items="ViewBag.TableSelect" asp-for="TableOfRestaurantId" class="form-control">
+                        <option selected="" disable value="@Model.TableOfRestaurantId">Masa Seçimi</option>
+                    </select>
+
+                </div>
+
+
+                <div class="text-center">
+
+                    <button type="submit" class="btn btn-primary" style="margin-top:10px">Güncelle</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+

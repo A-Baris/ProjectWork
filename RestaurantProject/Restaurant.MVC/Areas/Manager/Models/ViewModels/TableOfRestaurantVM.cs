@@ -15,6 +15,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
 
         [Range(1, int.MaxValue, ErrorMessage = "Geçerli bir kapasite değeri giriniz.")]
         public int Capacity { get; set; }
+        public ReservationStatus Status { get; set; }
 
         [Required(ErrorMessage = "Lütfen boş bırakmayınız")]
         [Range(1, int.MaxValue, ErrorMessage = "Lütfen seçim yapınız")]

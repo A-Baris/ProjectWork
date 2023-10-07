@@ -53,6 +53,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         public async Task<IActionResult> Update(int id)
         {
             WaiterList();
+            
 
             var table = await _tableOfRestaurant.GetbyIdAsync(id);
             var updated = new TableOfRestaurantVM()
@@ -60,6 +61,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 Id = id,
                 TableName = table.TableName,
                 Capacity = table.TableCapacity,
+                Status = table.Status,
                 Location = table.TableLocation,
                 WaiterId = table.WaiterId
             };
@@ -74,6 +76,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var tableUpdate = await _tableOfRestaurant.GetbyIdAsync(updated.Id);
                 tableUpdate.TableName = updated.TableName;
                 tableUpdate.TableCapacity = updated.Capacity;
+                tableUpdate.Status = updated.Status;
                 tableUpdate.TableLocation = updated.Location;
                 tableUpdate.WaiterId = updated.WaiterId;
 
