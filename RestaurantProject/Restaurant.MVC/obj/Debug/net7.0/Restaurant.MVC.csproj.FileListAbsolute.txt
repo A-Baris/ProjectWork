@@ -263,3 +263,7 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\obj\Debug\net7.0\scopedcss\Areas\Manager\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Mono.TextTemplating.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\System.CodeDom.dll

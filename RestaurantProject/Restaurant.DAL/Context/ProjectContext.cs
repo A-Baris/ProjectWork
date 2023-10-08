@@ -6,11 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Restaurant.DAL.Context
 {
-    public class ProjectContext : DbContext
+    public class ProjectContext:DbContext
     {
+        public ProjectContext(DbContextOptions<ProjectContext> options) : base(options)
+        {
+
+        }
+
         public DbSet<TableOfRestaurant> TableOfRestaurants { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Waiter> Waiters { get; set; }
@@ -33,14 +39,7 @@ namespace Restaurant.DAL.Context
         public DbSet<BillDrink> BillDrinks { get; set; }
         public DbSet<IngredientCategory> IngredientCategories { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("server=DESKTOP-KUQ9PNH;database=RestaurantDB;uid=sa;pwd=1234;TrustServerCertificate=True");
-            }
-            base.OnConfiguring(optionsBuilder);
-        }
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
