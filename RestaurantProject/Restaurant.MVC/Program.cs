@@ -12,21 +12,22 @@ using Restaurant.MVC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 
-// Configure your application's DbContext
+//  DbContext
 builder.Services.AddDbContext<ProjectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configure Identity DbContext
+// Identity DbContext
 builder.Services.AddDbContext<UserRoleContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection2")));
 
 // Add Identity services
 builder.Services.AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<UserRoleContext>();
-    
+    .AddEntityFrameworkStores<UserRoleContext>()
+    .AddDefaultTokenProviders();
+
 //Password settings
 builder.Services.Configure<IdentityOptions>(x =>
 {

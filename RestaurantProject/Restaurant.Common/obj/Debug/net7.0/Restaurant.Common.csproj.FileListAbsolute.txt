@@ -1,0 +1,12 @@
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\bin\Debug\net7.0\Restaurant.Common.deps.json
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\bin\Debug\net7.0\Restaurant.Common.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\bin\Debug\net7.0\Restaurant.Common.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\Restaurant.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\Restaurant.Common.AssemblyInfoInputs.cache
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\Restaurant.Common.AssemblyInfo.cs
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\Restaurant.Common.csproj.CoreCompileInputs.cache
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\Restaurant.Common.sourcelink.json
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\Restaurant.Common.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\refint\Restaurant.Common.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\Restaurant.Common.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.Common\obj\Debug\net7.0\ref\Restaurant.Common.dll

@@ -8,6 +8,8 @@ using Restaurant.MVC.Data;
 using Restaurant.MVC.Models.ViewModels;
 using Microsoft.Win32;
 using NuGet.Protocol.Plugins;
+using Restaurant.Common;
+using System.Web;
 
 namespace Restaurant.MVC.Controllers
 {
@@ -16,12 +18,14 @@ namespace Restaurant.MVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+       
 
         public HomeController(ILogger<HomeController> logger,UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
         {
             _logger = logger;
           _userManager = userManager;
             _signInManager = signInManager;
+          
         }
 
         public IActionResult Index()
@@ -31,6 +35,7 @@ namespace Restaurant.MVC.Controllers
 
         public IActionResult Register()
         {
+         
             return View();
         }
         [HttpPost]
@@ -47,10 +52,19 @@ namespace Restaurant.MVC.Controllers
                 var result = await _userManager.CreateAsync(user, registerVM.Password);
                 if(result.Succeeded)
                 {
+                    var token = _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var encodeToken = HttpUtility.UrlEncode(token.ToString());
+                    string confirmationLink = Url.Action("Confirmation", "Home", new {id=user.Id,token=encodeToken},Request.Scheme);
+                    
+                    MailSender.SendEmail(registerVM.Email, "Üyelik AKtivasyon", $"Kayıt işlemi başarılı.\n Aramıza Hoş Geldin {registerVM.UserName} \n {confirmationLink} ");
                     return RedirectToAction("index", "home");
                 }
             }
             return View(registerVM);
+        }
+        public IActionResult Confirmation(string? id,string? token)
+        {
+            return View();
         }
         public IActionResult Login()
         {
