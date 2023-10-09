@@ -16,8 +16,8 @@ namespace Restaurant.Entity.Entities
         public string? Description { get; set; }
   
         public virtual List<Order> Orders { get; set; }
-        public virtual List<Dish> Dishes { get; set; }
-        public virtual List<Ingredient> Ingredients { get; set; }
+        public virtual List<Product> Products { get; set; }
+        
 
     }
 }

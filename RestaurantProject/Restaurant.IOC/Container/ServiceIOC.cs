@@ -17,16 +17,13 @@ namespace Restaurant.IOC.Container
         public static void ServiceConfigure(IServiceCollection services)
         {
             services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
-            services.AddScoped<IDishCategoryService, DishCategoryService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IWaiterService, WaiterService>();
             services.AddScoped<ITableOfRestaurantService, TableOfRestaurantService>();
-            services.AddScoped<IDishCategoryService, DishCategoryService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IKitchenService, KitchenService>();
-            services.AddScoped<IDishService, DishService>();
-            services.AddScoped<IDrinkCategoryService, DrinkCategoryService>();
-            services.AddScoped<IDrinkService, DrinkService>();
-            services.AddScoped<IIngredientCategoryService, IngredientCategoryService>();
-            services.AddScoped<IIngredientService, IngredientService>();
+            services.AddScoped<IProductService, ProductService>();
+           
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<ICustomerService, CustomerService>();
         }

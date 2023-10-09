@@ -27,6 +27,17 @@ builder.Services.AddDbContext<UserRoleContext>(options =>
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<UserRoleContext>()
     .AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(x =>
+{
+    x.LoginPath = "/Home/Login";
+    x.AccessDeniedPath = "/Home/Login";
+    x.Cookie = new CookieBuilder
+    {
+        Name = "MyRestaurantCookie"
+    };
+    x.SlidingExpiration = true;
+    x.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+});
 
 //Password settings
 builder.Services.Configure<IdentityOptions>(x =>
@@ -54,8 +65,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllerRoute(
     name: "default",

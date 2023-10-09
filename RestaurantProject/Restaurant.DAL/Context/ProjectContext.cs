@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Restaurant.DAL.Context
 {
-    public class ProjectContext:DbContext
+    public class ProjectContext : DbContext
     {
         public ProjectContext(DbContextOptions<ProjectContext> options) : base(options)
         {
@@ -22,25 +22,23 @@ namespace Restaurant.DAL.Context
         public DbSet<Waiter> Waiters { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Kitchen> Kitchens { get; set; }
-        public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<Drink> Drinks { get; set; }
-        public DbSet<DrinkCategory> DrinkCategories { get; set; }
-        public DbSet<Dish> Dishes { get; set; }
-        public DbSet<DishCategory> DishCategories { get; set; }
+
+
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<CashAccount> CashAccounts { get; set; }
         public DbSet<BillCustomer> BillCustomers { get; set; }
-        public DbSet<DishIngredient> DishIngredients { get; set; }
 
-        public DbSet<OrderDish> OrderDishes { get; set; }
-        public DbSet<OrderDrink> OrderDrinks { get; set; }
-        public DbSet<BillDish> BillDishes { get; set; }
-        public DbSet<BillDrink> BillDrinks { get; set; }
-        public DbSet<IngredientCategory> IngredientCategories { get; set; }
+
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public DbSet<BillProduct> BillProducts { get; set; }
+
+
 
       
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -79,33 +77,12 @@ namespace Restaurant.DAL.Context
 
 
 
-            modelBuilder.Entity<DishCategory>()
-                .HasMany(dc => dc.Dishes)
-                .WithOne(d => d.DishCategory)
-                .HasForeignKey(dc => dc.DishCategoryId);
-
-            modelBuilder.Entity<DishIngredient>()
-                .HasKey(di => new { di.DishId, di.IngredientId });
-
-            modelBuilder.Entity<DishIngredient>()
-                .HasOne(di => di.Dish)
-                .WithMany(d => d.DishIngredients)
-                .HasForeignKey(di => di.DishId)
-                  .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Products)
+                .WithOne(p => p.Category)
+                .HasForeignKey(c => c.CategoryId);
 
 
-
-            modelBuilder.Entity<DishIngredient>()
-              .HasOne(di => di.Ingredient)
-              .WithMany(d => d.DishIngredients)
-               .OnDelete(DeleteBehavior.Restrict);
-
-
-
-            modelBuilder.Entity<DrinkCategory>()
-                .HasMany(dc => dc.Drinks)
-                .WithOne(d => d.DrinkCategory)
-                .HasForeignKey(dc => dc.DrinkCategoryId);
 
             modelBuilder.Entity<BillCustomer>()
                 .HasKey(bc => new { bc.BillId, bc.CustomerId });
@@ -135,92 +112,55 @@ namespace Restaurant.DAL.Context
                 .HasForeignKey(k => k.KitchenId);
 
             modelBuilder.Entity<Kitchen>()
-              .HasMany(k => k.Dishes)
-              .WithOne(d => d.Kitchen)
+              .HasMany(k => k.Products)
+              .WithOne(p => p.Kitchen)
               .HasForeignKey(k => k.KitchenId);
 
-            modelBuilder.Entity<Kitchen>()
-              .HasMany(k => k.Ingredients)
-              .WithOne(i => i.Kitchen)
-              .HasForeignKey(k => k.KitchenId);
 
-            modelBuilder.Entity<OrderDish>()
-            .HasKey(od => new { od.OrderId, od.DishId });
+            modelBuilder.Entity<OrderProduct>()
+            .HasKey(od => new { od.OrderId, od.ProductId });
 
-            modelBuilder.Entity<OrderDish>()
+            modelBuilder.Entity<OrderProduct>()
                 .HasOne(od => od.Order)
-                .WithMany(x => x.OrderDishes)
+                .WithMany(x => x.OrderProducts)
                 .HasForeignKey(od => od.OrderId);
-               
 
 
-            modelBuilder.Entity<OrderDish>()
-          .HasOne(od => od.Dish)
-          .WithMany(x => x.OrderDishes)
-          .HasForeignKey(od => od.DishId)
+
+            modelBuilder.Entity<OrderProduct>()
+          .HasOne(od => od.Product)
+          .WithMany(x => x.OrderProducts)
+          .HasForeignKey(od => od.ProductId)
            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<OrderDrink>()
-          .HasKey(od => new { od.OrderId, od.DrinkId });
 
-            modelBuilder.Entity<OrderDrink>()
-                .HasOne(od => od.Order)
-                .WithMany(x => x.OrderDrinks)
-                .HasForeignKey(od => od.OrderId)
-               .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<OrderDrink>()
-          .HasOne(od => od.Drink)
-          .WithMany(x => x.OrderDrinks)
-          .HasForeignKey(od => od.DrinkId)
-       .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<BillProduct>()
+           .HasKey(b => new { b.BillId, b.ProductId });
 
-            modelBuilder.Entity<BillDish>()
-           .HasKey(b => new { b.BillId, b.DishId });
-
-            modelBuilder.Entity<BillDish>()
+            modelBuilder.Entity<BillProduct>()
        .HasOne(bd => bd.Bill)
-       .WithMany(x => x.BillDishes)
+       .WithMany(x => x.BillProducts)
        .HasForeignKey(bd => bd.BillId)
           .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<BillDish>()
-          .HasOne(bd => bd.Dish)
-           .WithMany(x => x.BillDishes)
-          .HasForeignKey(bd => bd.DishId)
-              .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<BillDrink>()
-       .HasKey(b => new { b.BillId, b.DrinkId });
-
-            modelBuilder.Entity<BillDrink>()
-       .HasOne(bd => bd.Bill)
-       .WithMany(x => x.BillDrinks)
-       .HasForeignKey(bd => bd.BillId)
-          .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<BillDrink>()
-          .HasOne(bd => bd.Drink)
-           .WithMany(x => x.BillDrinks)
-          .HasForeignKey(bd => bd.DrinkId)
+            modelBuilder.Entity<BillProduct>()
+          .HasOne(bd => bd.Product)
+           .WithMany(x => x.BillProducts)
+          .HasForeignKey(bd => bd.ProductId)
               .OnDelete(DeleteBehavior.Restrict);
 
 
 
-            modelBuilder.Entity<IngredientCategory>()
-                .HasMany(c => c.Ingredients)
-                .WithOne(i => i.IngredientCategory)
-                .HasForeignKey(c => c.IngredientCatgoryId);
+
+
 
             modelBuilder.Entity<Menu>()
-                .HasMany(m => m.Dishes)
+                .HasMany(m => m.Products)
                 .WithOne(d => d.Menu)
                 .HasForeignKey(m => m.MenuId);
 
-            modelBuilder.Entity<Menu>()
-             .HasMany(m => m.Drinks)
-             .WithOne(d => d.Menu)
-             .HasForeignKey(m => m.MenuId);
+
 
 
 

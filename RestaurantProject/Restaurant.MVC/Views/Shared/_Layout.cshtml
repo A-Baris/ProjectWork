@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/Restaurant.MVC.styles.css" asp-append-version="true" />
 </head>
 <body>
+   
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -25,7 +26,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        
                     </ul>
+                    <div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <h3>@User.Identity.Name</h3>
+                            <a href="/home/logout">Logout</a>
+                        }
+                        else
+                        {
+                            <a href="/home/Login">Login</a>
+                        }
+                    </div>
                 </div>
             </div>
         </nav>

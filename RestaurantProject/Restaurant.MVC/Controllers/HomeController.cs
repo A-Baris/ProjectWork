@@ -52,7 +52,7 @@ namespace Restaurant.MVC.Controllers
                 var result = await _userManager.CreateAsync(user, registerVM.Password);
                 if(result.Succeeded)
                 {
-                    var token = _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var encodeToken = HttpUtility.UrlEncode(token.ToString());
                     string confirmationLink = Url.Action("Confirmation", "Home", new {id=user.Id,token=encodeToken},Request.Scheme);
                     
@@ -62,9 +62,19 @@ namespace Restaurant.MVC.Controllers
             }
             return View(registerVM);
         }
-        public IActionResult Confirmation(string? id,string? token)
+        public async  Task<IActionResult> Confirmation(string? id,string? token)
         {
-            return View();
+            var user =await _userManager.FindByIdAsync(id);
+            if(user!=null)
+            {
+                var decodetoken = HttpUtility.UrlDecode(token);
+                var result = await _userManager.ConfirmEmailAsync(user, decodetoken);
+                if(result.Succeeded)
+                {
+                    return View("Index", "Home");
+                }
+            }
+            return View("Index","Home");
         }
         public IActionResult Login()
         {
@@ -88,6 +98,12 @@ namespace Restaurant.MVC.Controllers
             }
             return View(loginVM);
         }
+        public IActionResult Logout()
+        {
+            _signInManager.SignOutAsync();
+            return RedirectToAction("Index","Home");
+        }
+     
         public IActionResult Privacy()
         {
           

@@ -17,8 +17,8 @@ namespace Restaurant.Entity.Entities
 
        
         public IEnumerable<BillCustomer> BillCustomers { get; set; }
-        public IEnumerable<BillDish> BillDishes { get; set; }
-        public IEnumerable<BillDrink> BillDrinks { get; set; }
+        public IEnumerable<BillProduct> BillProducts { get; set; }
+       
         public CashAccount CashAccount { get; set; }
         public TableOfRestaurant TableOfRestaurant { get; set; }
     }

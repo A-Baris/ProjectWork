@@ -18,6 +18,18 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Category/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDYXRlZ29yeVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Category/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDYXRlZ29yeVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Category/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDYXRlZ29yeVxVcGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Customer/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDdXN0b21lclxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -30,80 +42,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDdXN0b21lclxVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/DishCategory/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEaXNoQ2F0ZWdvcnlcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/DishCategory/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEaXNoQ2F0ZWdvcnlcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/DishCategory/Update.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEaXNoQ2F0ZWdvcnlcVXBkYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Dish/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEaXNoXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Dish/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEaXNoXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Dish/Update.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEaXNoXFVwZGF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/DrinkCategory/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEcmlua0NhdGVnb3J5XENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/DrinkCategory/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEcmlua0NhdGVnb3J5XEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/DrinkCategory/Update.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEcmlua0NhdGVnb3J5XFVwZGF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Drink/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEcmlua1xDcmVhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Drink/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEcmlua1xJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Drink/Update.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xEcmlua1xVcGRhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/IngredientCategory/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbmdyZWRpZW50Q2F0ZWdvcnlcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/IngredientCategory/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbmdyZWRpZW50Q2F0ZWdvcnlcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/IngredientCategory/Update.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbmdyZWRpZW50Q2F0ZWdvcnlcVXBkYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Ingredient/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbmdyZWRpZW50XENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Ingredient/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbmdyZWRpZW50XEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Ingredient/Update.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbmdyZWRpZW50XFVwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Kitchen/Create.cshtml]
@@ -128,6 +68,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Menu/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xNZW51XFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Product/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xQcm9kdWN0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Product/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xQcm9kdWN0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Product/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xQcm9kdWN0XFVwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/TableOfRestaurant/Create.cshtml]

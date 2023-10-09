@@ -12,8 +12,8 @@ namespace Restaurant.Entity.Entities
     {
         [MaxLength(100)]
         public string MenuName { get; set; }
-        public List<Dish> Dishes { get; set; }
-        public List<Drink> Drinks { get; set; }
+        public List<Product> Products { get; set; }
+        
     }
      
 
