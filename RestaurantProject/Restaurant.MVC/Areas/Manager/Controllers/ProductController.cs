@@ -26,12 +26,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             string dish = "Dish";
             string drink = "Drink";
+            string ingredient = "Ingredient";
 
             ViewBag.DishCategoryList = _categoryService.GetAll();
             ViewBag.KitchenList= _kitchenService.GetAll();
             var dishList=_productService.GetAll();
             ViewBag.DishList = _productService.GetSelectedProducts(dish);
             ViewBag.DrinkList = _productService.GetSelectedProducts(drink);
+            ViewBag.IngredientList = _productService.GetSelectedProducts(ingredient);
             return View(dishList);
         }
         public IActionResult Create()

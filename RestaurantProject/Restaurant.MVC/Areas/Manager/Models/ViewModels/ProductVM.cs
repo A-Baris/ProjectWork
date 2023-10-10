@@ -13,7 +13,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
         public decimal Quantity { get; set; }
         public string? Description { get; set; }
         public int CategoryId { get; set; }
-        public int KitchenId { get; set; }
-        public int MenuId { get; set; }
+        public int? KitchenId { get; set; }
+        public int? MenuId { get; set; }
     }
 }

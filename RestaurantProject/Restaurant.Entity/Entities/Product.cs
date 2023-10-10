@@ -17,9 +17,9 @@ namespace Restaurant.Entity.Entities
         [MaxLength(200)]
         public string? Description { get; set; }
         public int CategoryId { get; set; }
-        public int KitchenId { get; set; }
+        public int? KitchenId { get; set; }
         public Kitchen Kitchen { get; set; }
-        public int MenuId { get; set; }
+        public int? MenuId { get; set; }
         public Menu Menu { get; set; }
       
         public IEnumerable<OrderProduct> OrderProducts { get; set; }

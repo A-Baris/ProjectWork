@@ -24,7 +24,7 @@ builder.Services.AddDbContext<UserRoleContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection2")));
 
 // Add Identity services
-builder.Services.AddIdentity<AppUser, IdentityRole>()
+builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<UserRoleContext>()
     .AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(x =>
@@ -69,14 +69,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "areas",
+        pattern: "{area}/{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-            name: "areas",
-            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
 
 app.Run();

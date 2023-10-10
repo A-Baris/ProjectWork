@@ -1,0 +1,49 @@
+﻿@model List<RoleVM>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<a class="btn btn-primary" asp-controller="Role" asp-action="Create" asp-area="Manager">Rol Ekle</a>
+<h1>Index</h1>
+<div class="container" style="margin-left:50px">
+    <h2>Rol Listesi</h2>
+    <h2><a href="/manager/role/Create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+
+                <th>Role Id</th>
+                <th>Menu Adı</th>
+
+
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+
+
+                <td>
+                    <a href="/manager/role/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/role/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+                    <a href="/manager/role/assignrole/@item.Id"><button class="btn btn-info">Rol Ata</button></a>
+
+
+                </td> 
+
+
+
+            </tr>
+
+
+        }
+
+    </table>
+
+</div>
+
