@@ -16,6 +16,7 @@
                 <th> Id</th>
                 <th>Kullanıcı Adı</th>
                 <th>Email</th>
+                <th>Roller</th>
 
 
             </tr>
@@ -29,6 +30,20 @@
                 <td>@item.Id</td>
                 <td>@item.UserName</td>
                 <td>@item.Email</td>
+                <td>
+                    @if (item.Roles != null && item.Roles.Any())
+                    {
+                        
+                        foreach (var role in item.Roles)
+                        {
+                            <span style="color:darkgoldenrod">#@role</span>
+
+                            <br />
+
+                            
+                        }
+                    }
+                </td>
 
 
                 <td>
