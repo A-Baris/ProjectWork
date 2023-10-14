@@ -1,4 +1,4 @@
-﻿@model WaiterVM
+﻿@model EmployeeVM
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
 
-            <h1>Waiter Update</h1>
+            <h1>employee Update</h1>
             <form method="post">
                 <div class="form-group">
                     <label asp-for="Name"></label>
@@ -24,6 +24,12 @@
 
                 </div>
                 <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="form-control" value="@Model.Title" />
+                    <span asp-validation-for="Title" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
                     <label asp-for="Phone"></label>
                     <input asp-for="Phone" class="form-control" value="@Model.Phone"/>
                     <span asp-validation-for="Phone" class="text-bg-danger"></span>
@@ -33,6 +39,12 @@
                     <label asp-for="TcNo"></label>
                     <input asp-for="TcNo" class="form-control" value="@Model.TcNo" />
                     <span asp-validation-for="TcNo" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Notes"></label>
+                    <input asp-for="Notes" class="form-control" value="@Model.Notes"/>
+                    <span asp-validation-for="Notes" class="text-bg-danger"></span>
 
                 </div>
                 <div class="text-center">

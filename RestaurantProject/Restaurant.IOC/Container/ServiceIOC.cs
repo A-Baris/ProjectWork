@@ -18,14 +18,15 @@ namespace Restaurant.IOC.Container
         {
             services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IWaiterService, WaiterService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ITableOfRestaurantService, TableOfRestaurantService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IKitchenService, KitchenService>();
             services.AddScoped<IProductService, ProductService>();
-           
+            services.AddScoped<IIngredientService, IngredientService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
     }
 }

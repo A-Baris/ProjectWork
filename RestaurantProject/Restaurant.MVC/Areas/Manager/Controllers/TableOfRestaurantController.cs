@@ -11,25 +11,25 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     {
 
         private readonly ITableOfRestaurantService _tableOfRestaurant;
-        private readonly IWaiterService _waiter;
+        private readonly IEmployeeService _employee;
 
-        public TableOfRestaurantController(ITableOfRestaurantService tableOfRestaurant, IWaiterService waiter)
+        public TableOfRestaurantController(ITableOfRestaurantService tableOfRestaurant, IEmployeeService employee)
         {
 
 
             _tableOfRestaurant = tableOfRestaurant;
-            _waiter = waiter;
+            _employee = employee;
         }
         public IActionResult Index()
         {
-            ViewBag.WaiterList = _waiter.GetAll();
+            ViewBag.EmployeeList = _employee.GetAll();
             var tableList = _tableOfRestaurant.GetAll();
             return View(tableList);
         }
 
         public IActionResult Create()
         {
-            WaiterList();
+            EmployeeList();
             return View();
         }
         [HttpPost]
@@ -42,17 +42,17 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     TableCapacity = restaurantVM.Capacity,
                     TableLocation = restaurantVM.Location,
                     TableName = restaurantVM.TableName,
-                    WaiterId = restaurantVM.WaiterId
+                    EmployeeId = restaurantVM.EmployeId
                 };
                 _tableOfRestaurant.Create(table);
-                return RedirectToAction("tableofrestaurant", "Manager", "Index");
+                return RedirectToAction("index", "tableodrestaurant", new {area="Manager"});
             }
-            WaiterList();
+            EmployeeList();
             return View(restaurantVM);
         }
         public async Task<IActionResult> Update(int id)
         {
-            WaiterList();
+            EmployeeList();
             
 
             var table = await _tableOfRestaurant.GetbyIdAsync(id);
@@ -63,7 +63,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 Capacity = table.TableCapacity,
                 Status = table.Status,
                 Location = table.TableLocation,
-                WaiterId = table.WaiterId
+                EmployeId = table.EmployeeId
             };
             return View(updated);
         }
@@ -78,13 +78,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 tableUpdate.TableCapacity = updated.Capacity;
                 tableUpdate.Status = updated.Status;
                 tableUpdate.TableLocation = updated.Location;
-                tableUpdate.WaiterId = updated.WaiterId;
+                tableUpdate.EmployeeId = updated.EmployeId;
 
                 _tableOfRestaurant.Update(tableUpdate);
                 TempData["UpdateMessage"] = "Updated is achieved";
-                return RedirectToAction("tableofrestaurant", "Manager", "Index");
+                return RedirectToAction("index", "tableodrestaurant", new { area = "Manager" });
             }
-            WaiterList();
+            EmployeeList();
             return View(updated);
             
         }
@@ -95,13 +95,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 table.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _tableOfRestaurant.Update(table);
-                return RedirectToAction("tableofrestaurant", "Manager", "Index");
+                return RedirectToAction("index", "tableodrestaurant", new { area = "Manager" });
             }
             return View();
         }
-        void WaiterList()
+        void EmployeeList()
         {
-            ViewBag.Waiters = _waiter.GetAll().Select(w => new SelectListItem
+            ViewBag.Employees = _employee.GetAll().Select(w => new SelectListItem
             {
                 Text = w.Name + " " + w.Surname,
                 Value = w.Id.ToString()

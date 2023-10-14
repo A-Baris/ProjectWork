@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Restaurant.BLL.Services
 {
-    public class WaiterService : BaseService<Waiter>, IWaiterService
+    public class IngredientService : BaseService<Ingredient>, IIngredientService
     {
-        public WaiterService(IRepository<Waiter> repository) : base(repository)
+        public IngredientService(IRepository<Ingredient> repository) : base(repository)
         {
         }
     }

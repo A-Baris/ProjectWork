@@ -36,7 +36,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     MenuName = menuVM.MenuName,
                 };
                 _menuService.Create(menu);
-               return RedirectToAction("Menu","Manager","Index");
+                return RedirectToAction("index", "menu", new { area = "Manager" });
             }
             return View();
 
@@ -66,7 +66,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     entity.Id = menuVM.Id;
                     entity.MenuName = menuVM.MenuName;
                     _menuService.Update(entity);
-                    return RedirectToAction("Menu", "Manager", "Index");
+                    return RedirectToAction("index", "menu", new { area = "Manager" });
 
                 }
                
@@ -82,7 +82,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _menuService.Update(entity);
-               return RedirectToAction("Menu", "Manager", "Index");
+                return RedirectToAction("index", "menu", new { area = "Manager" });
 
             }
             return View();

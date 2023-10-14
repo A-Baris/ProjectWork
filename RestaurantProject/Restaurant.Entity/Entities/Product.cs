@@ -26,5 +26,6 @@ namespace Restaurant.Entity.Entities
         public IEnumerable<BillProduct> BillProducts { get; set; }
 
         public Category Category { get; set; }
+        public IEnumerable<ProductIngredient> ProductIngredients { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using Restaurant.DAL.Context;
 namespace Restaurant.DAL.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20231009124211_FirstNewMigration")]
-    partial class FirstNewMigration
+    [Migration("20231011131119_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,6 +201,93 @@ namespace Restaurant.DAL.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Restaurant.Entity.Entities.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BaseStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TcNo")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("Restaurant.Entity.Entities.Ingredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BaseStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ingredients");
+                });
+
             modelBuilder.Entity("Restaurant.Entity.Entities.Kitchen", b =>
                 {
                     b.Property<int>("Id")
@@ -277,6 +364,9 @@ namespace Restaurant.DAL.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("KitchenId")
                         .HasColumnType("int");
 
@@ -289,16 +379,13 @@ namespace Restaurant.DAL.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WaiterId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("KitchenId");
 
                     b.HasIndex("TableofRestaurantId");
-
-                    b.HasIndex("WaiterId");
 
                     b.ToTable("Orders");
                 });
@@ -339,10 +426,12 @@ namespace Restaurant.DAL.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("KitchenId")
+                    b.Property<int?>("KitchenId")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("MenuId")
+                    b.Property<int?>("MenuId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -370,6 +459,21 @@ namespace Restaurant.DAL.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Restaurant.Entity.Entities.ProductIngredient", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("ProductIngredients");
+                });
+
             modelBuilder.Entity("Restaurant.Entity.Entities.TableOfRestaurant", b =>
                 {
                     b.Property<int>("Id")
@@ -383,6 +487,9 @@ namespace Restaurant.DAL.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -403,54 +510,11 @@ namespace Restaurant.DAL.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WaiterId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("WaiterId");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("TableOfRestaurants");
-                });
-
-            modelBuilder.Entity("Restaurant.Entity.Entities.Waiter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BaseStatus")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Phone")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TcNo")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Waiters");
                 });
 
             modelBuilder.Entity("Restaurant.Entity.Entities.Bill", b =>
@@ -523,6 +587,12 @@ namespace Restaurant.DAL.Migrations
 
             modelBuilder.Entity("Restaurant.Entity.Entities.Order", b =>
                 {
+                    b.HasOne("Restaurant.Entity.Entities.Employee", "Employee")
+                        .WithMany("Orders")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Restaurant.Entity.Entities.Kitchen", "Kitchen")
                         .WithMany("Orders")
                         .HasForeignKey("KitchenId")
@@ -535,17 +605,11 @@ namespace Restaurant.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Restaurant.Entity.Entities.Waiter", "Waiter")
-                        .WithMany("Orders")
-                        .HasForeignKey("WaiterId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Employee");
 
                     b.Navigation("Kitchen");
 
                     b.Navigation("TableOfRestaurant");
-
-                    b.Navigation("Waiter");
                 });
 
             modelBuilder.Entity("Restaurant.Entity.Entities.OrderProduct", b =>
@@ -594,15 +658,34 @@ namespace Restaurant.DAL.Migrations
                     b.Navigation("Menu");
                 });
 
+            modelBuilder.Entity("Restaurant.Entity.Entities.ProductIngredient", b =>
+                {
+                    b.HasOne("Restaurant.Entity.Entities.Ingredient", "Ingredient")
+                        .WithMany("ProductIngredients")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Restaurant.Entity.Entities.Product", "Product")
+                        .WithMany("ProductIngredients")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ingredient");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Restaurant.Entity.Entities.TableOfRestaurant", b =>
                 {
-                    b.HasOne("Restaurant.Entity.Entities.Waiter", "Waiter")
+                    b.HasOne("Restaurant.Entity.Entities.Employee", "Employee")
                         .WithMany("TableOfRestaurants")
-                        .HasForeignKey("WaiterId")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Waiter");
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Restaurant.Entity.Entities.Bill", b =>
@@ -627,6 +710,18 @@ namespace Restaurant.DAL.Migrations
                     b.Navigation("BillCustomers");
                 });
 
+            modelBuilder.Entity("Restaurant.Entity.Entities.Employee", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("TableOfRestaurants");
+                });
+
+            modelBuilder.Entity("Restaurant.Entity.Entities.Ingredient", b =>
+                {
+                    b.Navigation("ProductIngredients");
+                });
+
             modelBuilder.Entity("Restaurant.Entity.Entities.Kitchen", b =>
                 {
                     b.Navigation("Orders");
@@ -649,6 +744,8 @@ namespace Restaurant.DAL.Migrations
                     b.Navigation("BillProducts");
 
                     b.Navigation("OrderProducts");
+
+                    b.Navigation("ProductIngredients");
                 });
 
             modelBuilder.Entity("Restaurant.Entity.Entities.TableOfRestaurant", b =>
@@ -658,13 +755,6 @@ namespace Restaurant.DAL.Migrations
                     b.Navigation("Customers");
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Restaurant.Entity.Entities.Waiter", b =>
-                {
-                    b.Navigation("Orders");
-
-                    b.Navigation("TableOfRestaurants");
                 });
 #pragma warning restore 612, 618
         }

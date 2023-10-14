@@ -9,17 +9,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     [Area("Manager")]
     public class HomeController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public HomeController(UserManager<IdentityUser> userManager)
-        {
-            _userManager = userManager;
-        }
+        
 
 
         public IActionResult Index()
         {
-            ViewBag.Users = _userManager.Users.Count();
+           
              return View();
         }
         

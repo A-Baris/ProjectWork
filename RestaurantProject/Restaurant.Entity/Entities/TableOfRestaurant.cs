@@ -18,8 +18,8 @@ namespace Restaurant.Entity.Entities
       
         public int TableCapacity { get;set; }
         public ReservationStatus Status { get; set; }
-        public int WaiterId { get; set; }
-        public Waiter Waiter { get; set; }
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
         public virtual List<Customer> Customers { get; set; }
         public virtual List<Bill> Bills { get; set; }
         public virtual List<Order> Orders { get; set; }

@@ -23,6 +23,12 @@ builder.Services.AddDbContext<ProjectContext>(options =>
 builder.Services.AddDbContext<UserRoleContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection2")));
 
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "order_customer";
+    options.IdleTimeout = TimeSpan.FromHours(1);
+});
+
 // Add Identity services
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<UserRoleContext>()
@@ -65,6 +71,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

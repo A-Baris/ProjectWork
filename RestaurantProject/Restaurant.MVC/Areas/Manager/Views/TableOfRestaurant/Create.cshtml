@@ -29,20 +29,15 @@
 
                 </div>
                 <div class="form-group">
-                    <label>Waiter Name</label>
-                   <select asp-items="ViewBag.Waiters" asp-for="WaiterId" class="form-control">
+                    <label>Employee Name</label>
+                   <select asp-items="ViewBag.Employees" asp-for="EmployeId" class="form-control">
                        <option selected="" disable>Garson Seçimi</option>
                     </select>
                       
                    
 
                 </div>
-                @* <div class="form-group">
-                    <label asp-for="TcNo"></label>
-                    <input asp-for="TcNo" class="form-control" />
-                    <span asp-validation-for="TcNo" class="text-bg-danger"></span>
-
-                </div> *@
+           
                 <div class="text-center">
 
                     <button type="submit" class="btn btn-primary" style="margin-top:10px">Create</button>

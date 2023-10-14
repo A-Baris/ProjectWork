@@ -19,7 +19,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
 
         [Required(ErrorMessage = "Lütfen boş bırakmayınız")]
         [Range(1, int.MaxValue, ErrorMessage = "Lütfen seçim yapınız")]
-        public int WaiterId { get; set; }
+        public int EmployeId { get; set; }
         //public ReservationStatus ReservationStatus { get; set; } // rezervasyon durumu şuanlık başka bölümde ayarlanacak sonra burada düzenleme yapılacak
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace Restaurant.DAL.Context
 {
@@ -19,10 +20,10 @@ namespace Restaurant.DAL.Context
 
         public DbSet<TableOfRestaurant> TableOfRestaurants { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Waiter> Waiters { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Kitchen> Kitchens { get; set; }
-
+        public DbSet<Ingredient> Ingredients { get; set; }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -31,28 +32,35 @@ namespace Restaurant.DAL.Context
         public DbSet<CashAccount> CashAccounts { get; set; }
         public DbSet<BillCustomer> BillCustomers { get; set; }
 
-
+        public DbSet<ProductIngredient> ProductIngredients { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
 
         public DbSet<BillProduct> BillProducts { get; set; }
 
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer("server=DESKTOP-KUQ9PNH;database=RestaurantDB;uid=sa;pwd=1234;TrustServerCertificate=True");
+        //    }
+        //    base.OnConfiguring(optionsBuilder);
+        //}
 
-      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Waiter>()
+            modelBuilder.Entity<Employee>()
               .HasMany(w => w.TableOfRestaurants)
-              .WithOne(t => t.Waiter)
-              .HasForeignKey(t => t.WaiterId);
+              .WithOne(t => t.Employee)
+              .HasForeignKey(t => t.EmployeeId);
 
 
 
-            modelBuilder.Entity<Waiter>()
+            modelBuilder.Entity<Employee>()
                 .HasMany(w => w.Orders)
-                .WithOne(o => o.Waiter)
-                .HasForeignKey(o => o.WaiterId)
+                .WithOne(o => o.Employee)
+                .HasForeignKey(o => o.EmployeeId)
               .OnDelete(DeleteBehavior.Restrict);
 
 
@@ -151,16 +159,25 @@ namespace Restaurant.DAL.Context
               .OnDelete(DeleteBehavior.Restrict);
 
 
-
-
-
-
             modelBuilder.Entity<Menu>()
                 .HasMany(m => m.Products)
                 .WithOne(d => d.Menu)
                 .HasForeignKey(m => m.MenuId);
 
 
+            modelBuilder.Entity<ProductIngredient>()
+                .HasKey(x => new { x.ProductId, x.IngredientId });
+            modelBuilder.Entity<ProductIngredient>()
+                .HasOne(p=>p.Product)
+                .WithMany(p=>p.ProductIngredients)
+                .HasForeignKey(p=>p.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductIngredient>()
+                .HasOne(i=>i.Ingredient)
+                .WithMany(i=>i.ProductIngredients)
+                .HasForeignKey(i=>i.IngredientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
 

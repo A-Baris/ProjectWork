@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.BLL.AbstractServices
 {
-    public interface IWaiterService:IRepository<Waiter>
+    public interface IEmployeeService:IRepository<Employee>
     {
     }
 }

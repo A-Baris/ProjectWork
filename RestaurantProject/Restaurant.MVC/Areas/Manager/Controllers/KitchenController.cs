@@ -34,7 +34,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Description = kitchenVM.Description,
                 };
                 _kitchenService.Create(kitchen);
-                return RedirectToAction("Kitchen", "Manager", "Index");
+                return RedirectToAction("index", "kitchen", new { area = "Manager" });
             }
             return View(kitchenVM);
         }
@@ -59,7 +59,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 kitchenEntity.KitchenName = updated.KitchenName;
                 kitchenEntity.Description= updated.Description;
                 _kitchenService.Update(kitchenEntity);
-                return RedirectToAction("Kitchen", "Manager", "Index");
+                return RedirectToAction("index", "kitchen", new { area = "Manager" });
             }
             
             return View();
@@ -71,7 +71,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Restaurant.Entity.Enums.BaseStatus.Deleted;
                 _kitchenService.Update(entity);
-                return RedirectToAction("Kitchen", "Manager", "Index");
+                return RedirectToAction("index", "kitchen", new { area = "Manager" });
             }
             return View();
         }

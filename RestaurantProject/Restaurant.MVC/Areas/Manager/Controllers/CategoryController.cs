@@ -34,7 +34,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     CategoryName = dishCategoryVm.CategoryName
                 };
                 _categoryService.Create(category);
-                return RedirectToAction("DishCategory", "Manager", "Index");
+                return RedirectToAction("index", "category", new { area = "Manager" });
             }
             return View();
         }
@@ -57,7 +57,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 category.Id= updated.Id;
                 category.CategoryName = updated.CategoryName;
                 _categoryService.Update(category);
-                return RedirectToAction("DishCategory", "Manager", "Index");
+                return RedirectToAction("index", "category", new { area = "Manager" });
 
             }
             return View();
@@ -69,7 +69,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _categoryService.Update(entity);
-                return RedirectToAction("DishCategory", "Manager", "Index");
+                return RedirectToAction("index", "category", new { area = "Manager" });
             }
             return View();
         }

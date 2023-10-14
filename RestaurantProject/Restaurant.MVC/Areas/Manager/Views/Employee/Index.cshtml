@@ -4,29 +4,33 @@
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
 <div class="container" style="margin-left:50px">
-<h2>Garson Listesi</h2>
-<h2><a href="/manager/waiter/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+<h2>Çalışan Listesi</h2>
+<h2><a href="/manager/employee/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
 <table class="table table-bordered">
     <thead>
         <tr>
             <th>Ad</th>
             <th>Soyad</th>
+            <th>Görev</th>
             <th>Tel</th>
             <th>TCNO</th>
+            <th>Not</th>
         </tr>
     </thead>
-    @foreach (var item in ViewBag.waiterList as List<Waiter>)
+    @foreach (var item in ViewBag.waiterList as List<Employee>)
     {
 
 
         <tr>
             <td>@item.Name</td>
             <td>@item.Surname</td>
+            <td>@item.Title</td>
             <td>@item.Phone</td>
             <td>@item.TcNo</td>
+            <td>@item.Notes</td>
             <td>
-                <a href="/manager/waiter/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
-                <a href="/manager/waiter/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+                    <a href="/manager/employee/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/employee/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
 
 
             </td>

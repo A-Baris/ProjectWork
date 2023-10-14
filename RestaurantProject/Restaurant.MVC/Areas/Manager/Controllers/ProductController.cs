@@ -26,14 +26,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             string dish = "Dish";
             string drink = "Drink";
-            string ingredient = "Ingredient";
+           
 
             ViewBag.DishCategoryList = _categoryService.GetAll();
             ViewBag.KitchenList= _kitchenService.GetAll();
             var dishList=_productService.GetAll();
             ViewBag.DishList = _productService.GetSelectedProducts(dish);
             ViewBag.DrinkList = _productService.GetSelectedProducts(drink);
-            ViewBag.IngredientList = _productService.GetSelectedProducts(ingredient);
+           
             return View(dishList);
         }
         public IActionResult Create()
@@ -58,7 +58,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     MenuId = productVM.MenuId,
                 };
                 _productService.Create(product);
-                return RedirectToAction("Product", "Manager","Index");
+                return RedirectToAction("index", "product", new { area = "Manager" });
             }
             CategoryAndKitchenList();
             return View();
@@ -81,24 +81,24 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View(productUpdate);
         }
         [HttpPost]
-        public async Task<IActionResult> Update(ProductVM dishUpdate)
+        public async Task<IActionResult> Update(ProductVM productUpdate)
         {
             if (ModelState.IsValid)
             {
-                var entity = await _productService.GetbyIdAsync(dishUpdate.Id);
-                entity.ProductName = dishUpdate.ProductName;
-                entity.Price = dishUpdate.Price;
-                entity.Quantity = dishUpdate.Quantity;
-                entity.Description = dishUpdate.Description;
-                entity.CategoryId = dishUpdate.CategoryId;
-                entity.KitchenId = dishUpdate.KitchenId;
-                entity.MenuId = dishUpdate.MenuId;
+                var entity = await _productService.GetbyIdAsync(productUpdate.Id);
+                entity.ProductName = productUpdate.ProductName;
+                entity.Price = productUpdate.Price;
+                entity.Quantity = productUpdate.Quantity;
+                entity.Description = productUpdate.Description;
+                entity.CategoryId = productUpdate.CategoryId;
+                entity.KitchenId = productUpdate.KitchenId;
+                entity.MenuId = productUpdate.MenuId;
                 _productService.Update(entity);
-                return RedirectToAction("Product", "Manager", "Index");
+                return RedirectToAction("index", "product", new { area = "Manager" });
 
             }
             CategoryAndKitchenList();
-            return View(dishUpdate);
+            return View(productUpdate);
         }
         public async Task<IActionResult> Remove(int id)
 
@@ -108,7 +108,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 dishEntity.BaseStatus= Entity.Enums.BaseStatus.Deleted;
                 _productService.Update(dishEntity);
-                return RedirectToAction("Product", "Manager", "Index");
+                return RedirectToAction("index", "product", new { area = "Manager" });
             }
             return View();
         }
