@@ -45,7 +45,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     EmployeeId = restaurantVM.EmployeId
                 };
                 _tableOfRestaurant.Create(table);
-                return RedirectToAction("index", "tableodrestaurant", new {area="Manager"});
+                return RedirectToAction("index", "tableofrestaurant", new {area="Manager"});
             }
             EmployeeList();
             return View(restaurantVM);
@@ -82,7 +82,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
                 _tableOfRestaurant.Update(tableUpdate);
                 TempData["UpdateMessage"] = "Updated is achieved";
-                return RedirectToAction("index", "tableodrestaurant", new { area = "Manager" });
+                return RedirectToAction("index", "tableofrestaurant", new { area = "Manager" });
             }
             EmployeeList();
             return View(updated);

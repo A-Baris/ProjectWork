@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.DAL.Context;
 using Restaurant.Entity.Entities;
@@ -18,13 +19,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
         private readonly ProjectContext _context;
 
-        public OrderController(IOrderService orderService,IEmployeeService employeeService,IKitchenService kitchenService,IProductService productService ,ITableOfRestaurantService tableOfRestaurantService,ProjectContext context)
+        public OrderController(IOrderService orderService, IEmployeeService employeeService, IKitchenService kitchenService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context)
         {
-           _orderService = orderService;
+            _orderService = orderService;
             _employeeService = employeeService;
             _kitchenService = kitchenService;
             _productService = productService;
-           _tableOfRestaurantService = tableOfRestaurantService;
+            _tableOfRestaurantService = tableOfRestaurantService;
             _context = context;
         }
         public IActionResult Index()
@@ -68,37 +69,71 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         public IActionResult Create()
         {
             Select();
-            
+          
+
             return View();
         }
         [HttpPost]
         public IActionResult Create(OrderCreateVM createVM)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 Order order = new Order()
                 {
                     Description = createVM.Description,
-                    Status = createVM.Status,
+                    StatusOfOrder = createVM.StatusOfOrder,
                     TableofRestaurantId = createVM.TableofRestaurantId,
                     EmployeeId = createVM.EmployeeId,
                     KitchenId = createVM.KitchenId,
 
+
                 };
                 _orderService.Create(order);
-                //return RedirectToAction("index", "order", new { area = "Manager" });
                 int orderId = order.Id;
-                
-                OrderProduct orderProduct = new OrderProduct()
+
+                createVM.Quantity.RemoveAll(item => item == 0);
+
+
+                for (int i = 0; i < createVM.SelectedProductId.Count; i++)
                 {
-                    OrderId = orderId,
-                    ProductId = createVM.ProductId,
-                };
+                  
+
+                            OrderProduct orderProduct = new OrderProduct()
+                            {
+                                OrderId = orderId,
+                                ProductId = createVM.SelectedProductId[i],
+                                Quantity = createVM.Quantity[i]
+
+                            };
+                            _context.Set<OrderProduct>().Add(orderProduct);
+                            _context.SaveChanges();
+                          
+                          
+
+                        
+                        
+                    
+                    
+                }
+             
+               
+                
+              
+
+              
+
+                return RedirectToAction("index", "order", new { area = "Manager" });
+
             }
+
             Select();
             return View(createVM);
         }
+        public IActionResult OrderTracking()
+        {
 
+            return View();
+        }
 
         void Select()
         {
@@ -117,8 +152,20 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 Text = x.TableName,
                 Value = x.Id.ToString()
             });
+            ViewBag.ProductSelect = _productService.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.ProductName,
+                Value = x.Id.ToString()
+
+            }).ToList();
 
         }
+
     }
-   
+
+
+
+
 }
+
+

@@ -367,7 +367,7 @@ namespace Restaurant.DAL.Migrations
                     b.Property<int>("KitchenId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("StatusOfOrder")
                         .HasColumnType("int");
 
                     b.Property<int>("TableofRestaurantId")
@@ -394,6 +394,9 @@ namespace Restaurant.DAL.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId", "ProductId");
 

@@ -47,7 +47,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 KitchenName = kitchen.KitchenName,
                 Description = kitchen.Description
             };
-
+       
             return View(updated);
         }
         [HttpPost]

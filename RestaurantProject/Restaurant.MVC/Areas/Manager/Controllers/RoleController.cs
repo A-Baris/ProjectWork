@@ -120,7 +120,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             if (userToRole == null)
             {
-                // Handle the case where the user is not found
+                
                 return RedirectToAction("index", "role", new { area = "Manager" });
             }
 

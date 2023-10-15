@@ -8,8 +8,8 @@ namespace Restaurant.Entity.Enums
 {
     public enum ReservationStatus
     {
-        Pasif,
-        Aktif,
-        Beklemede
+        Passive,
+        Active,
+        Pending
     }
 }

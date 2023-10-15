@@ -14,7 +14,7 @@ namespace Restaurant.Entity.Entities
         
         [MaxLength(200)]
         public string? Description { get; set; }
-        public OrderStatus Status { get; set; }
+        public OrderStatus StatusOfOrder { get; set; }
         public int TableofRestaurantId { get;set; }
         public int EmployeeId { get;set; }
         public int KitchenId { get;set; }

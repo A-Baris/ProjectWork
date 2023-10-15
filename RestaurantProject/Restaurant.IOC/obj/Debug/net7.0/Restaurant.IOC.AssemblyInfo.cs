@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Restaurant.IOC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6274c95fab3bf388d643bca31f8af21df67746cb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95e254deb8bd2d3821d9d6512e659893da74d5b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Restaurant.IOC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Restaurant.IOC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

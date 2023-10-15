@@ -104,7 +104,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         void TableSelect()
         {
-            ViewBag.TableSelect = _tableOfRestaurantService.GetAll().Where(t=>t.Status==Entity.Enums.ReservationStatus.Pasif).Select(t => new SelectListItem
+            ViewBag.TableSelect = _tableOfRestaurantService.GetAll().Where(t=>t.Status == Entity.Enums.ReservationStatus.Passive).Select(t => new SelectListItem
             {
                 Text = $"{t.TableName} ({t.TableCapacity})",
                 Value = t.Id.ToString(),
