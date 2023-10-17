@@ -143,40 +143,39 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
             return RedirectToAction("ListOrder", "Orderitem", "manager");
         }
-        public async Task<IActionResult> OrderPreparing(int id)
+        public async Task<IActionResult> OrderPreparing(int id) 
         {
-            var test = await _orderItem.GetbyIdAsync(id);
-            var productId = test.ProductId;
-            var ingredient = _ingredient.GetAll();
-
-            var productingredient = _context.ProductIngredients.ToList();
-            var productingredient2 =  _context.ProductIngredients.ToList().Where(x=>x.ProductId==productId);
-
-            foreach (var item in productingredient)
-            {
-                
-                if(item.ProductId==productId)
-                {
-                    var ingredients = ingredient.FirstOrDefault(x => x.Id == item.IngredientId);
-                    if(ingredients!=null)
-                    {
-                        ingredients.Quantity -= item.Quantity;
-                        
-                    }
-                }
-            }
-           
-            
-
-
-
+            // ürün hazırlanmaya başladığında o ürünü oluştumrak için gerekli malzeme miktarı stoktaki malzeme miktarlarından düşülecek
             var entity = await _orderItem.GetbyIdAsync(id);
             if (entity != null)
             {
+               
+
+                var productId = entity.ProductId;
+                var ingredients = _ingredient.GetAll();
+                var productingredient = _context.ProductIngredients.Where(x => x.ProductId == productId).ToList();
+
+                foreach (var item in productingredient)
+                {
+
+                    if (item.ProductId == productId)
+                    {
+                        var ingredient = ingredients.FirstOrDefault(x => x.Id == item.IngredientId);
+                        if (ingredient != null)
+                        {
+                            ingredient.Quantity -= item.Quantity;
+                            _ingredient.Update(ingredient);
+                        }
+                    }
+                }
                 entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Preparing;
                 _orderItem.Update(entity);
+                return RedirectToAction("ordertracking", "orderitem", "manager");
             }
-            return RedirectToAction("ListOrder", "Orderitem", "manager");
+
+            return RedirectToAction("ordertracking", "orderitem", "manager");
+
+
         }
         void Select()
         {
