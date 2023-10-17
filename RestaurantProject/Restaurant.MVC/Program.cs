@@ -33,6 +33,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<UserRoleContext>()
     .AddDefaultTokenProviders();
+
 builder.Services.ConfigureApplicationCookie(x =>
 {
     x.LoginPath = "/Home/Login";

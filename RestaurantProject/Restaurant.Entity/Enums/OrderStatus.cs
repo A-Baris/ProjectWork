@@ -8,6 +8,7 @@ namespace Restaurant.Entity.Enums
 {
     public enum OrderStatus
     {
+        Waiting,
         Preparing,
         Ready,
         Delivered

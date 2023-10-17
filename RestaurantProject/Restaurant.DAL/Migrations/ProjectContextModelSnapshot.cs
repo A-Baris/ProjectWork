@@ -417,6 +417,8 @@ namespace Restaurant.DAL.Migrations
 
                     b.HasIndex("EmployeeId");
 
+                    b.HasIndex("ProductId");
+
                     b.HasIndex("TableofRestaurantId");
 
                     b.ToTable("OrderItems");
@@ -480,6 +482,9 @@ namespace Restaurant.DAL.Migrations
 
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId", "IngredientId");
 
@@ -618,6 +623,12 @@ namespace Restaurant.DAL.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Restaurant.Entity.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Restaurant.Entity.Entities.TableOfRestaurant", "TableOfRestaurant")
                         .WithMany("OrderItems")
                         .HasForeignKey("TableofRestaurantId")
@@ -625,6 +636,8 @@ namespace Restaurant.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Employee");
+
+                    b.Navigation("Product");
 
                     b.Navigation("TableOfRestaurant");
                 });

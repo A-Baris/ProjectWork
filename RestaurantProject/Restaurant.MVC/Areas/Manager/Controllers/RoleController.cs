@@ -32,7 +32,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(RoleVM roleVM)
+        public async Task<IActionResult> Create(RoleCreateVM roleVM)
         {
             if (ModelState.IsValid)
             {

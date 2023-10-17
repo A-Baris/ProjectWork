@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Experimental.ProjectCache;
@@ -17,21 +18,21 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IEmployeeService _employeeService;
-
         private readonly IProductService _productService;
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
         private readonly ProjectContext _context;
         private readonly IOrderItemService _orderItem;
+        private readonly IIngredientService _ingredient;
 
-        public OrderItemController(IOrderService orderService, IEmployeeService employeeService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context,IOrderItemService orderItem)
+        public OrderItemController(IOrderService orderService, IEmployeeService employeeService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context,IOrderItemService orderItem,IIngredientService ingredient)
         {
             _orderService = orderService;
             _employeeService = employeeService;
-
             _productService = productService;
             _tableOfRestaurantService = tableOfRestaurantService;
             _context = context;
             _orderItem = orderItem;
+          _ingredient = ingredient;
         }
 
         public IActionResult Index()
@@ -46,6 +47,9 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             Select();
             return View();
         }
+
+
+
         [HttpPost]
         public async Task<IActionResult> CreateOrder(int Id, OrderItemCreateVM createVM)
         {
@@ -82,7 +86,6 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 else
                 {
 
-
                     OrderItem orderItem = new OrderItem()
                     {
                         ProductId = product.Id,
@@ -105,19 +108,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return RedirectToAction("index", "orderitem", new { arrea = "manager" });
            
         }
-           
-        
-
+                  
         public IActionResult SelectTable()
         {
 
             return View();
         }
 
-
-   
-        
-        public IActionResult ListOrder()
+        [Authorize(Roles = "Chief")]
+        public IActionResult OrderTracking()
         {
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
             ViewBag.Products = _productService.GetAll();
@@ -140,6 +139,41 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             if (entity != null)
             {
                 entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Delivered;
+                _orderItem.Update(entity);
+            }
+            return RedirectToAction("ListOrder", "Orderitem", "manager");
+        }
+        public async Task<IActionResult> OrderPreparing(int id)
+        {
+            var test = await _orderItem.GetbyIdAsync(id);
+            var productId = test.ProductId;
+            var ingredient = _ingredient.GetAll();
+
+            var productingredient = _context.ProductIngredients.ToList();
+            var productingredient2 =  _context.ProductIngredients.ToList().Where(x=>x.ProductId==productId);
+
+            foreach (var item in productingredient)
+            {
+                
+                if(item.ProductId==productId)
+                {
+                    var ingredients = ingredient.FirstOrDefault(x => x.Id == item.IngredientId);
+                    if(ingredients!=null)
+                    {
+                        ingredients.Quantity -= item.Quantity;
+                        
+                    }
+                }
+            }
+           
+            
+
+
+
+            var entity = await _orderItem.GetbyIdAsync(id);
+            if (entity != null)
+            {
+                entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Preparing;
                 _orderItem.Update(entity);
             }
             return RedirectToAction("ListOrder", "Orderitem", "manager");
