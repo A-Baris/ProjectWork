@@ -1,0 +1,41 @@
+﻿@model List<OrderItem>
+@{
+    ViewData["Title"] = "ListOrder";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <label for="tableId">Enter Table ID:</label>
+    <input type="text" id="tableId" />
+    <button onclick="filterByTableId()">Filter</button>
+</div>
+
+<table id="orderItemsTable" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Masa</th>
+            <th>Ürün Adı</th>
+            <th>Adet</th>
+            <th>Durum</th>
+            <th>Fiyat</th>
+            <th></th>
+        
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.TableOfRestaurant.TableName</td>
+            <td>@item.Product.ProductName</td>
+            <td>@item.Quantity</td>
+            <td>@item.StatusOfOrder</td>
+            <td>@item.TotalPrice</td>
+            <td>
+                <a href="/manager/orderitem/orderReady/@item.Id"><button class="btn btn-outline-primary">Ready</button></a>
+                <a href="/manager/orderitem/orderdelivered/@item.Id"><button class="btn btn-outline-primary">Delivered</button></a>
+            </td>
+           
+        </tr>
+    }
+</table>

@@ -14,6 +14,5 @@ namespace Restaurant.BLL.Services
         public OrderService(IRepository<Order> repository) : base(repository)
         {
         }
-      
     }
 }

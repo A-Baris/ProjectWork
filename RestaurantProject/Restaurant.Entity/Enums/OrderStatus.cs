@@ -10,6 +10,6 @@ namespace Restaurant.Entity.Enums
     {
         Preparing,
         Ready,
-        Taken
+        Delivered
     }
 }

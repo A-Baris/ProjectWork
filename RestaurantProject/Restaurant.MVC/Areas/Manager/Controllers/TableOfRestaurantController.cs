@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.BLL.Services;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 
@@ -12,13 +13,17 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         private readonly ITableOfRestaurantService _tableOfRestaurant;
         private readonly IEmployeeService _employee;
+        private readonly IProductService _productService;
+        private readonly IOrderItemService _orderItem;
 
-        public TableOfRestaurantController(ITableOfRestaurantService tableOfRestaurant, IEmployeeService employee)
+        public TableOfRestaurantController(ITableOfRestaurantService tableOfRestaurant, IEmployeeService employee,IProductService productService,IOrderItemService orderItem)
         {
 
 
             _tableOfRestaurant = tableOfRestaurant;
             _employee = employee;
+            _productService = productService;
+          _orderItem = orderItem;
         }
         public IActionResult Index()
         {
@@ -97,6 +102,17 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 _tableOfRestaurant.Update(table);
                 return RedirectToAction("index", "tableodrestaurant", new { area = "Manager" });
             }
+            return View();
+        }
+        public async Task<IActionResult> OrderList(int id)
+        {
+            ViewBag.Tables = _tableOfRestaurant.GetAll();
+            ViewBag.Products = _productService.GetAll();
+            var orderList = _orderItem.GetAll().Where(x => x.TableofRestaurantId == id).ToList();
+            return View(orderList);
+        }
+        public IActionResult OrderReady()
+        {
             return View();
         }
         void EmployeeList()

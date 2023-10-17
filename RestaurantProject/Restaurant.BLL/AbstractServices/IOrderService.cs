@@ -11,4 +11,5 @@ namespace Restaurant.BLL.AbstractServices
     public interface IOrderService:IRepository<Order>
     {
     }
+    
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Restaurant.DAL.Context
 {
@@ -19,12 +20,12 @@ namespace Restaurant.DAL.Context
         }
 
         public DbSet<TableOfRestaurant> TableOfRestaurants { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Kitchen> Kitchens { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -33,7 +34,7 @@ namespace Restaurant.DAL.Context
         public DbSet<BillCustomer> BillCustomers { get; set; }
 
         public DbSet<ProductIngredient> ProductIngredients { get; set; }
-        public DbSet<OrderProduct> OrderProducts { get; set; }
+  
 
         public DbSet<BillProduct> BillProducts { get; set; }
 
@@ -68,7 +69,12 @@ namespace Restaurant.DAL.Context
             modelBuilder.Entity<TableOfRestaurant>()
                 .HasMany(t => t.Orders)
                 .WithOne(o => o.TableOfRestaurant)
-                .HasForeignKey(o => o.TableofRestaurantId);
+                .HasForeignKey(o => o.TableOfRestaurantId);
+
+            modelBuilder.Entity<TableOfRestaurant>()
+               .HasMany(t => t.OrderItems)
+               .WithOne(o => o.TableOfRestaurant)
+               .HasForeignKey(o => o.TableofRestaurantId);
 
             modelBuilder.Entity<TableOfRestaurant>()
            .HasMany(t => t.Bills)
@@ -114,10 +120,6 @@ namespace Restaurant.DAL.Context
                 .WithOne(b => b.CashAccount)
                 .HasForeignKey(ca => ca.CashAccountId);
 
-            modelBuilder.Entity<Kitchen>()
-                .HasMany(k => k.Orders)
-                .WithOne(o => o.Kitchen)
-                .HasForeignKey(k => k.KitchenId);
 
             modelBuilder.Entity<Kitchen>()
               .HasMany(k => k.Products)
@@ -125,21 +127,7 @@ namespace Restaurant.DAL.Context
               .HasForeignKey(k => k.KitchenId);
 
 
-            modelBuilder.Entity<OrderProduct>()
-            .HasKey(od => new { od.OrderId, od.ProductId });
-
-            modelBuilder.Entity<OrderProduct>()
-                .HasOne(od => od.Order)
-                .WithMany(x => x.OrderProducts)
-                .HasForeignKey(od => od.OrderId);
-
-
-
-            modelBuilder.Entity<OrderProduct>()
-          .HasOne(od => od.Product)
-          .WithMany(x => x.OrderProducts)
-          .HasForeignKey(od => od.ProductId)
-           .OnDelete(DeleteBehavior.Restrict);
+        
 
 
 

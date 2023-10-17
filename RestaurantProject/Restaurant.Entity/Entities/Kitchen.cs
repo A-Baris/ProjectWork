@@ -15,7 +15,7 @@ namespace Restaurant.Entity.Entities
         [MaxLength(250)]
         public string? Description { get; set; }
   
-        public virtual List<Order> Orders { get; set; }
+    
         public virtual List<Product> Products { get; set; }
         
 

@@ -51,7 +51,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 {
                     ProductName = productVM.ProductName,
                     Price = productVM.Price,
-                    Quantity = productVM.Quantity,
+                  
                     Description = productVM.Description,
                     CategoryId = productVM.CategoryId,
                     KitchenId = productVM.KitchenId,
@@ -71,7 +71,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 ProductName = updated.ProductName,
                 Price = updated.Price,
-                Quantity = updated.Quantity,
+               
                 Description = updated.Description,
                 CategoryId = updated.CategoryId,
                 KitchenId = updated.KitchenId,
@@ -88,7 +88,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var entity = await _productService.GetbyIdAsync(productUpdate.Id);
                 entity.ProductName = productUpdate.ProductName;
                 entity.Price = productUpdate.Price;
-                entity.Quantity = productUpdate.Quantity;
+        
                 entity.Description = productUpdate.Description;
                 entity.CategoryId = productUpdate.CategoryId;
                 entity.KitchenId = productUpdate.KitchenId;

@@ -26,7 +26,7 @@ builder.Services.AddDbContext<UserRoleContext>(options =>
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = "order_customer";
-    options.IdleTimeout = TimeSpan.FromHours(1);
+    options.IdleTimeout = TimeSpan.FromHours(6);
 });
 
 // Add Identity services
