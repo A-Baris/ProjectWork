@@ -30,7 +30,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(CustomerVM customerVM)
+        public async Task<IActionResult> Create(CustomerVM customerVM)
         {
             
             if(ModelState.IsValid)
@@ -46,7 +46,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     TableOfRestaurantId = customerVM.TableOfRestaurantId,
                 };
                 _customerService.Create(customer);
-                return RedirectToAction("customer", "manager", "index");
+               var table = await _tableOfRestaurantService.GetbyIdAsync(customer.TableOfRestaurantId??0);
+                if(customer.TableOfRestaurantId!=null)
+                {
+                    table.Status = Entity.Enums.ReservationStatus.Active;
+                    _tableOfRestaurantService.Update(table);
+                }
+                
+                return RedirectToAction("index", "customer", new { area = "manager" });
             }
             TableSelect();
             return View(customerVM);

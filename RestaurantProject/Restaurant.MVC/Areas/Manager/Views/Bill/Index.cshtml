@@ -16,7 +16,7 @@
                 <th>Garson Adı</th>
             </tr>
         </thead>
-  
+
         @foreach (var item in Model)
         {
 
@@ -31,7 +31,6 @@
                     <a href="/manager/tableofrestaurant/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
                     <a href="/manager/tableofrestaurant/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
                     <a href="/manager/tableofrestaurant/orderlist/@item.Id"><button class="btn btn-info">Siparişler</button></a>
-                    <a href="/manager/Bill/billdetail/@item.Id"><button class="btn btn-check">Hesap Ekranı</button></a>
 
 
                 </td>
@@ -42,7 +41,7 @@
 
 
         }
-        
+
 
     </table>
 

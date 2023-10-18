@@ -30,6 +30,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             ViewBag.DishCategoryList = _categoryService.GetAll();
             ViewBag.KitchenList= _kitchenService.GetAll();
+            ViewBag.MenuList=_menuService.GetAll();
             var dishList=_productService.GetAll();
             ViewBag.DishList = _productService.GetSelectedProducts(dish);
             ViewBag.DrinkList = _productService.GetSelectedProducts(drink);

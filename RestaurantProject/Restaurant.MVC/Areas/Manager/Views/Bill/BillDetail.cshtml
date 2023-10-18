@@ -1,0 +1,45 @@
+﻿@model List<BillDetailVM>
+@{
+    ViewData["Title"] = "BillDetail";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-left:50px">
+    <h2>Hesap Detayı</h2>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Masa Adı</th>
+                <th>Ürün Adı</th>
+                <th>Adet</th>
+                <th>Ürün Fiyat</th>
+                <th>Total Fiyat</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>@item.TableName</td>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+                <td>@item.TotalPrice</td>
+             
+
+
+
+            </tr>
+
+
+        }
+
+
+    </table>
+
+</div>
+
+
