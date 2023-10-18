@@ -4,14 +4,32 @@
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
 
-<h1>update</h1>
+<div class="message-container">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">
+            <div class="d-flex justify-content-center align-items-center">
+                @TempData["Message"]
+            </div>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            <div class="d-flex justify-content-center align-items-center">
+                @TempData["ErrorMessage"]
+            </div>
+        </div>
+    }
+</div>
 
 
 <div class="container" style="margin-top:40px">
     <div class="row justify-content-center">
         <div class="col-md-4">
 
-            <h1>Tarif Oluştur</h1>
+            <h1>Tarif Güncelle</h1>
             <form method="post">
 
 

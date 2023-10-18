@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container" style="margin-left:50px">
+    <h2>Tarif Listesi</h2>
+    <h2><a href="/manager/recipe/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ürün</th>
+                <th>Malzeme</th>
+                <th>Miktar</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        @foreach (var item in ViewBag.ProductIngredient as List<ProductIngredient>)
+        {
+
+
+            <tr>
+                <td>@item.Product.ProductName</td>
+                <td>@item.Ingredient.Name</td>
+                <td>@item.Quantity</td>
+
+                <td>
+                    <a href="/manager/recipe/update?productId=@item.ProductId&ingredientId=@item.IngredientId"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/recipe/remove?productId=@item.ProductId&ingredientId=@item.IngredientId"><button class="btn btn-outline-danger">Sil</button></a>
+                              
+
+
+                </td>
+
+
+            </tr>
+
+
+        }
+
+    </table>
+
+</div>
