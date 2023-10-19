@@ -4,6 +4,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
 {
     public class BillDetailVM
     {
+        public int Id { get; set; }
         public TableOfRestaurant TableOfRestaurant { get; set; }
         public Product Product { get; set; }
         public string ProductName { get; set; }

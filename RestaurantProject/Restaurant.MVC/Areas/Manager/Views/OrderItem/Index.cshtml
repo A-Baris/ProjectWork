@@ -3,11 +3,14 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
+x
+<h1>y</h1>
+z
 
-<h1>Index</h1>
-<@* section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5"> *@
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    
             @foreach (var item in ViewBag.Dish as List<Product>)
             {
                 <div class="col mb-5">
@@ -35,7 +38,5 @@
             }
 
         </div>
-  @*   </div>
-    </div> *@
-@*     </div>
-</section> *@
+        </div>
+        </section>

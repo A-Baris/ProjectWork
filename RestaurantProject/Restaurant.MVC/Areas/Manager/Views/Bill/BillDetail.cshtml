@@ -3,6 +3,11 @@
     ViewData["Title"] = "BillDetail";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
     decimal totalAccount = 0;
+    string tableName = "";
+
+  
+
+ 
 }
 
 <div class="container" style="margin-left:50px">
@@ -15,28 +20,47 @@
                 <th>Adet</th>
                 <th>Ürün Fiyat</th>
                 <th>Total Fiyat</th>
+                <th></th>
             </tr>
         </thead>
 
         @foreach (var item in Model)
         {
-               totalAccount += item.TotalPrice;
+            totalAccount += item.TotalPrice;
+          
 
             <tr>
-                <td>@item.TableName</td>
+                <td>@(tableName = item.TableName)</td>
                 <td>@item.ProductName</td>
                 <td>@item.Quantity</td>
                 <td>@item.Price</td>
                 <td>@item.TotalPrice</td>
-
-
+                <td>
+                  
+                    
+                </td>
+          
             </tr>
-
-
+         
+        
         }
+      
+        </table>
+
         <div class="col-md-4" style="background-color:green">
             <h2 style="color:white">Toplam tutar: @totalAccount TL</h2>
-            </div>
+         </div>
+         <br />
+
+      <a href="/manager/bill/completepayment?tableName=@tableName"><button class="btn btn-primary">ödeme</button></a>
+  
+ 
+         
+  
+
+
+         
 
 </div>
+
 

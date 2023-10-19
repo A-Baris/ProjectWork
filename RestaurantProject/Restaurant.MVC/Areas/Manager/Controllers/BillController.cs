@@ -18,12 +18,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IOrderItemService _orderItemService;
         private readonly ProjectContext _context;
 
-        public BillController(IBillService billService,ITableOfRestaurantService tableOfRestaurantService,IEmployeeService employeeService,IProductService productService,IOrderItemService orderItemService,ProjectContext context)
+        public BillController(IBillService billService, ITableOfRestaurantService tableOfRestaurantService, IEmployeeService employeeService, IProductService productService, IOrderItemService orderItemService, ProjectContext context)
         {
-          _billService = billService;
+            _billService = billService;
             _tableOfRestaurantService = tableOfRestaurantService;
-           _employeeService = employeeService;
-          _productService = productService;
+            _employeeService = employeeService;
+            _productService = productService;
             _orderItemService = orderItemService;
             _context = context;
         }
@@ -33,7 +33,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var tableList = _tableOfRestaurantService.GetAll();
             return View(tableList);
         }
-        public async Task<IActionResult> BillDetail(int id,BillDetailVM vM)
+        public async Task<IActionResult> BillDetail(int id, BillDetailVM vM)
         {
             ViewBag.OrderItems = _orderItemService.GetAll();
             ViewBag.Product = _productService.GetAll();
@@ -49,38 +49,62 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var query = from t in _context.TableOfRestaurants
                         join o in _context.OrderItems on t.Id equals o.TableofRestaurantId
                         join p in _context.Products on o.ProductId equals p.Id
-                        where t.Id == id
+                        where t.Id == id && o.BaseStatus == 0
                         select new BillDetailVM
                         {
-                            TableName=t.TableName, 
-                            ProductName=p.ProductName,
+                            Id = t.Id,
+                            TableName = t.TableName,
+                            ProductName = p.ProductName,
                             Quantity = o.Quantity,
                             Price = p.Price,
                             TotalPrice = o.TotalPrice
                         };
             var billDetails = query.ToList();
 
-            //List<BillDetailVM> billDetails = new List<BillDetailVM>();
+         
+
+            return View(billDetails);
+        }
+
+ 
+        public async Task<IActionResult> CompletePayment(string tableName)
+        {
+
+            //select o.Id from OrderItems o
+            //join TableOfRestaurants t on o.TableofRestaurantId = t.Id
+            //where t.TableName = 'k-2'
 
 
-            ////for (int i = 1; i <= OrderItems.Count; i++)
-            ////{
-            //    foreach (var item in OrderItems)
-            //    {
-            //        var entity = new BillDetailVM
-            //        {
-            //            TableName = item.TableName,
-            //            ProductName = item.ProductName,
-            //            Quantity = item.Quantity,
-            //            Price = item.Price,
-            //            TotalPrice = item.TotalPrice
-            //        };
-            //        billDetails.Add(entity);
-            //    }
-            ////}
-           
-            return  View(billDetails);
+            var query = from o in _context.OrderItems
+                        join t in _context.TableOfRestaurants on o.TableofRestaurantId equals t.Id
+                        where t.TableName == tableName
+                        select new BillCompleteVM
+                        {
+                            Id = o.Id,
+                        };
+
+            var orderItemIds = query.ToList();
+
+            var tableEntity = _tableOfRestaurantService.GetAll().Where(x => x.TableName == tableName).FirstOrDefault();
+            tableEntity.Status = Entity.Enums.ReservationStatus.Passive;
+            _tableOfRestaurantService.Update(tableEntity);
+            
+            foreach (var item in orderItemIds)
+            {
+                var entity = await _orderItemService.GetbyIdAsync(item.Id);
+                if (entity != null)
+                {
+                    entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
+                    _orderItemService.Update(entity);
+
+                }
+            }
+            
+
+
+
+            return RedirectToAction("index", "bill", new { area = "manager" });
         }
     }
-    }
+}
 
