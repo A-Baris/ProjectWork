@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "BillDetail";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+    decimal totalAccount = 0;
 }
 
 <div class="container" style="margin-left:50px">
-    <h2>Hesap Detayı</h2>
-    
+    <h2>Hesap Detay</h2>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -20,7 +20,7 @@
 
         @foreach (var item in Model)
         {
-
+               totalAccount += item.TotalPrice;
 
             <tr>
                 <td>@item.TableName</td>
@@ -28,18 +28,15 @@
                 <td>@item.Quantity</td>
                 <td>@item.Price</td>
                 <td>@item.TotalPrice</td>
-             
-
 
 
             </tr>
 
 
         }
-
-
-    </table>
+        <div class="col-md-4" style="background-color:green">
+            <h2 style="color:white">Toplam tutar: @totalAccount TL</h2>
+            </div>
 
 </div>
-
 

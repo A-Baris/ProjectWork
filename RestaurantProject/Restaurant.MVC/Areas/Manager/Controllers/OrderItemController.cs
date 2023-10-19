@@ -115,7 +115,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Chief")]
+        [Authorize(Roles = "chief,admin,waiter")]
         public IActionResult OrderTracking()
         {
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
@@ -123,6 +123,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var orderList=_orderItem.GetAll();
             return View(orderList);
         }
+        [Authorize(Roles = "chief,admin")]
         public async Task<IActionResult> OrderReady(int id)
         {
             var entity = await _orderItem.GetbyIdAsync(id);
@@ -131,8 +132,9 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Ready;
                 _orderItem.Update(entity);
             }
-            return RedirectToAction("ListOrder", "Orderitem", "manager");
+            return RedirectToAction("ordertracking", "Orderitem", "manager");
         }
+        [Authorize(Roles = "chief,admin")]
         public async Task<IActionResult> OrderDelivered(int id)
         {
             var entity = await _orderItem.GetbyIdAsync(id);
@@ -141,8 +143,9 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Delivered;
                 _orderItem.Update(entity);
             }
-            return RedirectToAction("ListOrder", "Orderitem", "manager");
+            return RedirectToAction("ordertracking", "Orderitem", "manager");
         }
+        [Authorize(Roles = "chief,admin")]
         public async Task<IActionResult> OrderPreparing(int id) 
         {
             // ürün hazırlanmaya başladığında o ürünü oluştumrak için gerekli malzeme miktarı stoktaki malzeme miktarlarından düşülecek

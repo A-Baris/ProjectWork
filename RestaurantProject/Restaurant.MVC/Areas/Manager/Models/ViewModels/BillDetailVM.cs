@@ -10,6 +10,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }
         public decimal TotalPrice { get; set; }
+   
         public string TableName { get; set; }
      
 

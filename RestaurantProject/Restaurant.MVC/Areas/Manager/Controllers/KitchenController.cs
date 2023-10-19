@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
@@ -24,6 +25,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles ="admin")]
         public IActionResult Create(KitchenVM kitchenVM)
         {
             if(ModelState.IsValid)
