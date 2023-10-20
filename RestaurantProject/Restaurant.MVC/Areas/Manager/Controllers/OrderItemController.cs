@@ -35,12 +35,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
           _ingredient = ingredient;
         }
 
-        public IActionResult Index()
+        public IActionResult Selectproduct(int id)
         {
             ViewBag.Dish = _productService.GetSelectedProducts("Dish");
             ViewBag.Drink = _productService.GetSelectedProducts("Drink");
+            TempData["TableId"] = id;
             return View();
         }
+      
    
         public IActionResult CreateOrder()
         {
@@ -51,7 +53,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(int Id, OrderItemCreateVM createVM)
+        public async Task<IActionResult> CreateOrder(int tableId,int Id, OrderItemCreateVM createVM)
         {
             
             createVM.ProductId= Id;
@@ -69,16 +71,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var product = await _productService.GetbyIdAsync(Id);
             if(product==null)
             {
-                return View("Index");
+                return RedirectToAction("selectproduct", "orderitem", new { area = "manager" });
             }
             else
             {
                 var od = _orderItem.GetAll();
-                if (od.Any(x => x.TableofRestaurantId == createVM.TableofRestaurantId && x.ProductId == createVM.ProductId))
+                if (od.Any(x => x.TableofRestaurantId == tableId && x.ProductId == Id))
                 {
-                    var update = _orderItem.GetAll().Where(x => x.TableofRestaurantId == createVM.TableofRestaurantId && x.ProductId == createVM.ProductId).FirstOrDefault();
+                    var update = _orderItem.GetAll().Where(x => x.TableofRestaurantId == tableId && x.ProductId == Id).FirstOrDefault();
                     update.Quantity += createVM.Quantity;
-                    update.TotalPrice *= update.Quantity;
+                    update.TotalPrice = update.Quantity * update.Product.Price;
                     _orderItem.Update(update);
                 }
 
@@ -91,7 +93,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                         ProductId = product.Id,
                         Quantity = createVM.Quantity,
                         TotalPrice = product.Price * createVM.Quantity,
-                        TableofRestaurantId = createVM.TableofRestaurantId,
+                        TableofRestaurantId = tableId,
                         EmployeeId = 1,
                         Description = createVM.Description,
                     };
@@ -102,17 +104,23 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     //SessionHelper.SetJsonProduct(HttpContext.Session, "siparis", orderSession);
 
                 }
-
+             
 
             }
-            return RedirectToAction("index", "orderitem", new { arrea = "manager" });
-           
-        }
-                  
-        public IActionResult SelectTable()
-        {
+            
+            TempData["TableId"] = tableId;
+            ViewBag.Dish = _productService.GetSelectedProducts("Dish");
+            return View("selectproduct");
 
-            return View();
+        }
+
+    
+
+       
+        public IActionResult Index()
+        {
+            var tables = _tableOfRestaurantService.GetAll();
+            return View(tables);
         }
 
         [Authorize(Roles = "chief,admin,waiter")]
@@ -180,6 +188,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
         }
+
+  
         void Select()
         {
           
