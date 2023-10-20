@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.DAL.Context;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 
@@ -11,11 +12,36 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     {
         private readonly ICustomerService _customerService;
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
+        private readonly ProjectContext _context;
 
-        public CustomerController(ICustomerService customerService,ITableOfRestaurantService tableOfRestaurantService)
+        public CustomerController(ICustomerService customerService,ITableOfRestaurantService tableOfRestaurantService,ProjectContext context)
         {
             _customerService = customerService;
             _tableOfRestaurantService = tableOfRestaurantService;
+           _context = context;
+        }
+        public IActionResult Test1()
+        {
+            return View();
+        }
+        public IActionResult Test2(DateTime testdate)
+        {
+           
+            var reservationQuery = (from c in _context.Customers
+                                    join t in _context.TableOfRestaurants on c.TableOfRestaurantId equals t.Id
+                                    select new RezervationVM
+                                    {
+                                        TableOfRestaurantId = t.Id,
+                                        TableName=t.TableName,
+                                        TableLocation=t.TableLocation,
+                                        ReserveStatus=t.Status.ToString(),
+                                  
+                                    }).ToList();
+            //Girilen güne  göre rezervasyonları listeler.Müşteri aradığında istediği gündeki boş saate rezerve yapılarak çakışmalar önlenecek 
+            var data = reservationQuery.Where(x => x.ReservationDate.DayOfWeek == testdate.DayOfWeek && x.ReserveStatus == "Passive").ToList();
+            //var data = reservationQuery.Where(x => x.ReservationDate.DayOfWeek == testdate.DayOfWeek && x.ReservationDate.Hour == testdate.Hour).ToList();    //gün ve saat           
+            ViewBag.ReservationDay = data;
+            return View();
         }
         public IActionResult Index()
         {
@@ -24,7 +50,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View(customerList);
         }
 
-        public IActionResult Create()
+        public IActionResult Create(DateTime rezervationDate)
         {
             TableSelect();
             return View();
@@ -41,8 +67,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Surname = customerVM.Surname,
                     Adress = customerVM.Adress,
                     Phone = customerVM.Phone,
-                    ReservationDate = customerVM.ReservationDate,
-                    ReservationDescription = customerVM.ReservationDescription,
+                    //ReservationDate = customerVM.ReservationDate,
+                    //ReservationDescription = customerVM.ReservationDescription,
                     TableOfRestaurantId = customerVM.TableOfRestaurantId,
                 };
                 _customerService.Create(customer);
@@ -70,8 +96,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Surname = customerEntity.Surname,
                     Adress = customerEntity.Adress,
                     Phone = customerEntity.Phone,
-                    ReservationDate = customerEntity.ReservationDate,
-                    ReservationDescription = customerEntity.ReservationDescription,
+                    //ReservationDate = customerEntity.ReservationDate,
+                    //ReservationDescription = customerEntity.ReservationDescription,
                     TableOfRestaurantId = customerEntity.TableOfRestaurantId,
                 };
                 return View(updated);
@@ -88,8 +114,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 entity.Surname = customerVM.Surname;
                 entity.Adress = customerVM.Adress;
                 entity.Phone = customerVM.Phone;
-                entity.ReservationDate = customerVM.ReservationDate;
-                entity.ReservationDescription = customerVM.ReservationDescription;
+                //entity.ReservationDate = customerVM.ReservationDate;
+                //entity.ReservationDescription = customerVM.ReservationDescription;
                 entity.TableOfRestaurantId=customerVM.TableOfRestaurantId;
                 _customerService.Update(entity);
                 return RedirectToAction("customer", "manager", "index");

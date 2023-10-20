@@ -171,14 +171,6 @@ namespace Restaurant.DAL.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<DateTime>("ReservationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReservationDescription")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -493,6 +485,50 @@ namespace Restaurant.DAL.Migrations
                     b.ToTable("ProductIngredients");
                 });
 
+            modelBuilder.Entity("Restaurant.Entity.Entities.Reservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BaseStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("ReservationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReservationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TableOfRestaurantId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("TableOfRestaurantId");
+
+                    b.ToTable("Reservations");
+                });
+
             modelBuilder.Entity("Restaurant.Entity.Entities.TableOfRestaurant", b =>
                 {
                     b.Property<int>("Id")
@@ -688,6 +724,25 @@ namespace Restaurant.DAL.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Restaurant.Entity.Entities.Reservation", b =>
+                {
+                    b.HasOne("Restaurant.Entity.Entities.Customer", "Customer")
+                        .WithMany("Reservations")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Restaurant.Entity.Entities.TableOfRestaurant", "TableOfRestaurant")
+                        .WithMany("Reservations")
+                        .HasForeignKey("TableOfRestaurantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("TableOfRestaurant");
+                });
+
             modelBuilder.Entity("Restaurant.Entity.Entities.TableOfRestaurant", b =>
                 {
                     b.HasOne("Restaurant.Entity.Entities.Employee", "Employee")
@@ -719,6 +774,8 @@ namespace Restaurant.DAL.Migrations
             modelBuilder.Entity("Restaurant.Entity.Entities.Customer", b =>
                 {
                     b.Navigation("BillCustomers");
+
+                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("Restaurant.Entity.Entities.Employee", b =>
@@ -759,6 +816,8 @@ namespace Restaurant.DAL.Migrations
                     b.Navigation("OrderItems");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

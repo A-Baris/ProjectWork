@@ -32,7 +32,7 @@ namespace Restaurant.DAL.Context
         public DbSet<Bill> Bills { get; set; }
         public DbSet<CashAccount> CashAccounts { get; set; }
         public DbSet<BillCustomer> BillCustomers { get; set; }
-
+        public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ProductIngredient> ProductIngredients { get; set; }
   
 
@@ -50,6 +50,12 @@ namespace Restaurant.DAL.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Reservations)
+                .WithOne(r => r.Customer)
+                .HasForeignKey(r => r.CustomerId);
+
 
             modelBuilder.Entity<Employee>()
               .HasMany(w => w.TableOfRestaurants)
@@ -86,7 +92,11 @@ namespace Restaurant.DAL.Context
            .WithOne(c => c.TableOfRestaurant)
            .HasForeignKey(c => c.TableOfRestaurantId);
 
-
+            modelBuilder.Entity<TableOfRestaurant>()
+                .HasMany(t => t.Reservations)
+                .WithOne(r => r.TableOfRestaurant)
+                .HasForeignKey(r => r.TableOfRestaurantId)
+                 .OnDelete(DeleteBehavior.Restrict);
 
 
 

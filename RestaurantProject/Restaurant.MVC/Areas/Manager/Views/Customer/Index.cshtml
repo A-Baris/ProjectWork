@@ -2,11 +2,20 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+   
 }
 
+
+
+
 <div class="container" style="margin-left:50px">
+ 
     <h2>Müşteri Ve Rezervasyon Listesi</h2>
-    <h2><a href="/manager/customer/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+
+    <form method="get" action="/manager/customer/Test2">
+        <input type="datetime-local" name="testdate" />
+        <button class="btn btn-info" type="submit">Göster</button>
+    </form>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -14,8 +23,8 @@
                 <th>Soyad</th>
                 <th>Adres</th>
                 <th>Telefon</th>
-                <th>Rezervasyon Tarih</th>
-                <th>Açıklama</th>
+            @*     <th>Rezervasyon Tarih</th>
+                <th>Açıklama</th> *@
                 <th>Masa</th>
             </tr>
         </thead>
@@ -29,8 +38,8 @@
                 <td>@item.Surname</td>
                 <td>@item.Adress</td>
                 <td>@item.Phone</td>
-                <td>@item.ReservationDate</td>
-                <td>@item.ReservationDescription</td>
+            @*     <td>@item.ReservationDate</td>
+                <td>@item.ReservationDescription</td> *@
                 <td>@item.TableOfRestaurant.TableName</td>
                 <td>
                     <a href="/manager/customer/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
@@ -51,3 +60,5 @@
 
 </div>
 
+
+ 

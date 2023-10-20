@@ -21,6 +21,8 @@ namespace Restaurant.Entity.Entities
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public virtual List<Customer> Customers { get; set; }
+        public virtual List<Reservation> Reservations { get; set; }
+
         public virtual List<Bill> Bills { get; set; }
         public virtual List<OrderItem> OrderItems { get; set; }
         public virtual List<Order> Orders { get; set; }
