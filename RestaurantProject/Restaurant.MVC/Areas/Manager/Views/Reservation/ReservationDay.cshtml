@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "ReservationDay";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-left:50px">
+   
+        <form method="get" action="/manager/reservation/reservationday">
+            <input type="datetime-local" name="testdate" />
+            <button class="btn btn-info" type="submit">Göster</button>
+        </form>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tarih</th>
+                <th>Masa</th>
+                <th>Müşteri</th>
+                <th>Rez Durum</th>
+                <th>Not</th>
+
+             
+
+            </tr>
+        </thead>
+
+        @foreach (var item in ViewBag.ReservationDay as List<ReservationDayVM>)
+        {
+
+
+            <tr>
+                <td>@item.ReservationId</td>
+                <td>@item.ReservationDate</td>
+                <td>@item.TableName</td>
+                <td>@item.CustomerName</td>
+                <td>@item.ReservationStatus</td>
+                <td>@item.Description</td>
+      
+
+
+            </tr>
+
+
+        }
+
+
+    </table>
+
+</div>
+
+

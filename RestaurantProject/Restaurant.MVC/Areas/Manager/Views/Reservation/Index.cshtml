@@ -1,0 +1,57 @@
+﻿@model List<Reservation>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container" style="margin-left:50px">
+
+    <h2>Rezervasyon Listesi</h2>
+
+    <form method="get" action="/manager/reservation/reservationday">
+        <input type="datetime-local" name="testdate" />
+        <button class="btn btn-info" type="submit">Göster</button>
+    </form>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Masa</th>
+                <th>Müşteri</th>
+                <th>Rez Tarih</th>
+                <th>Rez Durum</th>         
+               
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.TableOfRestaurant.TableName</td>
+                <td>@item.Customer.Name @item.Customer.Surname</td>
+                <td>@item.ReservationDate</td>
+                <td>@item.ReservationStatus</td>
+            
+                <td>
+                    <a href="/manager/reservation/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/reservation/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+                </td>
+
+
+
+            </tr>
+
+
+        }
+
+
+    </table>
+
+</div>
+
