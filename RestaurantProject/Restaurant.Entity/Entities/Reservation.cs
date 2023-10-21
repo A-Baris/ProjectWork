@@ -12,7 +12,7 @@ namespace Restaurant.Entity.Entities
     {
         public DateTime ReservationDate { get; set; }
         public int? TableOfRestaurantId { get; set; }
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         [MaxLength(250)]
         public string Description { get; set; }
         public ReservationStatus ReservationStatus { get; set; }
