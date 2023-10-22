@@ -19,7 +19,7 @@ namespace Restaurant.Entity.Entities
         public string Phone { get; set; }
 
         public int? TableOfRestaurantId { get;set; }
-        public TableOfRestaurant TableOfRestaurant { get;set; }
+        public TableOfRestaurant? TableOfRestaurant { get;set; }
         public virtual List<Reservation> Reservations { get; set; }
         public IEnumerable<BillCustomer> BillCustomers { get; set;}
 

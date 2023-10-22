@@ -7,12 +7,23 @@
 
 <div class="container" style="margin-left:50px">
 
+
     <h2>Rezervasyon Listesi</h2>
 
-    <form method="get" action="/manager/reservation/reservationday">
-        <input type="datetime-local" name="testdate" />
-        <button class="btn btn-info" type="submit">Göster</button>
-    </form>
+  
+        <div class="col-md-8">
+            <form method="get" action="/manager/reservation/reservationday">
+                <input type="datetime-local" name="testdate" />
+                <button class="btn btn-info" type="submit">Göster</button>
+            </form>
+            </div>
+        
+
+    <div>
+        <h2><a href="/manager/reservation/create"><button class="btn btn-outline-success">Rezervasyon Oluştur</button></a></h2>
+
+    </div>
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -31,8 +42,31 @@
 
             <tr>
                 <td>@item.Id</td>
-                <td>@item.TableOfRestaurant.TableName</td>
-                <td>@item.Customer.Name @item.Customer.Surname</td>
+              <td>
+                    @if (item.TableOfRestaurant != null)
+                    {
+                        @item.TableOfRestaurant.TableName
+                    }
+                    else
+                    {
+                        <text>NULL</text>
+                    }
+
+                </td>
+
+               <td>
+                @if(item.Customer!=null)
+                {
+                    @item.Customer.Name @item.Customer.Surname
+                }
+                  
+                
+                else
+                {
+                        <text>NULL</text>
+                }
+                   
+                </td>
                 <td>@item.ReservationDate</td>
                 <td>@item.ReservationStatus</td>
             

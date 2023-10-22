@@ -1,0 +1,60 @@
+﻿@model ReservationUpdateVM
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="width:100%" >
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            
+            <h1>Rezervasyon Güncelle</h1>
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="ReservationDate"></label>
+                    <input asp-for="ReservationDate" class="form-control" type="datetime-local" value="@Model.ReservationDate" />
+                    <span asp-validation-for="ReservationDate" class="text-bg-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Müşteri</label>
+                    <select asp-items="ViewBag.Customer" asp-for="CustomerId" class="form-control">
+                        <option selected="" disable value="@Model.CustomerId">Müşteri</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Masa</label>
+                    <select asp-items="ViewBag.Table" asp-for="TableOfRestaurantId" class="form-control">
+                        <option selected="" disable value="@Model.TableOfRestaurantId">Masa Seçimi</option>
+                    </select>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control" value="@Model.Description"/>
+                    <span asp-validation-for="Description" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReservationStatus"></label>
+                    <input asp-for="ReservationStatus" class="form-control" value="@Model.ReservationStatus" />
+                    <span asp-validation-for="ReservationStatus" class="text-bg-danger"></span>
+
+               
+                <div class="text-center">
+
+                    <button type="submit" class="btn btn-primary" style="margin-top:10px">Güncelle</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+

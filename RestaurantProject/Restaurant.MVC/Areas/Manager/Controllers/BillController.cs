@@ -86,23 +86,24 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var orderItemIds = query.ToList();
 
             var tableEntity = _tableOfRestaurantService.GetAll().Where(x => x.TableName == tableName).FirstOrDefault();
-            tableEntity.Status = Entity.Enums.ReservationStatus.Passive;
-            _tableOfRestaurantService.Update(tableEntity);
-            
-            foreach (var item in orderItemIds)
+            if (tableEntity != null)
             {
-                var entity = await _orderItemService.GetbyIdAsync(item.Id);
-                if (entity != null)
+                tableEntity.Status = Entity.Enums.ReservationStatus.Passive;
+                _tableOfRestaurantService.Update(tableEntity);
+
+                foreach (var item in orderItemIds)
                 {
-                    entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
-                    _orderItemService.Update(entity);
+                    var entity = await _orderItemService.GetbyIdAsync(item.Id);
+                    if (entity != null)
+                    {
+                        entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
+                        _orderItemService.Update(entity);
 
+                    }
                 }
+                //işlem mesajı
+                return View();
             }
-            
-
-
-
             return RedirectToAction("index", "bill", new { area = "manager" });
         }
     }

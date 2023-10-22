@@ -17,7 +17,7 @@ namespace Restaurant.Entity.Entities
         public string Description { get; set; }
         public ReservationStatus ReservationStatus { get; set; }
 
-        public TableOfRestaurant TableOfRestaurant { get; set; }
-        public Customer Customer { get; set; }
+        public TableOfRestaurant? TableOfRestaurant { get; set; }
+        public Customer? Customer { get; set; }
     }
 }

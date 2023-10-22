@@ -43,6 +43,7 @@ namespace Restaurant.BLL.Repositories
         public IEnumerable<T> GetAll()
         {
             return _context.Set<T>().Where(x => x.BaseStatus == Entity.Enums.BaseStatus.Active).ToList();
+        
         }
 
         public async Task<T> GetbyIdAsync(int id)
