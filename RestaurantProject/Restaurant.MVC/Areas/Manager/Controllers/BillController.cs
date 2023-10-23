@@ -6,6 +6,7 @@ using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 using Restaurant.DAL.Context;
 
+
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
@@ -102,10 +103,26 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     }
                 }
                 //işlem mesajı
-                return View();
+                return RedirectToAction("billdetail", "bill", new { area = "manager",id=tableEntity.Id });
             }
             return RedirectToAction("index", "bill", new { area = "manager" });
         }
+
+        public async Task<IActionResult> PartOfPayment(string tableName,decimal payment)
+        {
+            var table = _tableOfRestaurantService.GetAll().Where(x => x.TableName == tableName).FirstOrDefault();
+            var bill = _orderItemService.GetAll().Where(x=>x.TableofRestaurantId==table.Id && x.BaseStatus == Entity.Enums.BaseStatus.Active).FirstOrDefault();
+            if (bill != null)
+            {
+                bill.TotalPrice -= payment;
+                _orderItemService.Update(bill);
+            }
+
+           return RedirectToAction("billdetail", "bill", new {area="manager",id=table.Id});
+        }
+
+      
     }
 }
+
 

@@ -4,6 +4,7 @@
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
     decimal totalAccount = 0;
     string tableName = "";
+    decimal payment = 0;
 
   
 
@@ -11,7 +12,7 @@
 }
 
 <div class="container" style="margin-left:50px">
-    <h2>Hesap Detay</h2>
+    <h2>Hesap Detay</h2>    
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -46,14 +47,24 @@
         }
       
         </table>
-
+        <div class="row">
         <div class="col-md-4" style="background-color:green">
-            <h2 style="color:white">Toplam tutar: @totalAccount TL</h2>
+            <h2 style="color:white">Toplam tutar: @totalAccount TL</h2>       
          </div>
-         <br />
 
-      <a href="/manager/bill/completepayment?tableName=@tableName"><button class="btn btn-primary">ödeme</button></a>
-  
+
+      <div class="col-md-8 text-right">
+            <a href="/manager/bill/completepayment?tableName=@tableName"><button class="btn btn-primary">Ödemeyi Tamamla</button></a>
+         </div>
+    </div>
+         <br />
+     
+    <form method="get" action="/manager/bill/partofpayment">
+        <input type="hidden" name="tableName" value="@tableName" />
+        <input type="number" name="payment" />
+        <button type="submit" class="btn btn-primary">Ödeme Al</button>
+    </form>
+
  
          
   
