@@ -18,6 +18,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Accounting/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xBY2NvdW50aW5nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Accounting/Report.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xBY2NvdW50aW5nXFJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Bill/BillDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xCaWxsXEJpbGxEZXRhaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

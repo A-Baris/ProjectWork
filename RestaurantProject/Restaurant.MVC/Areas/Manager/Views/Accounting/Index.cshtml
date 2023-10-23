@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<form method="get" action="/manager/Accounting/report">
+    <input type="number" name="targetYear" placeholder="Year" />
+    <input type="number" name="targetMonth" placeholder="Month"/>
+    <button class="btn btn-info" type="submit">Göster</button>
+</form>
+
+
+

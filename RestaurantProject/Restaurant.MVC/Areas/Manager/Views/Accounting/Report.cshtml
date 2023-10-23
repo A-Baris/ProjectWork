@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<form method="get" action="/manager/Accounting/report">
+    <input type="number" name="targetYear" placeholder="Year"/>
+    <input type="number" name="targetMonth" placeholder="Month"/>
+    <button class="btn btn-info" type="submit">Göster</button>
+</form>
+
+
+<div class="container" style="margin-left:50px">
+    <h2>Kasa Listesi</h2>
+    <h2><a href="/manager/tableofrestaurant/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Gün</th>
+                <th>Toplam Ciro</th>
+
+            </tr>
+        </thead>
+
+        @foreach (var item in ViewBag.Weekly)
+        {
+
+
+            <tr>
+                <td>@item.DayOfYear</td>
+                <td>@item.TotalPriceSum</td>
+
+
+
+
+
+            </tr>
+
+
+        }
+
+
+    </table>
+
+</div>
+
