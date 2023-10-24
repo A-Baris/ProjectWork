@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Restaurant.Entity.Entities;
+using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Restaurant.BLL.Mapping
         public MapProfile()
         {
             CreateMap<Supplier,SupplierVM>().ReverseMap(); 
+            CreateMap<AccountingTransaction,TransactionVM>().ReverseMap(); 
         }
     }
 }

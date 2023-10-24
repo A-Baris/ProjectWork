@@ -30,6 +30,7 @@ namespace Restaurant.IOC.Container
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISupplierService, SupplierService>();           
             services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IAccountingTransactionService, AccountingTransactionService>();
 
             //automap servise ekledik
             services.AddAutoMapper(typeof(MapProfile));

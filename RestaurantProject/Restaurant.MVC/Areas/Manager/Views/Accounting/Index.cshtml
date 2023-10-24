@@ -1,14 +1,58 @@
-﻿
+﻿@model List<AccountingTransaction>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
 
-<form method="get" action="/manager/Accounting/reportofturnover">
-    <input type="number" name="targetYear" placeholder="Year" />
-    <input type="number" name="targetMonth" placeholder="Month"/>
-    <button class="btn btn-info" type="submit">Göster</button>
-</form>
+
+
+<h2><a href="/manager/Accounting/cashtracking"><button class="btn btn-outline-info">Kasa Takip</button></a></h2>
+<div class="container" style="margin-left:50px">
+    <h2>İşlem Listesi</h2>
+    <h2><a href="/manager/Accounting/createtransaction"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Şirket Adı</th>
+                <th>Fatura Kodu</th>
+                <th>Borç</th>
+                <th>Ödeme</th>
+                <th>Kalan Ödeme</th>
+                <th>Son Ödeme Tarihi</th>
+                <th>Açıklama</th>
+
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>@item.Supplier.CompanyName</td>
+                <td>@item.InvoiceCode</td>
+                <td>@item.Debit</td>
+                <td>@item.Payment</td>
+                <td>@item.RemainingDebt</td>
+                <td>@item.LastPaymentDate</td>
+                <td>@item.Description</td>
+
+                <td>
+                    <a href="/manager/Accounting/updatetransaction/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/Accounting/removetransaction/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+                </td>
+
+
+
+            </tr>
+
+
+        }
+
+    </table>
+
+</div>
 
 
 

@@ -56,7 +56,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var entity = await _supplierService.GetbyIdAsync(Id);
                 if (entity != null)
                 {
-                    _mapper.Map(supplierVM, entity); ;
+                    _mapper.Map(supplierVM, entity); 
                     _supplierService.Update(entity);
                 }
                 return RedirectToAction("Index", "supplier", new { area = "manager" });
