@@ -6,26 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Restaurant.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class restaurantnew1 : Migration
+    public partial class init001 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "CashAccounts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BaseStatus = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CashAccounts", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -65,25 +50,6 @@ namespace Restaurant.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingredients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BaseStatus = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ingredients", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Kitchens",
                 columns: table => new
                 {
@@ -114,6 +80,31 @@ namespace Restaurant.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Menus", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Suppliers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ContactPerson = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Payment = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RemainingDebt = table.Column<decimal>(type: "decimal(18,2)", nullable: true, computedColumnSql: "[Debit] - [Payment]"),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BaseStatus = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Suppliers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,32 +173,27 @@ namespace Restaurant.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bills",
+                name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Subtotal = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CashAccountId = table.Column<int>(type: "int", nullable: false),
-                    TableOfRestaurantId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SupplierId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BaseStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bills", x => x.Id);
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bills_CashAccounts_CashAccountId",
-                        column: x => x.CashAccountId,
-                        principalTable: "CashAccounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bills_TableOfRestaurants_TableOfRestaurantId",
-                        column: x => x.TableOfRestaurantId,
-                        principalTable: "TableOfRestaurants",
+                        name: "FK_Ingredients_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -222,7 +208,7 @@ namespace Restaurant.DAL.Migrations
                     Surname = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Adress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    TableOfRestaurantId = table.Column<int>(type: "int", nullable: false),
+                    TableOfRestaurantId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BaseStatus = table.Column<int>(type: "int", nullable: false)
@@ -234,35 +220,11 @@ namespace Restaurant.DAL.Migrations
                         name: "FK_Customers_TableOfRestaurants_TableOfRestaurantId",
                         column: x => x.TableOfRestaurantId,
                         principalTable: "TableOfRestaurants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TableOfRestaurantId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BaseStatus = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_TableOfRestaurants_TableOfRestaurantId",
-                        column: x => x.TableOfRestaurantId,
-                        principalTable: "TableOfRestaurants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderItems",
+                name: "Order",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -280,21 +242,21 @@ namespace Restaurant.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.PrimaryKey("PK_Order", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Employees_EmployeeId",
+                        name: "FK_Order_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Products_ProductId",
+                        name: "FK_Order_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderItems_TableOfRestaurants_TableofRestaurantId",
+                        name: "FK_Order_TableOfRestaurants_TableofRestaurantId",
                         column: x => x.TableofRestaurantId,
                         principalTable: "TableOfRestaurants",
                         principalColumn: "Id",
@@ -327,62 +289,14 @@ namespace Restaurant.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BillProducts",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    BillId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BillProducts", x => new { x.BillId, x.ProductId });
-                    table.ForeignKey(
-                        name: "FK_BillProducts_Bills_BillId",
-                        column: x => x.BillId,
-                        principalTable: "Bills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_BillProducts_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BillCustomers",
-                columns: table => new
-                {
-                    BillId = table.Column<int>(type: "int", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BillCustomers", x => new { x.BillId, x.CustomerId });
-                    table.ForeignKey(
-                        name: "FK_BillCustomers_Bills_BillId",
-                        column: x => x.BillId,
-                        principalTable: "Bills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BillCustomers_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reservations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TableOfRestaurantId = table.Column<int>(type: "int", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    TableOfRestaurantId = table.Column<int>(type: "int", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     ReservationStatus = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -396,8 +310,7 @@ namespace Restaurant.DAL.Migrations
                         name: "FK_Reservations_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reservations_TableOfRestaurants_TableOfRestaurantId",
                         column: x => x.TableOfRestaurantId,
@@ -407,49 +320,29 @@ namespace Restaurant.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BillCustomers_CustomerId",
-                table: "BillCustomers",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BillProducts_ProductId",
-                table: "BillProducts",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bills_CashAccountId",
-                table: "Bills",
-                column: "CashAccountId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bills_TableOfRestaurantId",
-                table: "Bills",
-                column: "TableOfRestaurantId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Customers_TableOfRestaurantId",
                 table: "Customers",
                 column: "TableOfRestaurantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_EmployeeId",
-                table: "OrderItems",
+                name: "IX_Ingredients_SupplierId",
+                table: "Ingredients",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_EmployeeId",
+                table: "Order",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_ProductId",
-                table: "OrderItems",
+                name: "IX_Order_ProductId",
+                table: "Order",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_TableofRestaurantId",
-                table: "OrderItems",
+                name: "IX_Order_TableofRestaurantId",
+                table: "Order",
                 column: "TableofRestaurantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_TableOfRestaurantId",
-                table: "Orders",
-                column: "TableOfRestaurantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductIngredients_IngredientId",
@@ -491,25 +384,13 @@ namespace Restaurant.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BillCustomers");
-
-            migrationBuilder.DropTable(
-                name: "BillProducts");
-
-            migrationBuilder.DropTable(
-                name: "OrderItems");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "ProductIngredients");
 
             migrationBuilder.DropTable(
                 name: "Reservations");
-
-            migrationBuilder.DropTable(
-                name: "Bills");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");
@@ -521,7 +402,7 @@ namespace Restaurant.DAL.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "CashAccounts");
+                name: "Suppliers");
 
             migrationBuilder.DropTable(
                 name: "Categories");

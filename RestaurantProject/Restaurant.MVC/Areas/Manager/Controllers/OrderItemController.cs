@@ -21,17 +21,17 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IProductService _productService;
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
         private readonly ProjectContext _context;
-        private readonly IOrderItemService _orderItem;
+        private readonly IOrderService _orderItem;
         private readonly IIngredientService _ingredient;
 
-        public OrderItemController(IOrderService orderService, IEmployeeService employeeService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context,IOrderItemService orderItem,IIngredientService ingredient)
+        public OrderItemController(IOrderService orderService, IEmployeeService employeeService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context,IIngredientService ingredient)
         {
             _orderService = orderService;
             _employeeService = employeeService;
             _productService = productService;
             _tableOfRestaurantService = tableOfRestaurantService;
             _context = context;
-            _orderItem = orderItem;
+            _orderItem = orderService;
           _ingredient = ingredient;
         }
 
@@ -88,7 +88,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 else
                 {
 
-                    OrderItem orderItem = new OrderItem()
+                    Order orderItem = new Order()
                     {
                         ProductId = product.Id,
                         Quantity = createVM.Quantity,

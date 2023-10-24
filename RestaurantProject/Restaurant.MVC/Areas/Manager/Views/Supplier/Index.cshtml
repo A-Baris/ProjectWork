@@ -1,0 +1,52 @@
+﻿@model List<Supplier>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-left:50px">
+    <h2>Tedarikçi Listesi</h2>
+    <h2><a href="/manager/supplier/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Şirket Adı</th>
+                <th>Yetkili</th>
+                <th>Görevi</th>
+                <th>Adres</th>
+                <th>Telefon</th>
+                <th>Email</th>
+                <th>Açıklama</th>
+
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>@item.CompanyName</td>
+                <td>@item.ContactPerson</td>
+                <td>@item.Title</td>
+                <td>@item.Adress</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td>@item.Description</td>
+
+                <td>
+                    <a href="/manager/supplier/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/supplier/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+                </td>
+
+
+
+            </tr>
+
+
+        }
+
+    </table>
+
+</div>

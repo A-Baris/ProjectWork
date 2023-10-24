@@ -11,11 +11,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     [Area("Manager")]
     public class AccountingController : Controller
     {
-        private readonly IOrderItemService _orderItemService;
+        private readonly IOrderService _orderItemService;
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
         private readonly ProjectContext _context;
 
-        public AccountingController(IOrderItemService orderItemService,ITableOfRestaurantService tableOfRestaurantService,ProjectContext context)
+        public AccountingController(IOrderService orderItemService,ITableOfRestaurantService tableOfRestaurantService,ProjectContext context)
         {
             _orderItemService = orderItemService;
            _tableOfRestaurantService = tableOfRestaurantService;
@@ -26,13 +26,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
          return View();
         }
 
-        public IActionResult Report(int targetYear, int targetMonth)
+        public IActionResult ReportOfTurnover(int targetYear, int targetMonth)
         {
 //            SELECT DATEPART(WEEKDAY, CreatedDate),SUM(TotalPrice)
 //FROM OrderItems where DATEPART(MONTH, CreatedDate) = DATEPART(MONTH, '2023-10-22') group by DATEPART(WEEKDAY, CreatedDate)
 
 
-            var orderItemsForMonth = _context.OrderItems
+            var orderItemsForMonth = _context.Order
                 .Where(item => item.CreatedDate.Year == targetYear && item.CreatedDate.Month == targetMonth)
                 .ToList(); 
 
@@ -49,6 +49,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
             return View(weeklyTotalPrices);
+        }
+        public IActionResult PurchasingAccounts()
+        {
+            return View();
         }
     }
 }

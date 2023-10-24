@@ -17,7 +17,9 @@ namespace Restaurant.Entity.Entities
         public string Category { get; set; }
         public decimal Price { get;set; }
         public decimal Quantity { get; set; }
-   
+        public int SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
+
 
         public IEnumerable<ProductIngredient> ProductIngredients { get; set; }
     }

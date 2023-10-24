@@ -12,16 +12,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     [Area("Manager")]
     public class BillController : Controller
     {
-        private readonly IBillService _billService;
+    
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
         private readonly IEmployeeService _employeeService;
         private readonly IProductService _productService;
-        private readonly IOrderItemService _orderItemService;
+        private readonly IOrderService _orderItemService;
         private readonly ProjectContext _context;
 
-        public BillController(IBillService billService, ITableOfRestaurantService tableOfRestaurantService, IEmployeeService employeeService, IProductService productService, IOrderItemService orderItemService, ProjectContext context)
+        public BillController(ITableOfRestaurantService tableOfRestaurantService, IEmployeeService employeeService, IProductService productService, IOrderService orderItemService, ProjectContext context)
         {
-            _billService = billService;
+            
             _tableOfRestaurantService = tableOfRestaurantService;
             _employeeService = employeeService;
             _productService = productService;
@@ -48,7 +48,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
             var query = from t in _context.TableOfRestaurants
-                        join o in _context.OrderItems on t.Id equals o.TableofRestaurantId
+                        join o in _context.Order on t.Id equals o.TableofRestaurantId
                         join p in _context.Products on o.ProductId equals p.Id
                         where t.Id == id && o.BaseStatus == 0
                         select new BillDetailVM
@@ -71,12 +71,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         public async Task<IActionResult> CompletePayment(string tableName)
         {
 
-            //select o.Id from OrderItems o
+            //select o.Id from Order o
             //join TableOfRestaurants t on o.TableofRestaurantId = t.Id
             //where t.TableName = 'k-2'
 
 
-            var query = from o in _context.OrderItems
+            var query = from o in _context.Order
                         join t in _context.TableOfRestaurants on o.TableofRestaurantId equals t.Id
                         where t.TableName == tableName
                         select new BillCompleteVM

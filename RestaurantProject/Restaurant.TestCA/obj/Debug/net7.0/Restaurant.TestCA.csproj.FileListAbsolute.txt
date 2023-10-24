@@ -73,3 +73,5 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debu
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Restaurant.Entity.pdb
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.csproj.AssemblyReference.cache
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\obj\Debug\net7.0\Restaurant.TestCA.csproj.CopyComplete
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\AutoMapper.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

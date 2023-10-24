@@ -14,9 +14,9 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly ITableOfRestaurantService _tableOfRestaurant;
         private readonly IEmployeeService _employee;
         private readonly IProductService _productService;
-        private readonly IOrderItemService _orderItem;
+        private readonly IOrderService _orderItem;
 
-        public TableOfRestaurantController(ITableOfRestaurantService tableOfRestaurant, IEmployeeService employee,IProductService productService,IOrderItemService orderItem)
+        public TableOfRestaurantController(ITableOfRestaurantService tableOfRestaurant, IEmployeeService employee,IProductService productService,IOrderService orderItem)
         {
 
 

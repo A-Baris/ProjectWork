@@ -21,9 +21,11 @@ namespace Restaurant.Entity.Entities
         public Kitchen Kitchen { get; set; }
         public int? MenuId { get; set; }
         public Menu Menu { get; set; }
+        public int? SupplierId { get;set; }
+        public Supplier Supplier { get; set; }
       
 
-        public IEnumerable<BillProduct> BillProducts { get; set; }
+ 
 
         public Category Category { get; set; }
         public IEnumerable<ProductIngredient> ProductIngredients { get; set; }

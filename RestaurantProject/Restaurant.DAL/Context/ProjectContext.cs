@@ -20,23 +20,20 @@ namespace Restaurant.DAL.Context
         }
 
         public DbSet<TableOfRestaurant> TableOfRestaurants { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Order { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Kitchen> Kitchens { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Bill> Bills { get; set; }
-        public DbSet<CashAccount> CashAccounts { get; set; }
-        public DbSet<BillCustomer> BillCustomers { get; set; }
+       public DbSet<AccountingTransaction> AccountingTransactions { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ProductIngredient> ProductIngredients { get; set; }
-  
+        public DbSet<Supplier> Suppliers { get; set; }
 
-        public DbSet<BillProduct> BillProducts { get; set; }
+
 
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -72,20 +69,7 @@ namespace Restaurant.DAL.Context
 
 
 
-            modelBuilder.Entity<TableOfRestaurant>()
-                .HasMany(t => t.Orders)
-                .WithOne(o => o.TableOfRestaurant)
-                .HasForeignKey(o => o.TableOfRestaurantId);
-
-            modelBuilder.Entity<TableOfRestaurant>()
-               .HasMany(t => t.OrderItems)
-               .WithOne(o => o.TableOfRestaurant)
-               .HasForeignKey(o => o.TableofRestaurantId);
-
-            modelBuilder.Entity<TableOfRestaurant>()
-           .HasMany(t => t.Bills)
-           .WithOne(b => b.TableOfRestaurant)
-           .HasForeignKey(b => b.TableOfRestaurantId);
+  
 
             modelBuilder.Entity<TableOfRestaurant>()
            .HasMany(t => t.Customers)
@@ -108,28 +92,7 @@ namespace Restaurant.DAL.Context
 
 
 
-            modelBuilder.Entity<BillCustomer>()
-                .HasKey(bc => new { bc.BillId, bc.CustomerId });
-
-            modelBuilder.Entity<BillCustomer>()
-                .HasOne(bc => bc.Bill)
-                .WithMany(b => b.BillCustomers)
-                .HasForeignKey(bc => bc.BillId);
-
-
-
-            modelBuilder.Entity<BillCustomer>()
-                .HasOne(bc => bc.Customer)
-                .WithMany(b => b.BillCustomers)
-                .HasForeignKey(bc => bc.CustomerId)
-                  .OnDelete(DeleteBehavior.Restrict);
-
-
-            modelBuilder.Entity<CashAccount>()
-                .HasMany(ca => ca.Bills)
-                .WithOne(b => b.CashAccount)
-                .HasForeignKey(ca => ca.CashAccountId);
-
+           
 
             modelBuilder.Entity<Kitchen>()
               .HasMany(k => k.Products)
@@ -141,20 +104,7 @@ namespace Restaurant.DAL.Context
 
 
 
-            modelBuilder.Entity<BillProduct>()
-           .HasKey(b => new { b.BillId, b.ProductId });
-
-            modelBuilder.Entity<BillProduct>()
-       .HasOne(bd => bd.Bill)
-       .WithMany(x => x.BillProducts)
-       .HasForeignKey(bd => bd.BillId)
-          .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<BillProduct>()
-          .HasOne(bd => bd.Product)
-           .WithMany(x => x.BillProducts)
-          .HasForeignKey(bd => bd.ProductId)
-              .OnDelete(DeleteBehavior.Restrict);
+   
 
 
             modelBuilder.Entity<Menu>()
@@ -177,7 +127,25 @@ namespace Restaurant.DAL.Context
                 .HasForeignKey(i=>i.IngredientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Supplier>()
+                .HasMany(s => s.Ingredients)
+                .WithOne(i => i.Supplier)
+                .HasForeignKey(s => s.SupplierId);
 
+            modelBuilder.Entity<Supplier>()
+                .HasMany(s => s.Transactions)
+                .WithOne(t => t.Supplier)
+                .HasForeignKey(s => s.SupplierId);
+
+            modelBuilder.Entity<Supplier>()
+              .HasMany(s => s.Products)
+              .WithOne(p => p.Supplier)
+              .HasForeignKey(s => s.SupplierId);
+
+
+            modelBuilder.Entity<AccountingTransaction>()
+               .Property(a => a.RemainingDebt)
+               .HasComputedColumnSql("[Debit] - [Payment]");
 
 
             base.OnModelCreating(modelBuilder);

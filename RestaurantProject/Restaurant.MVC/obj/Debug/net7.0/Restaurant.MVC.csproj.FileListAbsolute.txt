@@ -269,3 +269,5 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\System.CodeDom.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Restaurant.Common.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\Restaurant.Common.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\AutoMapper.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

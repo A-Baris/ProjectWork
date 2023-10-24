@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.BLL.AbstractServices
 {
-    public interface IBillService:IRepository<Bill>
+    public interface ISupplierService:IRepository<Supplier>
     {
     }
 }

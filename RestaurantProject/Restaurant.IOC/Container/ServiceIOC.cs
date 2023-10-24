@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Restaurant.BLL.AbstractRepositories;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.BLL.Mapping;
 using Restaurant.BLL.Repositories;
 using Restaurant.BLL.Services;
 using Restaurant.Entity.Entities;
@@ -27,9 +28,11 @@ namespace Restaurant.IOC.Container
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IOrderItemService, OrderItemService>();
-            services.AddScoped<IBillService, BillService>();
+            services.AddScoped<ISupplierService, SupplierService>();           
             services.AddScoped<IReservationService, ReservationService>();
+
+            //automap servise ekledik
+            services.AddAutoMapper(typeof(MapProfile));
         }
     }
 }
