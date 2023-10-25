@@ -39,6 +39,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Notes = employeeVM.Notes,
                 };
                 _employeeService.Create(employee);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Employee");  
 
             }
@@ -73,7 +74,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 employeeUpdated.Notes = updated.Notes;
 
                 _employeeService.Update(employeeUpdated);
-                TempData["UpdateMessage"] = "Updated is achieved";
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index","Manager");
 
             }
@@ -91,6 +92,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 employee.BaseStatus=Entity.Enums.BaseStatus.Deleted;
                 _employeeService.Update(employee);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Manager");
 
             }

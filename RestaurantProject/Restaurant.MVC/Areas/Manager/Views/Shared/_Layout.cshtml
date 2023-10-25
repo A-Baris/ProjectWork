@@ -128,7 +128,25 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
+            <div class="message-container">
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-success">
+                        <div class="d-flex justify-content-center align-items-center">
+                            @TempData["Message"]
+                        </div>
+                    </div>
+                }
 
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        <div class="d-flex justify-content-center align-items-center">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    </div>
+                }
+            </div>
             <!--RenderBody Start-->
             @RenderBody()
 

@@ -99,6 +99,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     };
                     //orderSession.AddItem(orderItem);
                     _orderItem.Create(orderItem);
+                    var table = await _tableOfRestaurantService.GetbyIdAsync(orderItem.TableofRestaurantId);
+                    if(table!=null)
+                    {
+                        table.Status = Entity.Enums.ReservationStatus.Active;
+                        _tableOfRestaurantService.Update(table);
+                    }
 
 
                     //SessionHelper.SetJsonProduct(HttpContext.Session, "siparis", orderSession);
@@ -129,6 +135,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
             ViewBag.Products = _productService.GetAll();
             var orderList=_orderItem.GetAll();
+            TempData["Message"] = "Successful";
             return View(orderList);
         }
         [Authorize(Roles = "chief,admin")]
@@ -140,6 +147,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Ready;
                 _orderItem.Update(entity);
             }
+            TempData["Message"] = "Successful";
             return RedirectToAction("ordertracking", "Orderitem", "manager");
         }
         [Authorize(Roles = "chief,admin")]
@@ -151,6 +159,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Delivered;
                 _orderItem.Update(entity);
             }
+            TempData["Message"] = "Successful";
             return RedirectToAction("ordertracking", "Orderitem", "manager");
         }
         [Authorize(Roles = "chief,admin")]
@@ -181,6 +190,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 }
                 entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Preparing;
                 _orderItem.Update(entity);
+                      TempData["Message"] = "Successful"; ;
                 return RedirectToAction("ordertracking", "orderitem", "manager");
             }
 

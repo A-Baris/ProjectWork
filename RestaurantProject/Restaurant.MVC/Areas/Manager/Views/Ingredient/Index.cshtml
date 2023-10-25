@@ -10,7 +10,8 @@
         <thead>
             <tr>
                 <th>Malzeme Adı</th>
-                <th>Kategorisi</th>
+                <th>Kategori</th>
+                <th>Tedarikçi</th>
                 <th>Fiyat</th>
                 <th>Adet/KG</th>
                 
@@ -22,7 +23,8 @@
 
             <tr>
                 <td>@item.Name</td>
-                <td>@item.Category</td>
+                <td>@item.Category.CategoryName</td>
+                <td>@item.Supplier.CompanyName</td>
                 <td>@item.Price</td>
                 <td>@item.Quantity</td>
                

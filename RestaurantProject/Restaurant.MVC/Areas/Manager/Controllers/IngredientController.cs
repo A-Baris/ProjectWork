@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
@@ -9,18 +10,24 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     public class IngredientController : Controller
     {
         private readonly IIngredientService _ingredientService;
+        private readonly ICategoryService _categoryService;
+        private readonly ISupplierService _supplierService;
 
-        public IngredientController(IIngredientService ingredientService)
+        public IngredientController(IIngredientService ingredientService,ICategoryService categoryService,ISupplierService supplierService )
         {
             _ingredientService = ingredientService;
+            _categoryService = categoryService;
+            _supplierService = supplierService;
         }
         public IActionResult Index()
         {
+            SelectCategoryAndSupplier();
             var ingredientList = _ingredientService.GetAll();
             return View(ingredientList);
         }
         public IActionResult Create()
         {
+            SelectCategoryAndSupplier();
             return View();
         }
         [HttpPost]
@@ -31,19 +38,23 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 Ingredient ingredient = new Ingredient()
                 {
                     Name = ingredientVM.Name,
-                    Category = ingredientVM.Category,
+                    CategoryId = ingredientVM.CategoryId,
+                    SupplierId = ingredientVM.SupplierId,
                     Price = ingredientVM.Price,
                     Quantity = ingredientVM.Quantity,
 
 
                 };
                 _ingredientService.Create(ingredient);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
             }
+            SelectCategoryAndSupplier();
             return View(ingredientVM);
         }
         public async Task<IActionResult> Update(int id)
         {
+            SelectCategoryAndSupplier();
             var ingredient = await _ingredientService.GetbyIdAsync(id);
             if (ingredient != null)
             {
@@ -51,7 +62,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 {
                     Id = id,
                     Name = ingredient.Name,
-                    Category = ingredient.Category,
+                 
                     Price = ingredient.Price,
                     Quantity = ingredient.Quantity,
 
@@ -69,13 +80,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 if (ingredient != null)
                 {
                     ingredient.Name = updateVM.Name;
-                    ingredient.Category = updateVM.Category;
+                    ingredient.CategoryId = updateVM.CategoryId;
+                    ingredient.SupplierId = updateVM.SupplierId;
                     ingredient.Price = updateVM.Price;
                     ingredient.Quantity = updateVM.Quantity;
                     _ingredientService.Update(ingredient);
+                    TempData["Message"] = "Successful";
                     return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
                 }
             }
+            SelectCategoryAndSupplier();
             return View(updateVM);
 
 
@@ -87,10 +101,26 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _ingredientService.Update(entity);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
             }
             return View();
         }
         
+        void SelectCategoryAndSupplier()
+        {
+            ViewBag.Category = _categoryService.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.CategoryName,
+                Value = x.Id.ToString(),
+            });
+
+            ViewBag.Supplier = _supplierService.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.CompanyName,
+                Value = x.Id.ToString(),
+            });
+
+        }
     }
 }

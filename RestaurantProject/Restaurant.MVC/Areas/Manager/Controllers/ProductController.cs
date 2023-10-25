@@ -14,23 +14,24 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IKitchenService _kitchenService;
         private readonly IMenuService _menuService;
+        private readonly ISupplierService _supplierService;
 
-        public ProductController(IProductService productService,ICategoryService categoryService,IKitchenService kitchenService,IMenuService menuService)
+        public ProductController(IProductService productService,ICategoryService categoryService,IKitchenService kitchenService,IMenuService menuService,ISupplierService supplierService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _kitchenService = kitchenService;
             _menuService = menuService;
+            _supplierService = supplierService;
         }
         public IActionResult Index()
         {
             string dish = "Dish";
             string drink = "Drink";
-           
 
-            ViewBag.DishCategoryList = _categoryService.GetAll();
-            ViewBag.KitchenList= _kitchenService.GetAll();
-            ViewBag.MenuList=_menuService.GetAll();
+            SelectOptionList();
+
+
             var dishList=_productService.GetAll();
             ViewBag.DishList = _productService.GetSelectedProducts(dish);
             ViewBag.DrinkList = _productService.GetSelectedProducts(drink);
@@ -39,7 +40,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Create()
         {
-            CategoryAndKitchenList();
+            SelectOptionList();
 
             return View();
         }
@@ -52,27 +53,28 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 {
                     ProductName = productVM.ProductName,
                     Price = productVM.Price,
-                  
+                    SupplierId = productVM.SupplierId,
                     Description = productVM.Description,
                     CategoryId = productVM.CategoryId,
                     KitchenId = productVM.KitchenId,
                     MenuId = productVM.MenuId,
                 };
                 _productService.Create(product);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index", "product", new { area = "Manager" });
             }
-            CategoryAndKitchenList();
+            SelectOptionList();
             return View();
         }
         public async Task<IActionResult> Update(int id)
         {
-            CategoryAndKitchenList();
+            SelectOptionList();
             var updated = await _productService.GetbyIdAsync(id);
             var productUpdate = new ProductVM()
             {
                 ProductName = updated.ProductName,
                 Price = updated.Price,
-               
+                SupplierId = updated.SupplierId,
                 Description = updated.Description,
                 CategoryId = updated.CategoryId,
                 KitchenId = updated.KitchenId,
@@ -89,16 +91,17 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var entity = await _productService.GetbyIdAsync(productUpdate.Id);
                 entity.ProductName = productUpdate.ProductName;
                 entity.Price = productUpdate.Price;
-        
+                entity.SupplierId = productUpdate.SupplierId;
                 entity.Description = productUpdate.Description;
                 entity.CategoryId = productUpdate.CategoryId;
                 entity.KitchenId = productUpdate.KitchenId;
                 entity.MenuId = productUpdate.MenuId;
                 _productService.Update(entity);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index", "product", new { area = "Manager" });
 
             }
-            CategoryAndKitchenList();
+            SelectOptionList();
             return View(productUpdate);
         }
         public async Task<IActionResult> Remove(int id)
@@ -109,12 +112,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 dishEntity.BaseStatus= Entity.Enums.BaseStatus.Deleted;
                 _productService.Update(dishEntity);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index", "product", new { area = "Manager" });
             }
             return View();
         }
 
-        void CategoryAndKitchenList() //liste metodu
+        void SelectOptionList() //liste metodu
         {
             ViewBag.DishCategoryList = _categoryService.GetAll().Select(d => new SelectListItem
             {
@@ -130,6 +134,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             ViewBag.MenuList=_menuService.GetAll().Select(m => new SelectListItem
             {
                 Text = m.MenuName,
+                Value = m.Id.ToString(),
+            });
+            ViewBag.SupplierList = _supplierService.GetAll().Select(m => new SelectListItem
+            {
+                Text = m.CompanyName,
                 Value = m.Id.ToString(),
             });
         }

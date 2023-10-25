@@ -8,7 +8,9 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
         [Required(ErrorMessage ="Boş geçilemez")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Boş geçilemez")]
-        public string Category { get; set; }
+        public int CategoryId { get; set; }
+        [Required(ErrorMessage = "Boş geçilemez")]
+        public int SupplierId { get; set; }
         [Required(ErrorMessage = "Boş geçilemez")]
         public decimal Price { get; set; }
         [Required(ErrorMessage = "Boş geçilemez")]

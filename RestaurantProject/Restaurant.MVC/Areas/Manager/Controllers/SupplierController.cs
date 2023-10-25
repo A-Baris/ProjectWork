@@ -33,8 +33,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 var supplier = _mapper.Map<Supplier>(supplierVM);
                 _supplierService.Create(supplier);
+                TempData["Message"] = "Successful";
+                return RedirectToAction("Index", "supplier", new { area = "manager" });
             }
-            return View();
+            return View(supplierVM);
         }
         public async Task<IActionResult> Update(int Id)
         {
@@ -59,6 +61,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     _mapper.Map(supplierVM, entity); 
                     _supplierService.Update(entity);
                 }
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "supplier", new { area = "manager" });
 
             }
@@ -72,6 +75,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _supplierService.Update(entity);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "supplier", new { area = "manager" });
             }
             return RedirectToAction("Index", "supplier", new { area = "manager" });

@@ -50,7 +50,13 @@
                     </select>
 
                 </div>
-               
+                <div class="form-group">
+                    <label>Tedarikçi</label>
+                    <select asp-items="ViewBag.SupplierList" asp-for="SupplierId" class="form-control">
+                        <option selected="" disable>Tedarikçi Seçimi</option>
+                    </select>
+
+                </div>
                 <div class="text-center">
 
                     <button type="submit" class="btn btn-primary" style="margin-top:10px">Create</button>

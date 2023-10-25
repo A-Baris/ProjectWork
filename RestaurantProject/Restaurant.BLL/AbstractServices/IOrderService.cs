@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Restaurant.BLL.AbstractServices
 {
-    public interface IOrderService:IRepository<Order>
+    public interface IOrderService : IRepository<Order>
     {
-    }
-    
+        public IEnumerable<Order> GetAllDeletedStatus();
+
+    }   
 }

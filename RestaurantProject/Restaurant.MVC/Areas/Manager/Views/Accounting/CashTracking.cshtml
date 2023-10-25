@@ -11,4 +11,37 @@
 </form>
 
 <h1>CashTracking</h1>
+<div class="container" style="margin-left:50px">
+<h2>Ciro Listesi</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Gün</th>
+            <th>Toplam Ciro</th>
+
+        </tr>
+    </thead>
+
+    @foreach (var item in ViewBag.CashTracking)
+    {
+
+
+        <tr>
+            <td>@item.Day</td>
+            <td>@item.TotalPrice</td>
+
+
+
+
+
+        </tr>
+
+
+    }
+
+
+</table>
+
+</div>
 

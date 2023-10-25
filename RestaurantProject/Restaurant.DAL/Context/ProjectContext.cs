@@ -20,7 +20,7 @@ namespace Restaurant.DAL.Context
         }
 
         public DbSet<TableOfRestaurant> TableOfRestaurants { get; set; }
-        public DbSet<Order> Order { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Kitchen> Kitchens { get; set; }
@@ -28,7 +28,7 @@ namespace Restaurant.DAL.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
-       public DbSet<AccountingTransaction> AccountingTransactions { get; set; }
+        public DbSet<AccountingTransaction> AccountingTransactions { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ProductIngredient> ProductIngredients { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
@@ -69,7 +69,7 @@ namespace Restaurant.DAL.Context
 
 
 
-  
+
 
             modelBuilder.Entity<TableOfRestaurant>()
            .HasMany(t => t.Customers)
@@ -90,9 +90,12 @@ namespace Restaurant.DAL.Context
                 .WithOne(p => p.Category)
                 .HasForeignKey(c => c.CategoryId);
 
+            modelBuilder.Entity<Category>()
+              .HasMany(c => c.Ingredients)
+              .WithOne(i => i.Category)
+              .HasForeignKey(c => c.CategoryId);
 
 
-           
 
             modelBuilder.Entity<Kitchen>()
               .HasMany(k => k.Products)
@@ -100,11 +103,11 @@ namespace Restaurant.DAL.Context
               .HasForeignKey(k => k.KitchenId);
 
 
-        
 
 
 
-   
+
+
 
 
             modelBuilder.Entity<Menu>()
@@ -116,15 +119,15 @@ namespace Restaurant.DAL.Context
             modelBuilder.Entity<ProductIngredient>()
                 .HasKey(x => new { x.ProductId, x.IngredientId });
             modelBuilder.Entity<ProductIngredient>()
-                .HasOne(p=>p.Product)
-                .WithMany(p=>p.ProductIngredients)
-                .HasForeignKey(p=>p.ProductId)
+                .HasOne(p => p.Product)
+                .WithMany(p => p.ProductIngredients)
+                .HasForeignKey(p => p.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ProductIngredient>()
-                .HasOne(i=>i.Ingredient)
-                .WithMany(i=>i.ProductIngredients)
-                .HasForeignKey(i=>i.IngredientId)
+                .HasOne(i => i.Ingredient)
+                .WithMany(i => i.ProductIngredients)
+                .HasForeignKey(i => i.IngredientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Supplier>()

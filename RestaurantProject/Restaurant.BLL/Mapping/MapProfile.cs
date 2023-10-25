@@ -15,6 +15,7 @@ namespace Restaurant.BLL.Mapping
         public MapProfile()
         {
             CreateMap<Supplier,SupplierVM>().ReverseMap(); 
+            CreateMap<Product,ProductVM>().ReverseMap(); 
             CreateMap<AccountingTransaction,TransactionVM>().ReverseMap(); 
         }
     }

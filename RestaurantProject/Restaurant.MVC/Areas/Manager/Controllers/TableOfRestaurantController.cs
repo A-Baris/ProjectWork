@@ -50,6 +50,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     EmployeeId = restaurantVM.EmployeId
                 };
                 _tableOfRestaurant.Create(table);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index", "tableofrestaurant", new {area="Manager"});
             }
             EmployeeList();
@@ -100,6 +101,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 table.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _tableOfRestaurant.Update(table);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index", "tableodrestaurant", new { area = "Manager" });
             }
             return View();

@@ -208,10 +208,8 @@ namespace Restaurant.DAL.Migrations
                     b.Property<int>("BaseStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -222,6 +220,7 @@ namespace Restaurant.DAL.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
+                        .HasMaxLength(100)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Quantity")
@@ -234,6 +233,8 @@ namespace Restaurant.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("SupplierId");
 
@@ -587,11 +588,19 @@ namespace Restaurant.DAL.Migrations
 
             modelBuilder.Entity("Restaurant.Entity.Entities.Ingredient", b =>
                 {
+                    b.HasOne("Restaurant.Entity.Entities.Category", "Category")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Restaurant.Entity.Entities.Supplier", "Supplier")
                         .WithMany("Ingredients")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Supplier");
                 });
@@ -706,6 +715,8 @@ namespace Restaurant.DAL.Migrations
 
             modelBuilder.Entity("Restaurant.Entity.Entities.Category", b =>
                 {
+                    b.Navigation("Ingredients");
+
                     b.Navigation("Products");
                 });
 

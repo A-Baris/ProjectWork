@@ -47,8 +47,12 @@
                     <select asp-items="ViewBag.KitchenList" asp-for="KitchenId" class="form-control">
                         <option selected="" disable value="@Model.KitchenId">Mutfak Seçimi</option>
                     </select>
-
-
+                </div>
+                <div class="form-group">
+                    <label>Tedarikçi</label>
+                    <select asp-items="ViewBag.SupplierList" asp-for="SupplierId" class="form-control">
+                        <option selected="" disable value="@Model.SupplierId">Tedarikçi Seçimi</option>
+                    </select>
 
                 </div>
 

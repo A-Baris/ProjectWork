@@ -96,7 +96,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     reservation.CustomerId = customer.Id;
                     _reservationService.Update(reservation);
                 }
-
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index", "reservation", new { area = "manager" });
 
             }
@@ -119,8 +119,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Description = reservation.Description,
                     ReservationStatus = reservation.ReservationStatus,
                 };
-                return View(updated);
-
+              
+               return View(updated);
             }
             return RedirectToAction("index", "reservation", new { area = "manager" });
 
@@ -138,6 +138,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 entity.Description = updatedVM.Description;
                 entity.ReservationStatus = updatedVM.ReservationStatus;
                _reservationService.Update(entity);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Reservation", new {area="manager"});
 
             }
@@ -154,6 +155,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _reservationService.Update(entity);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Reservation", new {area="manager"});
             }
             return View();

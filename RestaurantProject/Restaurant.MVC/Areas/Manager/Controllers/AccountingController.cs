@@ -39,15 +39,24 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public IActionResult CashTracking()
         {
+            
+            var cashList = _orderItemService.GetAllDeletedStatus()
+                .GroupBy(x => x.CreatedDate.Date)
+                .Select(group => new
+            {
+                Day = group.Key,
+                TotalPrice = group.Sum(x => x.TotalPrice),
+            });
+            ViewBag.CashTracking = cashList.ToList();
             return View();
         }
         public IActionResult ReportOfTurnover(int targetYear, int targetMonth)
         {
-//            SELECT DATEPART(WEEKDAY, CreatedDate),SUM(TotalPrice)
-//FROM OrderItems where DATEPART(MONTH, CreatedDate) = DATEPART(MONTH, '2023-10-22') group by DATEPART(WEEKDAY, CreatedDate)
+              // SELECT DATEPART(WEEKDAY, CreatedDate),SUM(TotalPrice)
+             //FROM OrderItems where DATEPART(MONTH, CreatedDate) = DATEPART(MONTH, '2023-10-22') group by DATEPART(WEEKDAY, CreatedDate)
 
 
-            var orderItemsForMonth = _context.Order
+            var orderItemsForMonth = _orderItemService.GetAllDeletedStatus()
                 .Where(item => item.CreatedDate.Year == targetYear && item.CreatedDate.Month == targetMonth)
                 .ToList(); 
 
@@ -80,8 +89,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 var transaction = _mapper.Map<AccountingTransaction>(transactionVM);
                 _transactionService.Create(transaction);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Accounting", new {area="manager"});
             }
+            TempData["ErrorMessage"] = "ModelState is invalid";
             SelectSupplier();
             return View(transactionVM);
         }
@@ -95,6 +106,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var updated = _mapper.Map<TransactionVM>(entity);
                 return View(updated);
             }
+            TempData["ErrorMessage"] = $"{id} is Not found";
             return View("Index");
         }
         [HttpPost]
@@ -107,9 +119,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 {
                     _mapper.Map(transactionVM, entity);
                     _transactionService.Update(entity);
+                    TempData["Message"] = "Successful";
                     return RedirectToAction("index");
                 }
             }
+            TempData["ErrorMessage"] = "ModelState is invalid";
             return View(transactionVM);
 
         }
@@ -120,8 +134,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _transactionService.Update(entity);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index");
             }
+            TempData["ErrorMessage"] = "Not Found";
             return View("Index");
         }
 

@@ -11,12 +11,12 @@
         <thead>
             <tr>
                 <th>Yemek Adı</th>
-                <th>Fiyat</th>
-                
+                <th>Fiyat</th>   
                 <th>Açıklama</th>
                 <th>Kategori</th>
                 <th>Menu</th>
                 <th>Mutfak</th>
+                <th>Tedarikçi</th>
             </tr>
         </thead>
 
@@ -26,12 +26,12 @@
 
             <tr>
                 <td>@item.ProductName</td>
-                <td>@item.Price</td>
-               
+                <td>@item.Price</td>            
                 <td>@item.Description</td>
                 <td>@item.Category.CategoryName</td>
                 <td>@item.Menu?.MenuName</td>
                 <td>@item.Kitchen?.KitchenName</td>
+                <td>@item.Supplier?.CompanyName</td>
                 <td>
                     <a href="/manager/dish/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
                     <a href="/manager/dish/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>

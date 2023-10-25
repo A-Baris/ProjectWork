@@ -13,6 +13,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
 
         public string? Description { get; set; }
         public int CategoryId { get; set; }
+        public int? SupplierId { get; set; }
         public int? KitchenId { get; set; }
         public int? MenuId { get; set; }
     }

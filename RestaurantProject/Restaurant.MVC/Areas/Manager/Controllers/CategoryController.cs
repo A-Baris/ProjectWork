@@ -34,19 +34,27 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     CategoryName = dishCategoryVm.CategoryName
                 };
                 _categoryService.Create(category);
+                TempData["Message"] = "Is created successfully";
                 return RedirectToAction("index", "category", new { area = "Manager" });
             }
-            return View();
+            TempData["ErrorMessage"] = "ModelState is invalid";
+            return View(dishCategoryVm);
         }
         public async Task<IActionResult> Update(int id)
         {
             var category= await _categoryService.GetbyIdAsync(id);
-            var updated = new Category()
+            if (category != null)
             {
-                Id = id,
-                CategoryName = category.CategoryName
-            };
-            return View(updated);
+                var updated = new Category()
+                {
+                    Id = id,
+                    CategoryName = category.CategoryName
+                };
+                TempData["Message"] = "Successful";
+                return RedirectToAction("Index", "Category", new { area = "Manager" });
+            }
+            TempData["ErrorMessage"] = "Successful";
+            return View("index");
         }
         [HttpPost]
         public async Task <IActionResult> Update(CategoryVm updated)
@@ -57,6 +65,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 category.Id= updated.Id;
                 category.CategoryName = updated.CategoryName;
                 _categoryService.Update(category);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index", "category", new { area = "Manager" });
 
             }
@@ -69,6 +78,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _categoryService.Update(entity);
+                TempData["Message"] = "Successful";
                 return RedirectToAction("index", "category", new { area = "Manager" });
             }
             return View();

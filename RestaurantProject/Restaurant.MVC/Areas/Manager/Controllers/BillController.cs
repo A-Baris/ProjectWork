@@ -48,7 +48,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
             var query = from t in _context.TableOfRestaurants
-                        join o in _context.Order on t.Id equals o.TableofRestaurantId
+                        join o in _context.Orders on t.Id equals o.TableofRestaurantId
                         join p in _context.Products on o.ProductId equals p.Id
                         where t.Id == id && o.BaseStatus == 0
                         select new BillDetailVM
@@ -76,7 +76,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             //where t.TableName = 'k-2'
 
 
-            var query = from o in _context.Order
+            var query = from o in _context.Orders
                         join t in _context.TableOfRestaurants on o.TableofRestaurantId equals t.Id
                         where t.TableName == tableName
                         select new BillCompleteVM
@@ -102,7 +102,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
                     }
                 }
-                //işlem mesajı
+                TempData["Message"] = "Successful";
                 return RedirectToAction("billdetail", "bill", new { area = "manager",id=tableEntity.Id });
             }
             return RedirectToAction("index", "bill", new { area = "manager" });
@@ -116,6 +116,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 bill.TotalPrice -= payment;
                 _orderItemService.Update(bill);
+                TempData["Message"] = "Successful";
+                return RedirectToAction("billdetail", "bill", new { area = "manager", id = table.Id });
             }
 
            return RedirectToAction("billdetail", "bill", new {area="manager",id=table.Id});
