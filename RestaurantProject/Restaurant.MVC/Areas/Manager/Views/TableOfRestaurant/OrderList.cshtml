@@ -29,6 +29,10 @@
             <td>@item.Description</td>
             <td>@item.StatusOfOrder</td>
             <td>@item.TotalPrice</td>
+            <td>
+                <a href="/manager/orderitem/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                <a href="/manager/orderitem/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+            </td>
            
         </tr>
     }

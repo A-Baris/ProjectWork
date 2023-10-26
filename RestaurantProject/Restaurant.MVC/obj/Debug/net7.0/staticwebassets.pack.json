@@ -277,6 +277,18 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\test.js",
+      "PackagePath": "staticwebassets\\test.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testpost.js",
+      "PackagePath": "staticwebassets\\testpost.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testpostreservation.js",
+      "PackagePath": "staticwebassets\\testpostreservation.js"
+    },
+    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.Restaurant.MVC.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

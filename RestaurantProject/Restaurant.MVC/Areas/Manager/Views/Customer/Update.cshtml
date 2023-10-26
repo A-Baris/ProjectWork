@@ -34,25 +34,8 @@
                     <span asp-validation-for="Adress" class="text-bg-danger"></span>
 
                 </div>
-                <div class="form-group">
-                    <label asp-for="ReservationDate"></label>
-                    <input asp-for="ReservationDate" class="form-control" value="@Model.ReservationDate" />
-                    <span asp-validation-for="ReservationDate" class="text-bg-danger"></span>
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="ReservationDescription"></label>
-                    <input asp-for="ReservationDescription" class="form-control" value="@Model.ReservationDescription" />
-                    <span asp-validation-for="ReservationDescription" class="text-bg-danger"></span>
-
-                </div>
-                <div class="form-group">
-                    <label>Yemek Kategori</label>
-                    <select asp-items="ViewBag.TableSelect" asp-for="TableOfRestaurantId" class="form-control">
-                        <option selected="" disable value="@Model.TableOfRestaurantId">Masa Seçimi</option>
-                    </select>
-
-                </div>
+               
+               
 
 
                 <div class="text-center">

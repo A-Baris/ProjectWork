@@ -66,14 +66,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDdXN0b21lclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Customer/Test1.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDdXN0b21lclxUZXN0MS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Customer/Test2.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDdXN0b21lclxUZXN0Mi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Customer/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xDdXN0b21lclxVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -144,6 +136,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/OrderItem/SelectProduct.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xPcmRlckl0ZW1cU2VsZWN0UHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/OrderItem/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xPcmRlckl0ZW1cVXBkYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Product/Create.cshtml]
@@ -260,6 +256,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Views/Home/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Views/Home/Reservation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXNlcnZhdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Views/Shared/Error.cshtml]

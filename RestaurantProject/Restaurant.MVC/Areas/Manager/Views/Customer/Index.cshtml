@@ -9,13 +9,10 @@
 
 
 <div class="container" style="margin-left:50px">
- 
-    <h2>Müşteri Ve Rezervasyon Listesi</h2>
+    <h2><a href="/manager/customer/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <h2>Müşteri Listesi</h2>
 
-    <form method="get" action="/manager/customer/Test2">
-        <input type="datetime-local" name="testdate" />
-        <button class="btn btn-info" type="submit">Göster</button>
-    </form>
+ 
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -38,9 +35,7 @@
                 <td>@item.Surname</td>
                 <td>@item.Adress</td>
                 <td>@item.Phone</td>
-            @*     <td>@item.ReservationDate</td>
-                <td>@item.ReservationDescription</td> *@
-                <td>@item.TableOfRestaurant.TableName</td>
+                <td>@item.TableOfRestaurant?.TableName</td>
                 <td>
                     <a href="/manager/customer/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
                     <a href="/manager/customer/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>

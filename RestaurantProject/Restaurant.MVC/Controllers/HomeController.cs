@@ -33,9 +33,15 @@ namespace Restaurant.MVC.Controllers
             return View();
         }
 
-        public IActionResult Register()
+        public IActionResult Reservation()
         {
          
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+
             return View();
         }
         [HttpPost]

@@ -1,8 +1,7 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="container">
+<div class="col-md-2">
 
     <div>
         <a href="/manager/home/index"><button><h2>Manager Area</h2></button></a>
@@ -12,3 +11,60 @@
 
 </div>
 
+<div class="container" style="margin-top:40px">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="form-group d-flex flex-column align-items-center">
+                <h2>Create Product</h2>
+            </div>
+            <form id="productForm">
+                <div class="form-group d-flex flex-column align-items-center">
+                    <label for="ProductName">Product Name:</label>
+                    <input type="text" id="ProductName" name="ProductName" class="form-control">
+                    </div>
+
+                <div class="form-group d-flex flex-column align-items-center">
+                    <label for="Price">Price:</label>
+                    <input type="number" id="Price" name="Price" class="form-control">
+                </div>
+
+
+                <div class="form-group d-flex flex-column align-items-center">
+                    <label for="Description">Description:</label>
+                    <textarea id="Description" name="Description" class="form-control"></textarea>
+                </div>
+
+
+                <div class="form-group d-flex flex-column align-items-center">
+                    <label for="CategoryId">Category:</label>
+                    <select id="CategoryId" name="CategoryId" class="form-control"></select>
+                </div>
+
+
+                <div class="form-group d-flex flex-column align-items-center">
+                    <label for="SupplierId">Supplier:</label>
+                    <input type="text" id="SupplierId" name="SupplierId" class="form-control">
+                </div>
+
+
+                <div class="form-group d-flex flex-column align-items-center">
+                    <label for="MenuId">Menu:</label>
+                    <input type="text" id="MenuId" name="MenuId" class="form-control">
+                </div>
+
+                <div class="form-group d-flex flex-column align-items-center">
+                    <label for="KitchenId">Kitchen:</label>
+                    <input type="text" id="KitchenId" name="KitchenId" class="form-control">
+                </div>
+
+
+
+                <div class="form-group d-flex flex-column align-items-center">
+                    <button class="btn btn-info" type="submit" style="margin-top:10px">Create Product </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/testpost.js"></script>
