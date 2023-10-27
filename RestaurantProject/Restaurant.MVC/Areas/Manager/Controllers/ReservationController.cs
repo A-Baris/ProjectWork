@@ -31,38 +31,20 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var reservationList = _reservationService.GetAll();
             return View(reservationList);
         }
-     
         public IActionResult ReservationDay(DateTime testDate)
         {
             TableAndCustomerSelect();
-            //  select* from Reservations r
-            //join Customers c on r.CustomerId = c.Id
-            //join TableOfRestaurants t on r.TableOfRestaurantId = t.Id
-            //where DATEPART(DAYOFYEAR, r.ReservationDate) = DATEPART(DAYOFYEAR, '2023-10-21');
+         
 
 
-            ViewBag.Tables = _tableOfRestaurantService.GetAll();
-            ViewBag.Customers = _customerService.GetAll();
-            var reservationQuery = (from r in _context.Reservations
-                                   join t in _context.TableOfRestaurants on r.TableOfRestaurantId equals t.Id
-                                   join c in _context.Customers on r.CustomerId equals c.Id
-                                   select new ReservationDayVM
-                                   {
-                                       ReservationId = r.Id,
-                                       ReservationDate = r.ReservationDate,
-                                       TableName = t.TableName,
-                                       CustomerName = $"{c.Name} {c.Surname}",                                      
-                                       ReservationStatus = r.ReservationStatus,
-                                       Description = r.Description,
-                                   }).ToList();
+            var reservationList = _reservationService.GetAll().Where(x => x.ReservationDate.DayOfYear == testDate.DayOfYear).ToList();
 
-            var reservationList = reservationQuery.Where(x=>x.ReservationDate.DayOfYear==testDate.DayOfYear).ToList();
+            ViewBag.ReservationDay = reservationList;
 
-         ViewBag.ReservationDay = reservationList;
-                                 
-                                   
+
             return View();
         }
+
         public IActionResult Create()
         {
             TableAndCustomerSelect();

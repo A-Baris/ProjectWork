@@ -3,7 +3,7 @@
     ViewData["Title"] = "Update";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+
 <div class="container" style="margin-top:40px">
     <div class="row justify-content-center">
         <div class="col-md-4">
@@ -40,9 +40,13 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="ReservationStatus"></label>
-                    <input asp-for="ReservationStatus" class="form-control" value="@Model.ReservationStatus" />
+                    <select class="form-control" asp-for="ReservationStatus" style="background-color:darkorange">
+                        <option>Active</option>
+                        <option>Passive</option>
+                        <option>Pending</option>
+                    </select>
                     <span asp-validation-for="ReservationStatus" class="text-bg-danger"></span>
-
+                    </div>
                
                 <div class="text-center">
 
@@ -53,6 +57,27 @@
         </div>
     </div>
 </div>
+
+
+<div class="container" style="margin-left:50px">
+    <input type="date" id="dateInput">
+    <button id="fetchReservations" class="btn btn-success">Getir</button>
+
+    <table class="table table-bordered" id="reservationTable">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Your ReservationDate.js script -->
+    <script src="~/ReservationDate.js"></script>
 </div>
 
 

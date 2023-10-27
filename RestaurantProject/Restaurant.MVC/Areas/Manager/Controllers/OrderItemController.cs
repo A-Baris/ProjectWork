@@ -19,7 +19,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     public class OrderItemController : Controller
     {
         private readonly IMapper _mapper;
-      
+
         private readonly IEmployeeService _employeeService;
         private readonly IProductService _productService;
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
@@ -27,7 +27,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IOrderService _orderService;
         private readonly IIngredientService _ingredient;
 
-        public OrderItemController(IMapper mapper,IOrderService orderService, IEmployeeService employeeService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context,IIngredientService ingredient)
+        public OrderItemController(IMapper mapper, IOrderService orderService, IEmployeeService employeeService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context, IIngredientService ingredient)
         {
             _mapper = mapper;
             _orderService = orderService;
@@ -35,8 +35,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _productService = productService;
             _tableOfRestaurantService = tableOfRestaurantService;
             _context = context;
-           
-          _ingredient = ingredient;
+
+            _ingredient = ingredient;
         }
 
         public IActionResult Selectproduct(int id)
@@ -46,8 +46,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData["TableId"] = id;
             return View();
         }
-      
-   
+
+
         public IActionResult CreateOrder()
         {
             Select();
@@ -57,21 +57,21 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(int tableId,int Id, OrderItemCreateVM createVM)
+        public async Task<IActionResult> CreateOrder(int tableId, int Id, OrderItemCreateVM createVM)
         {
-            
-            createVM.ProductId= Id;
-        
-         
+
+            createVM.ProductId = Id;
+
+
             var product = await _productService.GetbyIdAsync(Id);
-            if(product==null)
+            if (product == null)
             {
                 return RedirectToAction("selectproduct", "orderitem", new { area = "manager" });
             }
             else
             {
-                var od = _orderService.GetAll();
-                if (od.Any(x => x.TableofRestaurantId == tableId && x.ProductId == Id))
+                var orderitem = _orderService.GetAll();
+                if (orderitem.Any(x => x.TableofRestaurantId == tableId && x.ProductId == Id))
                 {
                     var update = _orderService.GetAll().Where(x => x.TableofRestaurantId == tableId && x.ProductId == Id).FirstOrDefault();
                     update.Quantity += createVM.Quantity;
@@ -83,41 +83,53 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 else
                 {
 
-                    Order orderItem = new Order()
+                    //Order orderItem = new Order()
+                    //{
+                    //    ProductId = product.Id,
+                    //    Quantity = createVM.Quantity,
+                    //    TotalPrice = product.Price * createVM.Quantity, //employeeId düzenle
+                    //    TableofRestaurantId = tableId,
+                    //    EmployeeId = 1,
+                    //    Description = createVM.Description,
+                    //};
+                    if (ModelState.IsValid)
                     {
-                        ProductId = product.Id,
-                        Quantity = createVM.Quantity,
-                        TotalPrice = product.Price * createVM.Quantity, //employeeId düzenle
-                        TableofRestaurantId = tableId,
-                        EmployeeId = 1,
-                        Description = createVM.Description,
-                    };
-                
-                    _orderService.Create(orderItem);
-                    var table = await _tableOfRestaurantService.GetbyIdAsync(orderItem.TableofRestaurantId);
-                    if(table!=null)
-                    {
-                        table.Status = Entity.Enums.ReservationStatus.Active;
-                        _tableOfRestaurantService.Update(table);
+                        var table = await _tableOfRestaurantService.GetbyIdAsync(tableId);
+                        if (table != null)
+                        {
+                            var orderItem = _mapper.Map<Order>(createVM);
+                            orderItem.TableofRestaurantId = tableId;
+                            orderItem.EmployeeId = table.EmployeeId;
+                            orderItem.TotalPrice = product.Price * createVM.Quantity;
+                            _orderService.Create(orderItem);
+                            table.Status = Entity.Enums.ReservationStatus.Active;
+                            _tableOfRestaurantService.Update(table);
+
+                        }
+                       
+                     
+                        TempData["Message"] = "Successful";
+                        TempData["TableId"] = tableId;
+                        ViewBag.Dish = _productService.GetSelectedProducts("Dish");
+                        return View("selectproduct");
                     }
-
-
-                
+                    TempData["ErrorMessage"] = "ModelState is invalid";
+                    return View(createVM);
 
                 }
-             
+
 
             }
-            
+
             TempData["TableId"] = tableId;
             ViewBag.Dish = _productService.GetSelectedProducts("Dish");
             return View("selectproduct");
 
         }
 
-    
 
-       
+
+
         public IActionResult Index()
         {
             var tables = _tableOfRestaurantService.GetAll();
@@ -126,22 +138,22 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-        
+
             var orderItem = await _orderService.GetbyIdAsync(id);
-            if(orderItem!=null)
+            if (orderItem != null)
             {
-                var updated = _mapper.Map<OrderVM>(orderItem);                
+                var updated = _mapper.Map<OrderVM>(orderItem);
                 return View(updated);
             }
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id,OrderVM orderVM)
+        public async Task<IActionResult> Update(int id, OrderVM orderVM)
         {
             var product = await _productService.GetbyIdAsync(orderVM.ProductId);
             var entity = await _orderService.GetbyIdAsync(id);
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _mapper.Map(orderVM, entity);
                 entity.TotalPrice = orderVM.Quantity * product.Price;
@@ -156,11 +168,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         public async Task<IActionResult> Remove(int id)
         {
             var entity = await _orderService.GetbyIdAsync(id);
-            if(entity != null)
+            if (entity != null)
             {
                 _orderService.Remove(entity);
                 TempData["Message"] = "Order is deleted";
-                return RedirectToAction("orderlist", "tableofrestaurant", new { area = "Manager",id=entity.TableofRestaurantId });
+                return RedirectToAction("orderlist", "tableofrestaurant", new { area = "Manager", id = entity.TableofRestaurantId });
             }
             return RedirectToAction("orderlist", "tableofrestaurant", new { area = "Manager", id = entity.TableofRestaurantId });
 
@@ -171,8 +183,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
             ViewBag.Products = _productService.GetAll();
-            var orderList=_orderService.GetAll();
-           
+            var orderList = _orderService.GetAll();
+
             return View(orderList);
         }
         [Authorize(Roles = "chief,admin")]
@@ -200,13 +212,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return RedirectToAction("ordertracking", "Orderitem", "manager");
         }
         [Authorize(Roles = "chief,admin")]
-        public async Task<IActionResult> OrderPreparing(int id) 
+        public async Task<IActionResult> OrderPreparing(int id)
         {
-            // ürün hazırlanmaya başladığında o ürünü oluştumrak için gerekli malzeme miktarı stoktaki malzeme miktarlarından düşülecek
+            // ürün hazırlanmaya başladığında o ürünü oluşturmak için gerekli malzeme miktarı ürün adetine göre stoktaki malzeme miktarlarından düşülecek
             var entity = await _orderService.GetbyIdAsync(id);
             if (entity != null)
             {
-               
+
 
                 var productId = entity.ProductId;
                 var ingredients = _ingredient.GetAll();
@@ -220,14 +232,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                         var ingredient = ingredients.FirstOrDefault(x => x.Id == item.IngredientId);
                         if (ingredient != null)
                         {
-                            ingredient.Quantity -= item.Quantity;
+                            ingredient.Quantity -= item.Quantity * entity.Quantity;
                             _ingredient.Update(ingredient);
                         }
                     }
                 }
                 entity.StatusOfOrder = Restaurant.Entity.Enums.OrderStatus.Preparing;
                 _orderService.Update(entity);
-                      TempData["Message"] = "Successful"; ;
+                TempData["Message"] = "Successful"; ;
                 return RedirectToAction("ordertracking", "orderitem", "manager");
             }
 
@@ -236,16 +248,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         }
 
-  
+
         void Select()
         {
-          
+
             ViewBag.TableSelect = _tableOfRestaurantService.GetAll().Select(x => new SelectListItem
             {
                 Text = x.TableName,
                 Value = x.Id.ToString()
             });
-         
+
 
         }
 

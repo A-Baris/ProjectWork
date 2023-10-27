@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
+using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
@@ -12,12 +14,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IIngredientService _ingredientService;
         private readonly ICategoryService _categoryService;
         private readonly ISupplierService _supplierService;
+        private readonly IMapper _mapper;
 
-        public IngredientController(IIngredientService ingredientService,ICategoryService categoryService,ISupplierService supplierService )
+        public IngredientController(IIngredientService ingredientService,ICategoryService categoryService,ISupplierService supplierService,IMapper mapper )
         {
             _ingredientService = ingredientService;
             _categoryService = categoryService;
             _supplierService = supplierService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -31,24 +35,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(IngredientCreateVM ingredientVM)
+        public IActionResult Create(IngredientVM ingredientVM)
         {
             if (ModelState.IsValid)
             {
-                Ingredient ingredient = new Ingredient()
-                {
-                    Name = ingredientVM.Name,
-                    CategoryId = ingredientVM.CategoryId,
-                    SupplierId = ingredientVM.SupplierId,
-                    Price = ingredientVM.Price,
-                    Quantity = ingredientVM.Quantity,
-
-
-                };
+                var ingredient = _mapper.Map<Ingredient>(ingredientVM );
                 _ingredientService.Create(ingredient);
                 TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
             }
+            TempData["ErrorMessage"] = "ModelState is invalid";
             SelectCategoryAndSupplier();
             return View(ingredientVM);
         }
@@ -58,42 +54,38 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var ingredient = await _ingredientService.GetbyIdAsync(id);
             if (ingredient != null)
             {
-                var updateEntity = new IngredientUpdateVM
-                {
-                    Id = id,
-                    Name = ingredient.Name,
-                 
-                    Price = ingredient.Price,
-                    Quantity = ingredient.Quantity,
-
-                };
+                var updateEntity = _mapper.Map<IngredientVM>(ingredient);
                 return View(updateEntity);
+
             }
-            return View(id);
+            TempData["ErrorMessage"] = "Ingredient is not found";
+            return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
         }
         [HttpPost]
-        public async Task<IActionResult> Update(IngredientUpdateVM updateVM)
+        public async Task<IActionResult> Update(int id, IngredientVM updateVM)
         {
-            if (ModelState.IsValid)
+            var ingredient = await _ingredientService.GetbyIdAsync(id);
+            if (ingredient != null)
             {
-                var ingredient = await _ingredientService.GetbyIdAsync(updateVM.Id);
-                if (ingredient != null)
+                if (ModelState.IsValid)
                 {
-                    ingredient.Name = updateVM.Name;
-                    ingredient.CategoryId = updateVM.CategoryId;
-                    ingredient.SupplierId = updateVM.SupplierId;
-                    ingredient.Price = updateVM.Price;
-                    ingredient.Quantity = updateVM.Quantity;
+                    _mapper.Map(updateVM, ingredient);
                     _ingredientService.Update(ingredient);
-                    TempData["Message"] = "Successful";
+                    TempData["Message"] = "Updated";
                     return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
                 }
-            }
-            SelectCategoryAndSupplier();
-            return View(updateVM);
 
+                TempData["ErrorMessage"] = "ModelState is invalid";
+                SelectCategoryAndSupplier();
+                return View(updateVM);
+            }
+            TempData["ErrorMessage"] = "Id is not found";
+            return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
 
         }
+
+
+    
         public async Task<IActionResult> Remove(int id)
         {
             var entity = await _ingredientService.GetbyIdAsync(id);
@@ -101,7 +93,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _ingredientService.Update(entity);
-                TempData["Message"] = "Successful";
+                TempData["Message"] = "Deleted";
                 return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
             }
             return View();

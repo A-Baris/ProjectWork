@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
+using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
@@ -10,10 +12,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     public class KitchenController : Controller
     {
         private readonly IKitchenService _kitchenService;
+        private readonly IMapper _mapper;
 
-        public KitchenController(IKitchenService kitchenService)
+        public KitchenController(IKitchenService kitchenService,IMapper mapper)
         {
             _kitchenService = kitchenService;
+          _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -30,43 +34,44 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             if(ModelState.IsValid)
             {
-                Kitchen kitchen = new Kitchen()
-                {
-                    KitchenName = kitchenVM.KitchenName,
-                    Description = kitchenVM.Description,
-                };
+              var kitchen =_mapper.Map<Kitchen>(kitchenVM);
                 _kitchenService.Create(kitchen);
                 TempData["Message"] = "Successful";
                 return RedirectToAction("index", "kitchen", new { area = "Manager" });
             }
+            TempData["ErrorMessage"] = "ModelState is invalid";
             return View(kitchenVM);
         }
         public async Task<IActionResult> Update(int id)
         {
             var kitchen = await _kitchenService.GetbyIdAsync(id);
-            var updated = new KitchenVM()
+           if(kitchen != null)
             {
-                Id = id,
-                KitchenName = kitchen.KitchenName,
-                Description = kitchen.Description
-            };
-           
-            return View(updated);
+                var updated = _mapper.Map<KitchenVM>(kitchen);
+                return View(updated);
+            }
+            TempData["ErrorMessage"] = "Id is not found";
+            return RedirectToAction("index", "kitchen", new { area = "Manager" });
         }
         [HttpPost]
-        public async Task<IActionResult> Update(KitchenVM updated)
+        public async Task<IActionResult> Update(int id,KitchenVM updated)
         {
-            if(ModelState.IsValid)
+            var kitchen = await _kitchenService.GetbyIdAsync(id);
+            if (kitchen != null)
             {
-                var kitchenEntity =  await _kitchenService.GetbyIdAsync(updated.Id);
-                kitchenEntity.KitchenName = updated.KitchenName;
-                kitchenEntity.Description= updated.Description;
-                _kitchenService.Update(kitchenEntity);
-                TempData["Message"] = "Successful";
-                return RedirectToAction("index", "kitchen", new { area = "Manager" });
+                if (ModelState.IsValid)
+                {
+                    _mapper.Map(updated, kitchen);
+                    _kitchenService.Update(kitchen);
+
+                    TempData["Message"] = "Updated";
+                    return RedirectToAction("index", "kitchen", new { area = "Manager" });
+                }
+                TempData["ErrorMessage"] = "ModelState is invalid";
+                return View(updated);
             }
-            
-            return View();
+            TempData["ErrorMessage"] = "Id is not found";
+            return RedirectToAction("index", "kitchen", new { area = "Manager" });
         }
         public async Task<IActionResult> Remove(int id)
         {
@@ -78,7 +83,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 TempData["Message"] = "Successful";
                 return RedirectToAction("index", "kitchen", new { area = "Manager" });
             }
-            return View();
+            TempData["ErrorMessage"] = "Id is not found";
+            return RedirectToAction("index", "kitchen", new { area = "Manager" });
         }
        
 

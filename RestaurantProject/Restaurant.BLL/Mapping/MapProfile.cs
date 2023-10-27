@@ -23,6 +23,11 @@ namespace Restaurant.BLL.Mapping
             CreateMap<Customer,CustomerDTO>().ReverseMap();
             CreateMap<Customer,CustomerVM>().ReverseMap();
             CreateMap<Order,OrderVM>().ReverseMap();
+            CreateMap<Order,OrderItemCreateVM>().ReverseMap();
+            CreateMap<Employee,EmployeeVM>().ReverseMap();
+            CreateMap<Ingredient,IngredientVM>().ReverseMap();
+            CreateMap<Kitchen,KitchenVM>().ReverseMap();
+            CreateMap<Menu,MenuVM>().ReverseMap();
         }
     }
 }

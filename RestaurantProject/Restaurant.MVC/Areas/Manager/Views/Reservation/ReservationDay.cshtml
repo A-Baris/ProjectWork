@@ -1,92 +1,19 @@
-﻿@model ReservationCreateVM
+﻿
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "ReservationDay";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container" style="margin-top:40px">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-
-            <h1>Müşteri ve Rezervasyon Oluştur</h1>
-            <form method="post" action="/manager/reservation/create">
-                <div class="form-group">
-                    <label asp-for="ReservationDate"></label>
-                    <input asp-for="ReservationDate" class="form-control" type="datetime-local" />
-                    <span asp-validation-for="ReservationDate" class="text-bg-danger"></span>
-
-                </div>
-
-                <div class="form-group">
-                    <label>Müşteri</label>
-                    <select asp-items="ViewBag.Customer" asp-for="CustomerId" class="form-control">
-                        <option selected="" disable value="">Müşteri</option>
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-                    <label>Masa</label>
-                    <select asp-items="ViewBag.Table" asp-for="TableOfRestaurantId" class="form-control">
-                        <option selected="" disable value="">Masa Seçimi</option>
-                    </select>
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-bg-danger"></span>
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="Name"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-bg-danger"></span>
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="Surname"></label>
-                    <input asp-for="Surname" class="form-control" />
-                    <span asp-validation-for="Surname" class="text-bg-danger"></span>
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="Adress"></label>
-                    <input asp-for="Adress" class="form-control" />
-                    <span asp-validation-for="Adress" class="text-bg-danger"></span>
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="Phone"></label>
-                    <input asp-for="Phone" class="form-control" />
-                    <span asp-validation-for="Phone" class="text-bg-danger"></span>
-
-                </div>
-
-
-                <div class="text-center">
-
-                    <button type="submit" class="btn btn-primary" style="margin-top:10px">Create</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
-
 <div class="container" style="margin-left:50px">
-   
-        <form method="get" action="/manager/reservation/reservationday">
-            <input type="datetime-local" name="testdate" />
-            <button class="btn btn-info" type="submit">Göster</button>
-        </form>
-        <div>
-            <a href="/manager/reservation">back to Index</a>
-        </div>
-    
+
+    <form method="get" action="/manager/reservation/reservationday">
+        <input type="datetime-local" name="testdate" />
+        <button class="btn btn-info" type="submit">Göster</button>
+    </form>
+    <div>
+        <a href="/manager/reservation">back to Index</a>
+    </div>
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -98,29 +25,29 @@
                 <th>Not</th>
                 <th></th>
 
-             
+
 
             </tr>
         </thead>
 
-        @foreach (var item in ViewBag.ReservationDay as List<ReservationDayVM>)
+        @foreach (var item in ViewBag.ReservationDay as List<Reservation>)
         {
 
 
             <tr>
-                <td>@item.ReservationId</td>
+                <td>@item.Id</td>
                 <td>@item.ReservationDate</td>
-                <td>@item.TableName</td>
-                <td>@item.CustomerName</td>
+                <td>@item.TableOfRestaurant?.TableName</td>
+                <td>@item.Customer?.Name</td>
                 <td>@item.ReservationStatus</td>
                 <td>@item.Description</td>
                 <td>
 
-                    <a href="/manager/reservation/update/@item.ReservationId"><button class="btn btn-outline-primary">Güncelle</button></a>
-                    <a href="/manager/reservation/remove/@item.ReservationId"><button class="btn btn-danger">Sil</button></a>
+                    <a href="/manager/reservation/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/reservation/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
 
                 </td>
-      
+
 
 
             </tr>
@@ -132,5 +59,4 @@
     </table>
 
 </div>
-
 

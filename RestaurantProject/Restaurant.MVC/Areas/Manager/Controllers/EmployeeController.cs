@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
+using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -9,10 +12,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService,IMapper mapper)
         {
             _employeeService = employeeService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -29,60 +34,55 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             if (ModelState.IsValid)
             {
-                Employee employee= new Employee()
-                {
-                    Name = employeeVM.Name,
-                    Surname = employeeVM.Surname,
-                    Phone = employeeVM.Phone,
-                    TcNo = employeeVM.TcNo,
-                    Title= employeeVM.Title,
-                    Notes = employeeVM.Notes,
-                };
+                 
+                var employee = _mapper.Map<Employee>(employeeVM);
                 _employeeService.Create(employee);
                 TempData["Message"] = "Successful";
-                return RedirectToAction("Index", "Employee");  
+                return RedirectToAction("Index", "employee", new {area="manager"});
 
             }
+            TempData["ErrorMessage"] = "ModelState is valid";
             return View(employeeVM);
         }
         public async Task<IActionResult> Update(int id)
         {
             var employee = await _employeeService.GetbyIdAsync(id);
-            var updated = new EmployeeVM
+          if(employee!=null)
             {
-                Id = id,
-                Name = employee.Name,
-                Surname = employee.Surname,
-                Phone = employee.Phone,
-                TcNo = employee.TcNo,
-                Title= employee.Title,
-                Notes = employee.Notes,
-            };
-            return View(updated);
+                var updated = _mapper.Map<EmployeeVM>(employee);
+                return View(updated);
+
+            }
+            TempData["ErrorMessage"] = $"{id} is not found";
+          return View("index");
+           
         }
         [HttpPost]
-        public async  Task<IActionResult> Update(EmployeeVM updated)
+        public async  Task<IActionResult> Update(int id,EmployeeVM updated)
         {
-            if (ModelState.IsValid)
+            var employee = await _employeeService.GetbyIdAsync(id);
+            if (employee != null)
             {
-                var employeeUpdated = await _employeeService.GetbyIdAsync(updated.Id);
-                employeeUpdated.Name = updated.Name;
-                employeeUpdated.Surname = updated.Surname;
-                employeeUpdated.Phone = updated.Phone;
-                employeeUpdated.TcNo = updated.TcNo;
-                employeeUpdated.Title = updated.Title;
-                employeeUpdated.Notes = updated.Notes;
 
-                _employeeService.Update(employeeUpdated);
-                TempData["Message"] = "Successful";
-                return RedirectToAction("Index","Manager");
 
-            }
-            else
-            {
+                if (ModelState.IsValid)
+                {
+
+                    _mapper.Map(updated, employee);
+                    _employeeService.Update(employee);
+                    TempData["Message"] = "Successful";
+                    return RedirectToAction("Index", "employee", new { area = "manager" });
+
+                }
+                TempData["ErrorMessage"] = "ModelState is valid";
                 return View(updated);
             }
-            
+            TempData["ErrorMessage"] = "Employee is not found";
+            return View("index");
+
+
+
+
         }
 
         public async Task<IActionResult> Remove(int id)

@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Restaurant.MVC.bundle.scp.css"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\ReservationDate.js",
+      "PackagePath": "staticwebassets\\ReservationDate.js"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\assets\\demo\\chart-area-demo.js",
       "PackagePath": "staticwebassets\\assets\\demo\\chart-area-demo.js"
     },
