@@ -69,6 +69,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // Güncelleme yapılırken yeni toplam fiyat eski toplam fiyatla  toplanıp ve toplam adete bölünerek yeni güncel birim fiyatı ortaya çıkar.
+                    updateVM.Price = ((ingredient.Quantity * ingredient.Price) + (updateVM.Price * updateVM.Quantity)) / (ingredient.Quantity + updateVM.Quantity); 
+                    //Güncellenen adet eski adet miktarına dahil edilerek stok kontrollü şekilde arttırılır
+                    updateVM.Quantity = (ingredient.Quantity + updateVM.Quantity);
                     _mapper.Map(updateVM, ingredient);
                     _ingredientService.Update(ingredient);
                     TempData["Message"] = "Updated";

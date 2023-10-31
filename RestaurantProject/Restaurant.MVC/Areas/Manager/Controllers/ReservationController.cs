@@ -53,37 +53,50 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public IActionResult Create(ReservationCreateVM createVM)
         {
-            if(ModelState.IsValid)
+            var tables = _tableOfRestaurantService.GetAll().ToList();
+            var reservations = _reservationService.GetAll().Where(x => x.ReservationDate.DayOfYear == createVM.ReservationDate.DayOfYear).ToList();
+        
+
+            if (tables.Count > reservations.Count)
             {
-                Reservation reservation = new Reservation()
-                {
-                    ReservationDate = createVM.ReservationDate,
-                    TableOfRestaurantId = createVM.TableOfRestaurantId,
-                    CustomerId = createVM.CustomerId,
-                    Description = createVM.Description,
 
-                };
-                _reservationService.Create(reservation);
-                if (reservation.CustomerId == null)
-                {
 
-                    Customer customer = new Customer()
+                if (ModelState.IsValid)
+                {
+                    Reservation reservation = new Reservation()
                     {
-                        Name = createVM.Name,
-                        Surname = createVM.Surname,
-                        Phone = createVM.Phone,
-                        Adress = createVM.Adress,
-                    };
-                    _customerService.Create(customer);
-                    reservation.CustomerId = customer.Id;
-                    _reservationService.Update(reservation);
-                }
-                TempData["Message"] = "Successful";
-                return RedirectToAction("index", "reservation", new { area = "manager" });
+                        ReservationDate = createVM.ReservationDate,
+                        TableOfRestaurantId = createVM.TableOfRestaurantId,
+                        CustomerId = createVM.CustomerId,
+                        Description = createVM.Description,
 
+                    };
+                    _reservationService.Create(reservation);
+                    if (reservation.CustomerId == null)
+                    {
+
+                        Customer customer = new Customer()
+                        {
+                            Name = createVM.Name,
+                            Surname = createVM.Surname,
+                            Phone = createVM.Phone,
+                            Adress = createVM.Adress,
+                        };
+                        _customerService.Create(customer);
+                        reservation.CustomerId = customer.Id;
+                        _reservationService.Update(reservation);
+                    }
+                    TempData["Message"] = "Successful";
+                    return RedirectToAction("index", "reservation", new { area = "manager" });
+
+                }
+                TableAndCustomerSelect();
+                TempData["ErrorMessage"] = "ModelState is invalid";
+                return View(createVM);
             }
-            TableAndCustomerSelect();
+            TempData["ErrorMessage"] = "Reservation is full in the day";
             return View(createVM);
+
         }
 
         public async Task<IActionResult> Update(int id)
@@ -142,6 +155,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
             return View();
         }
+
+    
 
         void TableAndCustomerSelect()
         {

@@ -3,11 +3,22 @@
     ViewData["Title"] = "SelectTable";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model)
+            {
+                <div class="card-body" >
 
-@foreach (var item in Model)
-{
-    <div style="width:80px;height:80px">
-    <a href="/manager/orderitem/selectproduct/@item.Id"><button class="btn btn-outline-primary">@item.TableName</button></a>
+                    
+                        <div class="col-md-4">
+                        <a href="/manager/orderitem/selectproduct/@item.Id"><button class="btn btn-outline-primary" style="height:200px;width:200px"><h2>@item.TableName</h2></button></a>
+                        </div>
+                 
+                </div>
+
+            }
+        </div>
     </div>
-}
+</section>
 

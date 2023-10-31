@@ -10,7 +10,9 @@
 }
 
 <div class="container" style="margin-left:50px">
-    <h2>Hesap Detay</h2>    
+    <h2>Hesap Detay</h2>
+    <br />
+    <a href="/manager/bill/">Hesaplar Dön</a>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -45,29 +47,57 @@
         }
       
         </table>
-        <div class="row">
-        <div class="col-md-4" style="background-color:green">
-            <h2 style="color:white">Toplam tutar: @totalAccount TL</h2>       
-         </div>
-
-       
-
-
-      <div class="col-md-8 text-right">
-            <a href="/manager/bill/completepayment?tableName=@tableName"><button class="btn btn-primary">Ödemeyi Tamamla</button></a>
-        </div>
+<div class="row">
+    <div class="col-md-4" style="background-color: green">
+        <h2 style="color: white">Hesap tutar: <span id="totalAmount">@totalAccount</span> TL</h2>
     </div>
-         <br />
-     
-    <form method="get" action="/manager/bill/partofpayment">
-        <input type="hidden" name="tableName" value="@tableName" />
-        <input type="number" name="payment" />
-        <button type="submit" class="btn btn-primary">Ödeme Al</button>
+
+    <div class="col-md-8 text-right" >
+        <a href="/manager/bill/completepayment?tableName=@tableName"><button class="btn btn-success">Ödemeyi Tamamla</button></a>
+    </div>
+    </div>
+    <br />
+    <form id="reducePaymentForm">
+        <input type="number" id="reductionAmount" step="0.01" placeholder="0" />
+        <button type="button" id="reduceButton" class="btn btn-primary">Ödeme Ekle</button>
     </form>
 
-    <a href="/manager/bill/">Hesaplar Dön</a>
+    <label for="reductionAmount"><h4>Ödeme Tutar: </h4><span id="labelValue">0 TL</span></label>
+  
+@* 
+    Alınan ödeme miktarı Toplam hesap tutarından parça parça düşülerek toplam tutar da kalan miktarı görebiliriz. 
+    Böylelikle veritabanını etkilemeden parça parça ödemeler alıp toplam tutar karşılandığında ödeme tamamlaya tıklar ve veritabanına iletiliriz.
+    Ödeme tamamlandığında günlük ciro olarak o gün ki tarihe eklenir *@
+    <script>
+ 
+        document.getElementById("reduceButton").addEventListener("click", function () {
+            var reductionAmount = parseFloat(document.getElementById("reductionAmount").value);
+            var currentTotal = parseFloat(document.getElementById("totalAmount").innerText);
 
-</div>
+            if (!isNaN(reductionAmount) && reductionAmount > 0) {
+                var newTotal = currentTotal - reductionAmount;
+                document.getElementById("totalAmount").innerText = newTotal.toFixed(2);
+            }
+
+            var currentLabelValue = parseFloat(document.getElementById("labelValue").innerText);
+            var newLabelValue = currentLabelValue + reductionAmount;
+            document.getElementById("labelValue").innerText = newLabelValue.toFixed(2);
+
+           
+            document.getElementById("reductionAmount").value = "";
+        });
+    </script>
+
+
+  
+
+
+    </div>
+     
+
+
+
+
 
 
 

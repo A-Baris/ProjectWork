@@ -127,7 +127,7 @@
                     </div>
                 </nav>
             </div>
-            <div id="layoutSidenav_content">
+        <div id="layoutSidenav_content" @* style="background: rgb(141,146,159);background: linear-gradient(90deg, rgba(141,146,159,1) 0%, rgba(77,87,149,1) 50%, rgba(132,137,142,1) 100%);" *@>
             <div class="message-container">
                 @if (TempData["Message"] != null)
                 {
@@ -147,12 +147,13 @@
                     </div>
                 }
             </div>
+
             <!--RenderBody Start-->
             @RenderBody()
 
 
 
-
+        
 
             <!--RenderBody End-->
                 <footer class="py-4 bg-light mt-auto">

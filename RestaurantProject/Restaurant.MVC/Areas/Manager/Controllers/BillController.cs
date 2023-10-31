@@ -108,20 +108,20 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return RedirectToAction("index", "bill", new { area = "manager" });
         }
 
-        public async Task<IActionResult> PartOfPayment(string tableName,decimal payment)
-        {
-            var table = _tableOfRestaurantService.GetAll().Where(x => x.TableName == tableName).FirstOrDefault();
-            var bill = _orderItemService.GetAll().Where(x=>x.TableofRestaurantId==table.Id && x.BaseStatus == Entity.Enums.BaseStatus.Active).FirstOrDefault();
-            if (bill != null)
-            {
-                bill.TotalPrice -= payment;
-                _orderItemService.Update(bill);
-                TempData["Message"] = "Successful";
-                return RedirectToAction("billdetail", "bill", new { area = "manager", id = table.Id });
-            }
+        //public async Task<IActionResult> PartOfPayment(string tableName,decimal payment)
+        //{
+        //    var table = _tableOfRestaurantService.GetAll().Where(x => x.TableName == tableName).FirstOrDefault();
+        //    var bill = _orderItemService.GetAll().Where(x=>x.TableofRestaurantId==table.Id && x.BaseStatus == Entity.Enums.BaseStatus.Active).FirstOrDefault();
+        //    if (bill != null)
+        //    {
+        //        bill.TotalPrice -= payment;
+        //        _orderItemService.Update(bill);
+        //        TempData["Message"] = "Successful";
+        //        return RedirectToAction("billdetail", "bill", new { area = "manager", id = table.Id });
+        //    }
 
-           return RedirectToAction("billdetail", "bill", new {area="manager",id=table.Id});
-        }
+        //   return RedirectToAction("billdetail", "bill", new {area="manager",id=table.Id});
+        //}
 
       
     }

@@ -43,7 +43,7 @@ builder.Services.ConfigureApplicationCookie(x =>
         Name = "MyRestaurantCookie"
     };
     x.SlidingExpiration = true;
-    x.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    x.ExpireTimeSpan = TimeSpan.FromHours(12);
 });
 
 //Password settings

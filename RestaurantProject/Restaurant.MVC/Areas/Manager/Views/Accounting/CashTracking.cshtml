@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "CashTracking";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+    var totalTurnover = 0;
 }
 
 <form method="get" action="/manager/Accounting/reportofturnover">
@@ -25,12 +26,12 @@
 
     @foreach (var item in ViewBag.CashTracking)
     {
-
+            totalTurnover += @item.TotalPrice;
 
         <tr>
             <td>@item.Day</td>
             <td>@item.TotalPrice</td>
-
+            
 
 
 
@@ -42,6 +43,11 @@
 
 
 </table>
+    
+    <h3 align="right">Toplam Ciro : @totalTurnover TL</h3>
+        
+     
+
 
 </div>
 
