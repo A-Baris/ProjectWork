@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Restaurant.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class restaurant001 : Migration
+    public partial class init1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -246,6 +246,7 @@ namespace Restaurant.DAL.Migrations
                     Surname = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Adress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     TableOfRestaurantId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -336,7 +337,6 @@ namespace Restaurant.DAL.Migrations
                     TableOfRestaurantId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReservationStatus = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),

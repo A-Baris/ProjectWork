@@ -32,6 +32,7 @@ namespace Restaurant.DAL.Context
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ProductIngredient> ProductIngredients { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
 
 
 

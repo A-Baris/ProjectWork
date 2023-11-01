@@ -98,6 +98,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbmdyZWRpZW50XFVwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Invoice/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbnZvaWNlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Invoice/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbnZvaWNlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Invoice/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xJbnZvaWNlXFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Program Files/GitHub/ProjectWork/RestaurantProject/Restaurant.MVC/Areas/Manager/Views/Kitchen/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlclxWaWV3c1xLaXRjaGVuXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

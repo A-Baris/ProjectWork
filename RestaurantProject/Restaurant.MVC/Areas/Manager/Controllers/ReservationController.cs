@@ -52,15 +52,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(ReservationCreateVM createVM)
+        public async Task<IActionResult> Create(ReservationCreateVM createVM)
         {
             var tables = _tableOfRestaurantService.GetAll().ToList();
             var reservations = _reservationService.GetAll().Where(x => x.ReservationDate.DayOfYear == createVM.ReservationDate.DayOfYear).ToList();
-        
+          
+          
 
             if (tables.Count > reservations.Count)
             {
-
+                
 
                 if (ModelState.IsValid)
                 {
@@ -70,7 +71,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                         TableOfRestaurantId = createVM.TableOfRestaurantId,
                         CustomerId = createVM.CustomerId,
                         Description = createVM.Description,
-                        Email = createVM.Email,
+                       
 
                     };
                     _reservationService.Create(reservation);
@@ -83,13 +84,23 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                             Surname = createVM.Surname,
                             Phone = createVM.Phone,
                             Adress = createVM.Adress,
+                            Email = createVM.Email,
                         };
                         _customerService.Create(customer);
                         reservation.CustomerId = customer.Id;
+                      
                         _reservationService.Update(reservation);
                     }
-                    MailSender.SendEmail(createVM.Email, "Rezervasyon Bilgisi", $"Sayın {createVM.Name} {createVM.Surname},\nRezervasyonunuz başarıyla oluşturulmuştur." +
-                                                 $" \nRezervasyon Tarihi : {createVM.ReservationDate}  \nNot: {createVM.Description} \nİyi günler dileriz..");
+                    if (createVM.Email != null)
+                    {
+                        MailSender.SendEmail(createVM.Email, "Rezervasyon Bilgisi", $"Sayın {createVM.Name} {createVM.Surname},\nRezervasyonunuz başarıyla oluşturulmuştur." +
+                                                     $" \nRezervasyon Tarihi : {createVM.ReservationDate}  \nNot: {createVM.Description} \nİyi günler dileriz..");
+                    }
+                    //else
+                    //{
+                    //    MailSender.SendEmail(createVM.Email, "Rezervasyon Bilgisi", $"Sayın {createVM.Name} {createVM.Surname},\nRezervasyonunuz başarıyla oluşturulmuştur." +
+                    //                                 $" \nRezervasyon Tarihi : {createVM.ReservationDate}  \nNot: {createVM.Description} \nİyi günler dileriz..");
+                    //}
                     TempData["Message"] = "Successful";
                     return RedirectToAction("index", "reservation", new { area = "manager" });
 

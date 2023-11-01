@@ -1,0 +1,57 @@
+﻿@model List<Invoice>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-left:50px">
+    <h2>Fatura Listesi Listesi</h2>
+    <h2><a href="/manager/invoice/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tarih</th>
+                <th>Müşteri Adı</th>
+                <th>Vergi Adresi</th>
+                <th>Ara Toplam</th>
+                <th>KDV</th>
+                <th>Total</th>
+                <th>Şirket</th>
+                <th>Açıklama</th>
+
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.InvoiceDate</td>
+                <td>@item.CustomerName</td>
+                <td>@item.TaxAdress</td>
+                <td>@item.SubTotal</td>
+                <td>@item.KDV</td>
+                <td>@item.Total</td>
+                <td>@item.CompanyName</td>
+                <td>@item.Description</td>
+
+                <td>
+                    <a href="/manager/invoice/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/invoice/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+                </td>
+
+
+
+            </tr>
+
+
+        }
+
+    </table>
+
+</div>
+

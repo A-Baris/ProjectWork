@@ -28,6 +28,7 @@ namespace Restaurant.BLL.Mapping
             CreateMap<Ingredient,IngredientVM>().ReverseMap();
             CreateMap<Kitchen,KitchenVM>().ReverseMap();
             CreateMap<Menu,MenuVM>().ReverseMap();
+            CreateMap<Invoice,InvoiceVM>().ReverseMap();
         }
     }
 }

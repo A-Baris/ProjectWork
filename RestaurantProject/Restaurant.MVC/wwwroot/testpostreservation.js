@@ -50,7 +50,10 @@ $('#form1').submit(function (event) {
         data: formData,
         success: function (data) {
             console.log('Reservation created successfully:', data);
-            // Optionally, you can display a success message or redirect the user.
+            if (data === 'Ok') {
+                // Redirect to the MVC Home Index
+                window.location.href = '/Home/Index';
+            }
             $('#form1')[0].reset();
         },
         error: function (err) {

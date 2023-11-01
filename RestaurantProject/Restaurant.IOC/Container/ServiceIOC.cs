@@ -31,6 +31,7 @@ namespace Restaurant.IOC.Container
             services.AddScoped<ISupplierService, SupplierService>();           
             services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IAccountingTransactionService, AccountingTransactionService>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
 
             //automap servise ekledik
             services.AddAutoMapper(typeof(MapProfile));

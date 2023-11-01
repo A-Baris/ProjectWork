@@ -12,8 +12,8 @@ using Restaurant.DAL.Context;
 namespace Restaurant.DAL.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20231031133925_restaurant001")]
-    partial class restaurant001
+    [Migration("20231101132700_init1")]
+    partial class init1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,6 +122,11 @@ namespace Restaurant.DAL.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -448,10 +453,6 @@ namespace Restaurant.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("datetime2");

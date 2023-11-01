@@ -15,7 +15,7 @@ namespace Restaurant.Entity.Entities
         public int? CustomerId { get; set; }
         [MaxLength(250)]
         public string Description { get; set; }
-        public string Email { get; set; }
+
         public ReservationStatus ReservationStatus { get; set; }
 
         public TableOfRestaurant? TableOfRestaurant { get; set; }

@@ -17,6 +17,8 @@ namespace Restaurant.Entity.Entities
         public string? Adress { get; set; }
         [MaxLength(11)]
         public string Phone { get; set; }
+        [MaxLength(250)]
+        public string Email { get; set; }
 
         public int? TableOfRestaurantId { get;set; }
         public TableOfRestaurant? TableOfRestaurant { get;set; }

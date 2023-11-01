@@ -41,12 +41,14 @@ namespace Restaurant.API.Controllers
             reservationEntity.CustomerId = customerEntity.Id;
             _reservationService.Create(reservationEntity);
 
-            MailSender.SendEmail(reservationCustomerDTO.Reservation.Email, @"Rezervasyon Bilgisi", $"Sayın {reservationCustomerDTO.Customer.Name} {reservationCustomerDTO.Customer.Surname}, rezervasyonunuz başarıyla oluşturulmuştur." +
+            MailSender.SendEmail(reservationCustomerDTO.Customer.Email, @"Rezervasyon Bilgisi", $"Sayın {reservationCustomerDTO.Customer.Name} {reservationCustomerDTO.Customer.Surname}, rezervasyonunuz başarıyla oluşturulmuştur." +
                                                  $" \nRezervasyon Tarihi : {reservationCustomerDTO.Reservation.ReservationDate}  \nNot: {reservationCustomerDTO.Reservation.Description}");
 
+          
             return Ok();
 
-           
+
+
         }
         [HttpGet]
         public IActionResult GetReservationDate(DateTime date)
