@@ -81,3 +81,5 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\obj\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\obj\Debug\net7.0\Restaurant.API.genruntimeconfig.cache
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\obj\Debug\net7.0\ref\Restaurant.API.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\System.Web.Cors.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Restaurant.Common.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Restaurant.Common.pdb

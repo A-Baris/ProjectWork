@@ -10,6 +10,7 @@ using Microsoft.Win32;
 using NuGet.Protocol.Plugins;
 using Restaurant.Common;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Restaurant.MVC.Controllers
 {
@@ -32,10 +33,10 @@ namespace Restaurant.MVC.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult Reservation()
         {
-         
+            
             return View();
         }
 
@@ -47,7 +48,24 @@ namespace Restaurant.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-            if(ModelState.IsValid)
+            var mail = await _userManager.FindByEmailAsync(registerVM.Email);
+
+            if (mail != null)
+            {
+                TempData["ErrorMessage"] = "Mail is already existing";
+                return View(registerVM);
+            }
+            else
+            {
+                var username = await _userManager.FindByNameAsync(registerVM.UserName);
+                if (username != null)
+                {
+                    TempData["ErrorMessage"] = "User is already existing";
+                    return View(registerVM);
+                }
+            }
+
+            if (ModelState.IsValid)
             {
                 AppUser user = new AppUser()
                 {
@@ -55,16 +73,23 @@ namespace Restaurant.MVC.Controllers
                     Email = registerVM.Email,
                     PhoneNumber = registerVM.PhoneNumber,
                 };
+                
+
+
                 var result = await _userManager.CreateAsync(user, registerVM.Password);
                 if(result.Succeeded)
                 {
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var encodeToken = HttpUtility.UrlEncode(token.ToString());
-                    string confirmationLink = Url.Action("Confirmation", "Home", new {id=user.Id,token=encodeToken},Request.Scheme);
-                    
-                    MailSender.SendEmail(registerVM.Email, "Üyelik AKtivasyon", $"Kayıt işlemi başarılı.\n Aramıza Hoş Geldin {registerVM.UserName} \n {confirmationLink} ");
-                    return RedirectToAction("index", "home");
+                 
+                        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var encodeToken = HttpUtility.UrlEncode(token.ToString());
+                        string confirmationLink = Url.Action("Confirmation", "Home", new { id = user.Id, token = encodeToken }, Request.Scheme);
+
+                        MailSender.SendEmail(registerVM.Email, "Üyelik AKtivasyon", $"Kayıt işlemi başarılı.\n Aramıza Hoş Geldin {registerVM.UserName} \n {confirmationLink} ");
+                    TempData["Message"] = "Tebrikler üyelik başarılı şekilde oluşturuldu \n  Bilgilerinizle giriş yapabilirsiniz";
+                        return RedirectToAction("login", "home");
+                  
                 }
+               
             }
             return View(registerVM);
         }

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.Common;
 using Restaurant.DAL.Context;
 using Restaurant.Entity.DTOs;
 using Restaurant.Entity.Entities;
@@ -14,6 +17,7 @@ namespace Restaurant.API.Controllers
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
         private readonly ProjectContext _context;
+  
 
         public ReservationController(IReservationService reservationService,ICustomerService customerService,IMapper mapper,ProjectContext context)
         {
@@ -21,17 +25,24 @@ namespace Restaurant.API.Controllers
             _customerService = customerService;
             _mapper = mapper;
            _context = context;
+            
         }
 
         [HttpPost]
-        public IActionResult PostReservation(ReservationDTO reservation,CustomerDTO customer)
+       
+        public IActionResult PostReservation(ReservationCustomerDTO reservationCustomerDTO)
         {
-            var reservationEntity = _mapper.Map<Reservation>(reservation);
-            var customerEntity = _mapper.Map<Customer>(customer);
+        
+
+            var reservationEntity = _mapper.Map<Reservation>(reservationCustomerDTO.Reservation);
+            var customerEntity = _mapper.Map<Customer>(reservationCustomerDTO.Customer);
 
             _customerService.Create(customerEntity);
             reservationEntity.CustomerId = customerEntity.Id;
             _reservationService.Create(reservationEntity);
+
+            MailSender.SendEmail(reservationCustomerDTO.Reservation.Email, @"Rezervasyon Bilgisi", $"Sayın {reservationCustomerDTO.Customer.Name} {reservationCustomerDTO.Customer.Surname}, rezervasyonunuz başarıyla oluşturulmuştur." +
+                                                 $" \nRezervasyon Tarihi : {reservationCustomerDTO.Reservation.ReservationDate}  \nNot: {reservationCustomerDTO.Reservation.Description}");
 
             return Ok();
 

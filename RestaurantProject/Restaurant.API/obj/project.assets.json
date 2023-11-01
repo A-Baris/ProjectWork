@@ -1095,6 +1095,16 @@
           "bin/placeholder/Restaurant.BLL.dll": {}
         }
       },
+      "Restaurant.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Restaurant.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Restaurant.Common.dll": {}
+        }
+      },
       "Restaurant.DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -2925,6 +2935,11 @@
       "path": "../Restaurant.BLL/Restaurant.BLL.csproj",
       "msbuildProject": "../Restaurant.BLL/Restaurant.BLL.csproj"
     },
+    "Restaurant.Common/1.0.0": {
+      "type": "project",
+      "path": "../Restaurant.Common/Restaurant.Common.csproj",
+      "msbuildProject": "../Restaurant.Common/Restaurant.Common.csproj"
+    },
     "Restaurant.DAL/1.0.0": {
       "type": "project",
       "path": "../Restaurant.DAL/Restaurant.DAL.csproj",
@@ -2944,6 +2959,7 @@
   "projectFileDependencyGroups": {
     "net7.0": [
       "Restaurant.BLL >= 1.0.0",
+      "Restaurant.Common >= 1.0.0",
       "Restaurant.IOC >= 1.0.0"
     ]
   },
@@ -2981,6 +2997,9 @@
           "projectReferences": {
             "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.BLL\\Restaurant.BLL.csproj": {
               "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.BLL\\Restaurant.BLL.csproj"
+            },
+            "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Common\\Restaurant.Common.csproj": {
+              "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Common\\Restaurant.Common.csproj"
             },
             "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.IOC\\Restaurant.IOC.csproj": {
               "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.IOC\\Restaurant.IOC.csproj"

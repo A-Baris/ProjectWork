@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.Common;
 using Restaurant.DAL.Context;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
@@ -69,6 +70,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                         TableOfRestaurantId = createVM.TableOfRestaurantId,
                         CustomerId = createVM.CustomerId,
                         Description = createVM.Description,
+                        Email = createVM.Email,
 
                     };
                     _reservationService.Create(reservation);
@@ -86,6 +88,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                         reservation.CustomerId = customer.Id;
                         _reservationService.Update(reservation);
                     }
+                    MailSender.SendEmail(createVM.Email, "Rezervasyon Bilgisi", $"Sayın {createVM.Name} {createVM.Surname},\nRezervasyonunuz başarıyla oluşturulmuştur." +
+                                                 $" \nRezervasyon Tarihi : {createVM.ReservationDate}  \nNot: {createVM.Description} \nİyi günler dileriz..");
                     TempData["Message"] = "Successful";
                     return RedirectToAction("index", "reservation", new { area = "manager" });
 

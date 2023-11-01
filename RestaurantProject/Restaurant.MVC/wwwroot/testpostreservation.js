@@ -38,26 +38,25 @@
 //    });
 //});
 
-
 $(document).ready(function () {
-    $('#submitButton').click(function () {
-        var formData1 = $('#form1').serialize();
-        var formData2 = $('#form2').serialize();
+$('#form1').submit(function (event) {
+    event.preventDefault(); // Prevent the default form submission
 
-        // Combine the data from both forms
-        var combinedData = formData1 + '&' + formData2;
-
-        // Send the combined data to the desired endpoint
-        $.ajax({
-            url: 'https://localhost:7219/api/reservation/postreservation', // URL for the combined action
-            type: 'POST',
-            data: combinedData,
-            success: function (data) {
-                // Handle the success response for the combined form
-            },
-            error: function (err) {
-                // Handle errors for the combined form
-            }
-        });
+    var formData = $(this).serialize();
+    // Send the form data to the API using a POST request
+    $.ajax({
+        url: 'https://localhost:7219/api/reservation/postreservation',
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            console.log('Reservation created successfully:', data);
+            // Optionally, you can display a success message or redirect the user.
+            $('#form1')[0].reset();
+        },
+        error: function (err) {
+            console.error('Error creating reservation:', err);
+            // Optionally, you can display an error message.
+        }
     });
+});
 });

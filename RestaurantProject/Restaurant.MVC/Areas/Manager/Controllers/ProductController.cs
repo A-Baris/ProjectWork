@@ -28,6 +28,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             string dish = "Dish";
             string drink = "Drink";
+            string salad = "Salad";
+            string dessert = "Dessert";
 
             SelectOptionList();
 
@@ -35,6 +37,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var dishList=_productService.GetAll();
             ViewBag.DishList = _productService.GetSelectedProducts(dish);
             ViewBag.DrinkList = _productService.GetSelectedProducts(drink);
+            ViewBag.SaladList = _productService.GetSelectedProducts(salad);
+            ViewBag.DessertList = _productService.GetSelectedProducts(dessert);
            
             return View(dishList);
         }

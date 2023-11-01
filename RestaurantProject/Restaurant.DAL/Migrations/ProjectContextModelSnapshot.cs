@@ -346,7 +346,7 @@ namespace Restaurant.DAL.Migrations
 
                     b.HasIndex("TableofRestaurantId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Restaurant.Entity.Entities.Product", b =>
@@ -445,6 +445,10 @@ namespace Restaurant.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("datetime2");

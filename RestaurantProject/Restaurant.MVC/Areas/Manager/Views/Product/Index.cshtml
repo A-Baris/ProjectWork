@@ -5,8 +5,8 @@
 }
 
 <div class="container" style="margin-left:50px">
-    <h2>Yemek Listesi</h2>
     <h2><a href="/manager/product/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <h2>Yemek Listesi</h2>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -52,15 +52,113 @@
 </div>
 <br />
 <br />
+
+
+
 <div class="container" style="margin-left:50px">
-    <h2>İçecek Listesi</h2>
-    <h2><a href="/manager/product/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    <h2>Tatlı Listesi</h2>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>İçecek Adı</th>
                 <th>Fiyat</th>
-               
+
+                <th>Açıklama</th>
+                <th>Kategori</th>
+                <th>Menu</th>
+                <th>Mutfak</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in ViewBag.DessertList as List<Product>)
+        {
+
+
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Price</td>
+
+                <td>@item.Description</td>
+                <td>@item.Category.CategoryName</td>
+                <td>@item.Menu?.MenuName</td>
+                <td>@item.Kitchen?.KitchenName</td>
+                <td>
+                    <a href="/manager/product/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/product/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+                </td>
+
+
+
+            </tr>
+
+
+        }
+
+
+    </table>
+
+</div>
+
+<br />
+<br />
+<div class="container" style="margin-left:50px">
+    <h2>Salata Listesi</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>İçecek Adı</th>
+                <th>Fiyat</th>
+
+                <th>Açıklama</th>
+                <th>Kategori</th>
+                <th>Menu</th>
+                <th>Mutfak</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in ViewBag.SaladList as List<Product>)
+        {
+
+
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Price</td>
+
+                <td>@item.Description</td>
+                <td>@item.Category.CategoryName</td>
+                <td>@item.Menu?.MenuName</td>
+                <td>@item.Kitchen?.KitchenName</td>
+                <td>
+                    <a href="/manager/product/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/product/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+
+
+                </td>
+
+
+
+            </tr>
+
+
+        }
+
+
+    </table>
+
+</div>
+
+<br />
+<br />
+<div class="container" style="margin-left:50px">
+    <h2>İçecek Listesi</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>İçecek Adı</th>
+                <th>Fiyat</th>
+
                 <th>Açıklama</th>
                 <th>Kategori</th>
                 <th>Menu</th>
@@ -75,7 +173,7 @@
             <tr>
                 <td>@item.ProductName</td>
                 <td>@item.Price</td>
-               
+
                 <td>@item.Description</td>
                 <td>@item.Category.CategoryName</td>
                 <td>@item.Menu?.MenuName</td>

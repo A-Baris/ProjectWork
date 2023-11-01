@@ -12,6 +12,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
         public int? CustomerId { get; set; }
         [Required(ErrorMessage = "Açıklama boş bırakılamaz")]
         public string Description { get; set; }
+        public string Email { get; set; }
         public ReservationStatus? ReservationStatus { get; set; }
 
      

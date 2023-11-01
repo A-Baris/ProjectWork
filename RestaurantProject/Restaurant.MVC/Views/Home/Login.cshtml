@@ -3,6 +3,14 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        <div class="d-flex justify-content-center align-items-center">
+            @TempData["Message"]
+        </div>
+    </div>
+}
 
 <div class="container" style="margin-top:40px">
     <div class="row justify-content-center">
