@@ -30,13 +30,13 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="SubTotal"></label>
-                    <input asp-for="SubTotal" class="form-control" value="@Model.SubTotal" />
+                    <input asp-for="SubTotal" class="form-control" value="@Model.SubTotal" id="SubTotalInput" />
                     <span asp-validation-for="SubTotal" class="text-bg-danger"></span>
 
                 </div>
                 <div class="form-group">
                     <label asp-for="KDV"></label>
-                    <input asp-for="KDV" class="form-control" value="@Model.KDV" />
+                    <input asp-for="KDV" class="form-control" value="@Model.KDV" id="KDVInput" />
                     <span asp-validation-for="KDV" class="text-bg-danger"></span>
 
                 </div>
@@ -69,3 +69,13 @@
 
     </div>
 </div>
+
+<script>
+
+    document.getElementById('SubTotalInput').addEventListener('blur', function () {
+        this.value = this.value.replace('.', ',');
+    });
+    document.getElementById('KDVInput').addEventListener('blur', function () {
+        this.value = this.value.replace('.', ',');
+    });
+</script>

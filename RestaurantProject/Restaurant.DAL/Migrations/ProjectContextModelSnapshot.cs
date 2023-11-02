@@ -433,6 +433,9 @@ namespace Restaurant.DAL.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("KitchenId")
                         .IsRequired()
                         .HasColumnType("int");

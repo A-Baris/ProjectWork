@@ -30,13 +30,13 @@
                 </div>
                  <div class="form-group">
                     <label asp-for="SubTotal"></label>
-                    <input asp-for="SubTotal" class="form-control" />
+                    <input asp-for="SubTotal" class="form-control" id="SubTotalInput" />
                     <span asp-validation-for="SubTotal" class="text-bg-danger"></span>
 
                 </div>
                 <div class="form-group">
                     <label asp-for="KDV"></label>
-                    <input asp-for="KDV" class="form-control" />
+                    <input asp-for="KDV" class="form-control" id="KDVInput" />
                     <span asp-validation-for="KDV" class="text-bg-danger"></span>
 
                 </div>
@@ -69,3 +69,14 @@
 
     </div>
 </div>
+
+@* nokta ile giriş yapılsa dahi onu virgüle çevirerek olası hataların önüne geçilerek ondalık sayı oluşturulmuş olur *@
+<script>
+  
+    document.getElementById('SubTotalInput').addEventListener('blur', function() {
+        this.value = this.value.replace('.', ',');
+    });
+    document.getElementById('KDVInput').addEventListener('blur', function() {
+        this.value = this.value.replace('.', ',');
+    });
+</script>

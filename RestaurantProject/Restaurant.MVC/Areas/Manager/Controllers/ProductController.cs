@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.BLL.Services;
+using Restaurant.Common.ImageUploader;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 
@@ -49,16 +50,42 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public async Task<IActionResult> Create(ProductVM productVM)
         {
             if(ModelState.IsValid)
             {
-                Product product = new Product()
+                string path = "";
+                var imageResult = "";
+                var imageUrl = "";
+                
+                if (productVM.ImageUrl != null)
+                {
+
+                    imageResult = ImageUploader.ImageChangeName(productVM.ImageUrl.FileName);
+                }
+
+                if (imageResult != "" && imageResult != "0")
+                {
+                    
+                   imageUrl = imageResult;
+
+                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", imageResult);
+
+
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        productVM.ImageUrl.CopyToAsync(stream);
+                    }
+                }
+
+                    Product product = new Product()
                 {
                     ProductName = productVM.ProductName,
                     Price = productVM.Price,
                     SupplierId = productVM.SupplierId,
                     Description = productVM.Description,
+                    ImageUrl = imageUrl,
                     CategoryId = productVM.CategoryId,
                     KitchenId = productVM.KitchenId,
                     MenuId = productVM.MenuId,
@@ -67,6 +94,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 TempData["Message"] = "Successful";
                 return RedirectToAction("index", "product", new { area = "Manager" });
             }
+            TempData["ErrorMessage"] = "ModelState is invalid";
             SelectOptionList();
             return View();
         }
@@ -106,6 +134,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             }
             SelectOptionList();
+            TempData["ErrorMessage"] = "ModelState is invalid";
             return View(productUpdate);
         }
         public async Task<IActionResult> Remove(int id)

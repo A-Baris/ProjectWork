@@ -5,7 +5,7 @@
 }
 
 <div class="container" style="margin-left:50px">
-    <h2>Fatura Listesi Listesi</h2>
+    <h2>Fatura Listesi</h2>
     <h2><a href="/manager/invoice/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
     <table class="table table-bordered">
         <thead>
@@ -33,7 +33,7 @@
                 <td>@item.TaxAdress</td>
                 <td>@item.SubTotal</td>
                 <td>@item.KDV</td>
-                <td>@item.Total</td>
+                <td>@string.Format("{0:0.00}", item.Total)</td> @* //noktadan sonra yalnız iki basamak gösterir *@
                 <td>@item.CompanyName</td>
                 <td>@item.Description</td>
 

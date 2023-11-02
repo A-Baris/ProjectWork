@@ -1,26 +1,57 @@
-﻿
+﻿@model List<Product>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
     int tableId = (int)TempData["TableId"];
 
 }
+@* <a href="/manager/orderitem/index">Anasayfa</a> *@
+<div class="container px-4 px-lg-5 mt-5">
+@*     <button class="btn btn-outline-primary btn-lg category-button" data-category="Çorba">Çorbalar</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="Kebap">Kebaplar</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="KırmızıEt">Kırmızı Et</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="BeyazEt">Beyaz Et</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="Yöresel">Yöresel Lezzetler</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="Kahvaltı">Kahvaltılar</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="Meze">Mezeler</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="Salata">Salatalar</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="SütlüTatlı">Sütlü Tatlılar</button>
+    <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="ŞerbetliTatlı">Şerbetli Tatlılar</button>
+    <button style="margin-left:40px"  class="btn btn-outline-primary btn-lg category-button" data-category="İçecek">İçecekler</button> *@
+    <div class="row">
+        @foreach (var item in ViewBag.Menus as List<Menu>)
+        {
+            <div class="col-md-2">
+                <button class="btn btn-outline-primary btn-lg category-button" data-category="@item.MenuName">@item.MenuName</button>
+            </div>
+        }
+      
 
-<a href="/manager/orderitem/index">Anasayfa</a>
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-    
-            @foreach (var item in ViewBag.Dish as List<Product>)
-            {
+    </div>
+ 
+
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" style="margin-top:20px">
+        @foreach (var item in Model)
+        {
+            <div class="col mb-5 product-card" data-category="@item.Menu.MenuName">
+
                 <div class="col mb-5">
 
-                 <div class="card h-100">
+                    <div class="card h-100">
                         <!-- Product image-->
+                      
+                        @if(item.ImageUrl!=null)
+                        {
+                        <img src="/images/@item.ImageUrl" width="268" height="250"  />
+                        }
+                        else
+                        {
                         <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
+                        }
+                   
                         <!-- Product details-->
                         <input value="@tableId" style="display: none;" />
-                        
+
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
@@ -32,14 +63,45 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a id="moveValue" class="btn btn-outline-dark mt-auto" href="/manager/orderitem/createorder/@item.Id?tableId=@tableId">Ekle</a></div>
-                      
+
                         </div>
 
                     </div>
                 </div>
-            }
+            </div>
+        }
+    </div>
+</div>
 
-        </div>
-        </div>
-        </section>
+
+
+
+<script>
+    document.querySelectorAll('.category-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const category = button.getAttribute('data-category');
+            filterProductsByCategory(category);
+        });
+    });
+
+    function filterProductsByCategory(category) {
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            if (category === 'All' || cardCategory === category) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+
+
+
+
+  
+
+
 

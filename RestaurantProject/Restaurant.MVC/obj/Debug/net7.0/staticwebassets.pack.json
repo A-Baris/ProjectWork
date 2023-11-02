@@ -41,6 +41,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\0130584d-0bfb-4b47-9527-f76bfd5c3f0b.jpg",
+      "PackagePath": "staticwebassets\\images\\0130584d-0bfb-4b47-9527-f76bfd5c3f0b.jpg"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\b6bd7f60-b7fd-4709-bfe6-2b93ab8a39c2.jpg",
+      "PackagePath": "staticwebassets\\images\\b6bd7f60-b7fd-4709-bfe6-2b93ab8a39c2.jpg"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\datatables-simple-demo.js",
       "PackagePath": "staticwebassets\\js\\datatables-simple-demo.js"
     },

@@ -9,7 +9,7 @@
         <div class="col-md-4">
 
             <h1>Yemek Oluştur</h1>
-            <form method="post">
+            <form method="post" action="/manager/product/create" enctype="multipart/form-data">
                 <div class="form-group">
                     <label asp-for="ProductName"></label>
                     <input asp-for="ProductName" class="form-control" />
@@ -18,52 +18,65 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Price"></label>
-                    <input asp-for="Price" class="form-control"/>
+                    <input asp-for="Price" class="form-control" />
                     <span asp-validation-for="Price" class="text-bg-danger"></span>
 
                 </div>
-         
+
                 <div class="form-group">
                     <label asp-for="Description"></label>
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-bg-danger"></span>
 
                 </div>
-                <div class="form-group">
-                    <label>Yemek Kategori</label>
-                    <select asp-items="ViewBag.DishCategoryList" asp-for="CategoryId" class="form-control">
-                        <option selected="" disable>Yemek Kategori Seçimi</option>
-                    </select>
 
-                </div>
-                <div class="form-group">
-                    <label>Menu Adı</label>
-                    <select asp-items="ViewBag.MenuList" asp-for="MenuId" class="form-control">
-                        <option selected="" disable>Menu  Seçimi</option>
-                    </select>
-
-                </div>
-                <div class="form-group">
-                    <label>Mutfak</label>
-                    <select asp-items="ViewBag.KitchenList" asp-for="KitchenId" class="form-control">
-                        <option selected="" disable>Mutfak Seçimi</option>
-                    </select>
-
-                </div>
-                <div class="form-group">
-                    <label>Tedarikçi</label>
-                    <select asp-items="ViewBag.SupplierList" asp-for="SupplierId" class="form-control">
-                        <option selected="" disable>Tedarikçi Seçimi</option>
-                    </select>
-
-                </div>
-                <div class="text-center">
-
-                    <button type="submit" class="btn btn-primary" style="margin-top:10px">Create</button>
-                </div>
-
-            </form>
+        
+        <div class="form-group">
+            <label>Ürün Görsel</label>
+                    <input type="file" class="form-control" asp-for="ImageUrl">
         </div>
+
+
+        <div class="form-group">
+            <label>Yemek Kategori</label>
+            <select asp-items="ViewBag.DishCategoryList" asp-for="CategoryId" class="form-control">
+                <option selected="" disable>Yemek Kategori Seçimi</option>
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label>Menu Adı</label>
+            <select asp-items="ViewBag.MenuList" asp-for="MenuId" class="form-control">
+                <option selected="" disable>Menu  Seçimi</option>
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label>Mutfak</label>
+            <select asp-items="ViewBag.KitchenList" asp-for="KitchenId" class="form-control">
+                <option selected="" disable>Mutfak Seçimi</option>
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label>Tedarikçi</label>
+            <select asp-items="ViewBag.SupplierList" asp-for="SupplierId" class="form-control">
+                <option selected="" disable>Tedarikçi Seçimi</option>
+            </select>
+
+        </div>
+        <div class="text-center">
+
+            <button type="submit" class="btn btn-primary" style="margin-top:10px">Create</button>
+        </div>
+
+        </form>
     </div>
 </div>
+        </div>
+
+
+
+
+
 

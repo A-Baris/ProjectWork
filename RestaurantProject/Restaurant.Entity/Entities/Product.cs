@@ -16,6 +16,7 @@ namespace Restaurant.Entity.Entities
        
         [MaxLength(200)]
         public string? Description { get; set; }
+        public string? ImageUrl { get; set; }
         public int CategoryId { get; set; }
         public int? KitchenId { get; set; }
         public Kitchen Kitchen { get; set; }

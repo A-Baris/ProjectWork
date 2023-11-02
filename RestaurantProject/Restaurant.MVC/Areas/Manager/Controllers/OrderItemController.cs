@@ -26,8 +26,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly ProjectContext _context;
         private readonly IOrderService _orderService;
         private readonly IIngredientService _ingredient;
+        private readonly ICategoryService _categoryService;
+        private readonly IMenuService _menuService;
 
-        public OrderItemController(IMapper mapper, IOrderService orderService, IEmployeeService employeeService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context, IIngredientService ingredient)
+        public OrderItemController(IMapper mapper, IOrderService orderService, IEmployeeService employeeService, IProductService productService, ITableOfRestaurantService tableOfRestaurantService, ProjectContext context, IIngredientService ingredient,ICategoryService categoryService,IMenuService menuService)
         {
             _mapper = mapper;
             _orderService = orderService;
@@ -37,14 +39,17 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _context = context;
 
             _ingredient = ingredient;
+            _categoryService = categoryService;
+            _menuService = menuService;
         }
 
         public IActionResult Selectproduct(int id)
         {
-            ViewBag.Dish = _productService.GetSelectedProducts("Dish");
-            ViewBag.Drink = _productService.GetSelectedProducts("Drink");
+            ViewBag.Category = _categoryService.GetAll();
+            ViewBag.Menus = _menuService.GetAll();
             TempData["TableId"] = id;
-            return View();
+            var products = _productService.GetAll();
+            return View(products);
         }
 
 
@@ -111,7 +116,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                         TempData["Message"] = "Successful";
                         TempData["TableId"] = tableId;
                         ViewBag.Dish = _productService.GetSelectedProducts("Dish");
-                        return View("selectproduct");
+                        return RedirectToAction("selectproduct", "orderitem", new { area = "manager",id=tableId });
                     }
                     TempData["ErrorMessage"] = "ModelState is invalid";
                     return View(createVM);
