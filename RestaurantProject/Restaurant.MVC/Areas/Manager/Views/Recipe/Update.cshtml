@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Quantity"></label>
-                    <input asp-for="Quantity" class="form-control" value="@Model.Quantity"/>
+                    <input id="Quantity" asp-for="Quantity" class="form-control" value="@Model.Quantity"/>
                     <span asp-validation-for="Quantity" class="text-bg-danger"></span>
 
                 </div>
@@ -65,3 +65,12 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+    document.getElementById('Quantity').addEventListener('blur', function () {
+        this.value = this.value.replace('.', ',');
+    });
+
+</script>

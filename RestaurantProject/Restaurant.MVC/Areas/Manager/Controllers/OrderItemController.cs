@@ -47,6 +47,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             ViewBag.Category = _categoryService.GetAll();
             ViewBag.Menus = _menuService.GetAll();
+          
             TempData["TableId"] = id;
             var products = _productService.GetAll();
             return View(products);
@@ -114,7 +115,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                        
                      
                         TempData["Message"] = "Successful";
-                        TempData["TableId"] = tableId;
+                        //TempData["TableId"] = tableId;
                         ViewBag.Dish = _productService.GetSelectedProducts("Dish");
                         return RedirectToAction("selectproduct", "orderitem", new { area = "manager",id=tableId });
                     }
@@ -126,9 +127,9 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             }
 
-            TempData["TableId"] = tableId;
-            ViewBag.Dish = _productService.GetSelectedProducts("Dish");
-            return View("selectproduct");
+            //TempData["TableId"] = tableId;
+            TempData["Message"] = "Successful";
+            return RedirectToAction("selectproduct", "orderitem", new { area = "manager", id = tableId });
 
         }
 
@@ -220,6 +221,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         public async Task<IActionResult> OrderPreparing(int id)
         {
             // ürün hazırlanmaya başladığında o ürünü oluşturmak için gerekli malzeme miktarı ürün adetine göre stoktaki malzeme miktarlarından düşülecek
+            var products = _productService.GetAll();
             var entity = await _orderService.GetbyIdAsync(id);
             if (entity != null)
             {
@@ -237,8 +239,18 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                         var ingredient = ingredients.FirstOrDefault(x => x.Id == item.IngredientId);
                         if (ingredient != null)
                         {
+                            
                             ingredient.Quantity -= item.Quantity * entity.Quantity;
-                            _ingredient.Update(ingredient);
+                            if (ingredient.Quantity >= 0)
+                            {
+                                _ingredient.Update(ingredient);
+                            }
+                            else
+                            {
+                                TempData["ErrorMessage"] = $"Ingredient is not enough for {entity.Product.ProductName}"; ;
+                                return RedirectToAction("ordertracking", "orderitem", "manager");
+                            }
+
                         }
                     }
                 }

@@ -18,3 +18,5 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.IOC\obj\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.IOC\obj\Debug\net7.0\refint\Restaurant.IOC.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.IOC\obj\Debug\net7.0\Restaurant.IOC.pdb
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.IOC\obj\Debug\net7.0\ref\Restaurant.IOC.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.IOC\bin\Debug\net7.0\Restaurant.Common.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.IOC\bin\Debug\net7.0\Restaurant.Common.pdb

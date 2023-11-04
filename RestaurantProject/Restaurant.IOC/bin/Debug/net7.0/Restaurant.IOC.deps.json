@@ -649,11 +649,17 @@
           "Restaurant.BLL.dll": {}
         }
       },
+      "Restaurant.Common/1.0.0": {
+        "runtime": {
+          "Restaurant.Common.dll": {}
+        }
+      },
       "Restaurant.DAL/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.11",
           "Microsoft.EntityFrameworkCore": "7.0.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.11",
+          "Restaurant.Common": "1.0.0",
           "Restaurant.Entity": "1.0.0"
         },
         "runtime": {
@@ -1108,6 +1114,11 @@
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
     },
     "Restaurant.BLL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Restaurant.Common/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

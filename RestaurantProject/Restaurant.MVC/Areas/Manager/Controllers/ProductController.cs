@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.BLL.Services;
 using Restaurant.Common.ImageUploader;
 using Restaurant.Entity.Entities;
+using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
@@ -16,14 +18,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IKitchenService _kitchenService;
         private readonly IMenuService _menuService;
         private readonly ISupplierService _supplierService;
+        private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService,ICategoryService categoryService,IKitchenService kitchenService,IMenuService menuService,ISupplierService supplierService)
+        public ProductController(IProductService productService,ICategoryService categoryService,IKitchenService kitchenService,IMenuService menuService,ISupplierService supplierService,IMapper mapper)
         {
             _productService = productService;
             _categoryService = categoryService;
             _kitchenService = kitchenService;
             _menuService = menuService;
             _supplierService = supplierService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -33,7 +37,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             string dessert = "Dessert";
 
             SelectOptionList();
-
+            //pasife veya aktif durumdaki tüm ürünler listeleniyor// durum kontrolüde eklemeliyim!!
 
             var dishList=_productService.GetAll();
             ViewBag.DishList = _productService.GetSelectedProducts(dish);
@@ -50,24 +54,24 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(ProductVM productVM)
+        public async Task<IActionResult> Create(ProductVM productVM,IFormFile? productImage)
         {
             if(ModelState.IsValid)
             {
                 string path = "";
                 var imageResult = "";
-                var imageUrl = "";
+              
                 
-                if (productVM.ImageUrl != null)
+                if (productImage != null)
                 {
 
-                    imageResult = ImageUploader.ImageChangeName(productVM.ImageUrl.FileName);
+                    imageResult = ImageUploader.ImageChangeName(productImage.FileName);
                 }
 
                 if (imageResult != "" && imageResult != "0")
                 {
                     
-                   imageUrl = imageResult;
+                   productVM.ImageUrl = imageResult;
 
                     path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", imageResult);
 
@@ -75,21 +79,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
-                        productVM.ImageUrl.CopyToAsync(stream);
+                       productImage.CopyToAsync(stream);
                     }
                 }
 
-                    Product product = new Product()
-                {
-                    ProductName = productVM.ProductName,
-                    Price = productVM.Price,
-                    SupplierId = productVM.SupplierId,
-                    Description = productVM.Description,
-                    ImageUrl = imageUrl,
-                    CategoryId = productVM.CategoryId,
-                    KitchenId = productVM.KitchenId,
-                    MenuId = productVM.MenuId,
-                };
+                var product = _mapper.Map<Product>(productVM);
                 _productService.Create(product);
                 TempData["Message"] = "Successful";
                 return RedirectToAction("index", "product", new { area = "Manager" });
@@ -102,32 +96,46 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             SelectOptionList();
             var updated = await _productService.GetbyIdAsync(id);
-            var productUpdate = new ProductVM()
-            {
-                ProductName = updated.ProductName,
-                Price = updated.Price,
-                SupplierId = updated.SupplierId,
-                Description = updated.Description,
-                CategoryId = updated.CategoryId,
-                KitchenId = updated.KitchenId,
-                MenuId= updated.MenuId,
-            };
+
+            var productUpdate = _mapper.Map<ProductUpdateVM>(updated);
             
             return View(productUpdate);
         }
         [HttpPost]
-        public async Task<IActionResult> Update(ProductVM productUpdate)
+        public async Task<IActionResult> Update(ProductUpdateVM UpdateVM, IFormFile? productImage)
         {
             if (ModelState.IsValid)
             {
-                var entity = await _productService.GetbyIdAsync(productUpdate.Id);
-                entity.ProductName = productUpdate.ProductName;
-                entity.Price = productUpdate.Price;
-                entity.SupplierId = productUpdate.SupplierId;
-                entity.Description = productUpdate.Description;
-                entity.CategoryId = productUpdate.CategoryId;
-                entity.KitchenId = productUpdate.KitchenId;
-                entity.MenuId = productUpdate.MenuId;
+                string path = "";
+                var imageResult = "";
+
+
+                if (productImage != null)
+                {
+
+                    imageResult = ImageUploader.ImageChangeName(productImage.FileName);
+                }
+
+                if (imageResult != "" && imageResult != "0")
+                {
+
+                    UpdateVM.ImageUrl = imageResult;
+
+                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", imageResult);
+
+
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        productImage.CopyToAsync(stream);
+                    }
+                }
+
+
+
+
+                var entity = await _productService.GetbyIdAsync(UpdateVM.Id);
+                _mapper.Map(UpdateVM,entity);
                 _productService.Update(entity);
                 TempData["Message"] = "Successful";
                 return RedirectToAction("index", "product", new { area = "Manager" });
@@ -135,7 +143,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
             SelectOptionList();
             TempData["ErrorMessage"] = "ModelState is invalid";
-            return View(productUpdate);
+            return View(UpdateVM);
         }
         public async Task<IActionResult> Remove(int id)
 

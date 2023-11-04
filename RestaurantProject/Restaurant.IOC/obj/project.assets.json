@@ -1095,6 +1095,16 @@
           "bin/placeholder/Restaurant.BLL.dll": {}
         }
       },
+      "Restaurant.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Restaurant.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Restaurant.Common.dll": {}
+        }
+      },
       "Restaurant.DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -1102,6 +1112,7 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.11",
           "Microsoft.EntityFrameworkCore": "7.0.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.11",
+          "Restaurant.Common": "1.0.0",
           "Restaurant.Entity": "1.0.0"
         },
         "compile": {
@@ -2909,6 +2920,11 @@
       "type": "project",
       "path": "../Restaurant.BLL/Restaurant.BLL.csproj",
       "msbuildProject": "../Restaurant.BLL/Restaurant.BLL.csproj"
+    },
+    "Restaurant.Common/1.0.0": {
+      "type": "project",
+      "path": "../Restaurant.Common/Restaurant.Common.csproj",
+      "msbuildProject": "../Restaurant.Common/Restaurant.Common.csproj"
     },
     "Restaurant.DAL/1.0.0": {
       "type": "project",

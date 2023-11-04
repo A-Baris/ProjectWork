@@ -19,11 +19,18 @@
     <button style="margin-left:40px" class="btn btn-outline-primary btn-lg category-button" data-category="ŞerbetliTatlı">Şerbetli Tatlılar</button>
     <button style="margin-left:40px"  class="btn btn-outline-primary btn-lg category-button" data-category="İçecek">İçecekler</button> *@
     <div class="row">
+        
         @foreach (var item in ViewBag.Menus as List<Menu>)
         {
-            <div class="col-md-2">
-                <button class="btn btn-outline-primary btn-lg category-button" data-category="@item.MenuName">@item.MenuName</button>
-            </div>
+            
+                <div class="col-md-2">
+                    <button class="btn btn-outline-primary btn-lg category-button" data-category="@item.MenuName">@item.MenuName</button>
+                </div>
+            
+            
+            
+                
+            
         }
       
 
@@ -42,7 +49,7 @@
                       
                         @if(item.ImageUrl!=null)
                         {
-                        <img src="/images/@item.ImageUrl" width="268" height="250"  />
+                        <img class="card-img-top"  src="/images/@item.ImageUrl" width="268" height="178" />
                         }
                         else
                         {

@@ -23,7 +23,7 @@ namespace Restaurant.Entity.Entities
         public int? MenuId { get; set; }
         public Menu Menu { get; set; }
         public int? SupplierId { get;set; }
-        public Supplier Supplier { get; set; }
+        public Supplier? Supplier { get; set; }
       
 
  

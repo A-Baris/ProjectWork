@@ -16,3 +16,5 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.DAL\obj\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.DAL\obj\Debug\net7.0\Restaurant.DAL.pdb
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.DAL\obj\Debug\net7.0\Restaurant.DAL.genruntimeconfig.cache
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.DAL\obj\Debug\net7.0\ref\Restaurant.DAL.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.DAL\bin\Debug\net7.0\Restaurant.Common.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.DAL\bin\Debug\net7.0\Restaurant.Common.pdb

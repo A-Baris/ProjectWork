@@ -17,6 +17,7 @@
                 <th>Menu</th>
                 <th>Mutfak</th>
                 <th>Tedarikçi</th>
+              
             </tr>
         </thead>
 
@@ -32,6 +33,7 @@
                 <td>@item.Menu?.MenuName</td>
                 <td>@item.Kitchen?.KitchenName</td>
                 <td>@item.Supplier?.CompanyName</td>
+               
                 <td>
                     <a href="/manager/product/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
                     <a href="/manager/product/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
@@ -62,7 +64,6 @@
             <tr>
                 <th>İçecek Adı</th>
                 <th>Fiyat</th>
-
                 <th>Açıklama</th>
                 <th>Kategori</th>
                 <th>Menu</th>

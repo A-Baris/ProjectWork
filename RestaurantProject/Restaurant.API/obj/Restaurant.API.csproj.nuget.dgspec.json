@@ -241,6 +241,9 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
+              "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Common\\Restaurant.Common.csproj": {
+                "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Common\\Restaurant.Common.csproj"
+              },
               "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Entity\\Restaurant.Entity.csproj": {
                 "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Entity\\Restaurant.Entity.csproj"
               }

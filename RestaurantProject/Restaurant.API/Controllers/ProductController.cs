@@ -33,7 +33,7 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostProduct(ProductVM productVM ) 
+        public IActionResult PostProduct(ProductDTO productVM ) 
         {
             var product = _mapper.Map<Product>(productVM);
             _productService.Create(product);

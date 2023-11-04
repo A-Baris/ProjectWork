@@ -22,7 +22,7 @@ namespace Restaurant.BLL.Services
 
         public IEnumerable<Product> GetSelectedProducts(string categoryName)
         {
-            return _context.Set<Product>().Where(x=>x.Category.CategoryName == categoryName).ToList();
+            return _context.Set<Product>().Where(x=>x.Category.CategoryName == categoryName&&x.BaseStatus==Entity.Enums.BaseStatus.Active).ToList();
         }
     }
 }

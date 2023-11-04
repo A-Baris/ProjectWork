@@ -16,3 +16,5 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\bin\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\bin\Debug\net7.0\Restaurant.Entity.pdb
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\obj\Debug\net7.0\Restaurant.BLL.csproj.AssemblyReference.cache
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\obj\Debug\net7.0\Restaurant.BLL.csproj.CopyComplete
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\bin\Debug\net7.0\Restaurant.Common.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.BLL\bin\Debug\net7.0\Restaurant.Common.pdb

@@ -1136,6 +1136,16 @@
           }
         }
       },
+      "Restaurant.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Restaurant.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Restaurant.Common.dll": {}
+        }
+      },
       "Restaurant.Entity/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -3059,6 +3069,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Restaurant.Common/1.0.0": {
+      "type": "project",
+      "path": "../Restaurant.Common/Restaurant.Common.csproj",
+      "msbuildProject": "../Restaurant.Common/Restaurant.Common.csproj"
+    },
     "Restaurant.Entity/1.0.0": {
       "type": "project",
       "path": "../Restaurant.Entity/Restaurant.Entity.csproj",
@@ -3071,6 +3086,7 @@
       "Microsoft.EntityFrameworkCore >= 7.0.11",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.11",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.11",
+      "Restaurant.Common >= 1.0.0",
       "Restaurant.Entity >= 1.0.0"
     ]
   },
@@ -3106,6 +3122,9 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
+            "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Common\\Restaurant.Common.csproj": {
+              "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Common\\Restaurant.Common.csproj"
+            },
             "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Entity\\Restaurant.Entity.csproj": {
               "projectPath": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.Entity\\Restaurant.Entity.csproj"
             }
