@@ -11,6 +11,7 @@ using NuGet.Protocol.Plugins;
 using Restaurant.Common;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Restaurant.MVC.Controllers
 {
@@ -94,20 +95,9 @@ namespace Restaurant.MVC.Controllers
             }
             return View(registerVM);
         }
-        public async  Task<IActionResult> Confirmation(string? id,string? token)
-        {
-            var user =await _userManager.FindByIdAsync(id);
-            if(user!=null)
-            {
-                var decodetoken = HttpUtility.UrlDecode(token);
-                var result = await _userManager.ConfirmEmailAsync(user, decodetoken);
-                if(result.Succeeded)
-                {
-                    return View("Index", "Home");
-                }
-            }
-            return View("Index","Home");
-        }
+
+       
+       
         public IActionResult Login()
         {
             return View();
@@ -134,6 +124,57 @@ namespace Restaurant.MVC.Controllers
         {
             _signInManager.SignOutAsync();
             return RedirectToAction("Index","Home");
+        }
+
+        public IActionResult GoogleLogin(string returnUrl)
+        {
+            string redirectUrl = Url.Action("Response", "Home", new { returnUrl = returnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
+            return new ChallengeResult("Google", properties);
+        }
+        public async Task<IActionResult> Response(string ReturnUrl="/")
+        {
+            ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
+            if(info==null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, true);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index","home");
+                }
+                else
+                {
+                    AppUser user = new AppUser();
+                    user.Email = info.Principal.FindFirst(ClaimTypes.Email).Value;
+                    string ExternalUserId = info.Principal.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    if (info.Principal.HasClaim(x => x.Type == ClaimTypes.Name))
+                    {
+                        string userName = info.Principal.FindFirst(ClaimTypes.Name).Value;
+                        userName = userName.Replace(' ', '-').ToLower() + ExternalUserId.Substring(0, 5);
+                        user.UserName = userName;
+                    }
+                    else
+                    {
+                        user.UserName = info.Principal.FindFirst(ClaimTypes.Email).Value;
+                    }
+
+                    IdentityResult createResult = await _userManager.CreateAsync(user);
+                    if (createResult.Succeeded)
+                    {
+                        IdentityResult loginResult = await _userManager.AddLoginAsync(user, info);
+                        if(loginResult.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, true);
+                            return RedirectToAction("index","home");
+                        }
+                    }
+                    }
+            }
+            return View("Login");
         }
      
         public IActionResult Privacy()

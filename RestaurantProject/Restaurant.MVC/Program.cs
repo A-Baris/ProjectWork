@@ -19,9 +19,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ProjectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+
 // Identity DbContext
 builder.Services.AddDbContext<UserRoleContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection2")));
+
+//Google
+builder.Services.AddAuthentication().AddGoogle(options =>
+{
+    var googleSection = builder.Configuration.GetSection("Google");
+    options.ClientId = googleSection["ClientID"];
+    options.ClientSecret = googleSection["ClientSecret"];
+});
 
 builder.Services.AddSession(options =>
 {
@@ -49,6 +59,10 @@ builder.Services.ConfigureApplicationCookie(x =>
 //Password settings
 builder.Services.Configure<IdentityOptions>(x =>
 {
+    x.User.AllowedUserNameCharacters =
+    "abcçdefgðhýijklmnoöprsþtuüvyzwxqABCDEFGÐHIÝJKLMNOÖPRSÞTUÜVYZWXQ0123456789-,_";
+
+
     x.Password.RequireNonAlphanumeric = false;
     x.Password.RequireDigit = false;
     x.Password.RequiredLength = 6;
