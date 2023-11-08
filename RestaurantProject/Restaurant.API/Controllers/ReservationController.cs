@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.BLL.Services;
 using Restaurant.Common;
 using Restaurant.DAL.Context;
 using Restaurant.Entity.DTOs;
@@ -16,17 +17,19 @@ namespace Restaurant.API.Controllers
         private readonly IReservationService _reservationService;
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
-        private readonly ProjectContext _context;
-  
+   
+        private readonly ITableOfRestaurantService _tableOfRestaurant;
 
-        public ReservationController(IReservationService reservationService,ICustomerService customerService,IMapper mapper,ProjectContext context)
+        public ReservationController(IReservationService reservationService,ICustomerService customerService,IMapper mapper,ITableOfRestaurantService tableOfRestaurant)
         {
             _reservationService = reservationService;
             _customerService = customerService;
             _mapper = mapper;
-           _context = context;
-            
+          
+            _tableOfRestaurant = tableOfRestaurant;
         }
+
+       
 
         [HttpPost]
        

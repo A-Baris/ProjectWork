@@ -3,14 +3,7 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success">
-        <div class="d-flex justify-content-center align-items-center">
-            @TempData["Message"]
-        </div>
-    </div>
-}
+
 
 <div class="container" style="margin-top:40px">
     <div class="row justify-content-center">
@@ -33,6 +26,10 @@
                         <button type="submit" class="btn btn-primary" style="margin-top:10px">Giriş Yap</button>
                         <button type="submit" class="btn btn-danger" style="margin-top:10px" asp-action="GoogleLogin">Google</button>
                     </div>
+                    </div>
 
             </form>
 
+</div>
+</div>
+</div>

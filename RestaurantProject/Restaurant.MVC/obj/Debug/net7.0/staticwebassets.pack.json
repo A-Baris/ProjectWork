@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\getUser.js",
+      "PackagePath": "staticwebassets\\getUser.js"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\0130584d-0bfb-4b47-9527-f76bfd5c3f0b.jpg",
       "PackagePath": "staticwebassets\\images\\0130584d-0bfb-4b47-9527-f76bfd5c3f0b.jpg"
     },

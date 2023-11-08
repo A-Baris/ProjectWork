@@ -4,7 +4,7 @@ using Restaurant.BLL.AbstractServices;
 using Restaurant.MVC.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
-using Restaurant.MVC.Data;
+
 using Restaurant.MVC.Models.ViewModels;
 using Microsoft.Win32;
 using NuGet.Protocol.Plugins;
@@ -12,6 +12,8 @@ using Restaurant.Common;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Restaurant.DAL.Data;
 
 namespace Restaurant.MVC.Controllers
 {
@@ -107,12 +109,19 @@ namespace Restaurant.MVC.Controllers
         {
             if(ModelState.IsValid)
             {
+
                 AppUser user = await _userManager.FindByEmailAsync(loginVM.Email);
                 if(user != null)
                 {
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
+                        HttpContext.Session.SetString("Email",user.Email);
+                        HttpContext.Session.SetString("Id",user.Id);
+                        HttpContext.Session.SetString("UserName", user.UserName);
+                        HttpContext.Session.SetString("Phone", user.PhoneNumber);
+                        HttpContext.Session.SetString("Password", user.PasswordHash);
+                        TempData["Message"] = $"Hoş Geldin {user.UserName}";
                         return RedirectToAction("Index","Home");
                     }
                 }
@@ -144,6 +153,7 @@ namespace Restaurant.MVC.Controllers
                 Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, true);
                 if (result.Succeeded)
                 {
+                    TempData["Message"] = $"Hoş Geldin {info.Principal.Identity.Name}";
                     return RedirectToAction("index","home");
                 }
                 else
@@ -169,6 +179,7 @@ namespace Restaurant.MVC.Controllers
                         if(loginResult.Succeeded)
                         {
                             await _signInManager.SignInAsync(user, true);
+                            TempData["Message"] = $"Hoş Geldin {user.UserName}";
                             return RedirectToAction("index","home");
                         }
                     }

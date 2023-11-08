@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Restaurant.MVC.Migrations
+namespace Restaurant.DAL.Migrations.UserRole
 {
     /// <inheritdoc />
-    public partial class identityrestaurant : Migration
+    public partial class identityfirst : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

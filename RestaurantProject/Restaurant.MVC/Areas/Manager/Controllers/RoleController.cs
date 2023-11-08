@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Restaurant.DAL.Data;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
-using Restaurant.MVC.Data;
+
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.DAL.Data;
 using Restaurant.Entity.DTOs;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using Restaurant.MVC.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,8 @@ namespace Restaurant.BLL.Mapping
             CreateMap<Kitchen,KitchenVM>().ReverseMap();
             CreateMap<Menu,MenuVM>().ReverseMap();
             CreateMap<Invoice,InvoiceVM>().ReverseMap();
+            CreateMap<AppUser,ProfileVM>().ReverseMap();
+         
         }
     }
 }

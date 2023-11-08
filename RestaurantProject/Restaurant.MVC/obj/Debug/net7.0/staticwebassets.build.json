@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "t8g0B8KAKjZUYe/R6pXUVtIXPoqr7jRjpSCe2yAI66o=",
+  "Hash": "FOM4WpfpbLYhL/WgMsd8wpf1Xip38/j66GGCywuGAFw=",
   "Source": "Restaurant.MVC",
   "BasePath": "_content/Restaurant.MVC",
   "Mode": "Default",
@@ -1345,6 +1345,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\getUser.js",
+      "SourceId": "Restaurant.MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\",
+      "BasePath": "_content/Restaurant.MVC",
+      "RelativePath": "getUser.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\getUser.js"
     },
     {
       "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\0130584d-0bfb-4b47-9527-f76bfd5c3f0b.jpg",

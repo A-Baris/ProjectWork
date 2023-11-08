@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using Restaurant.MVC.Data
+@using Restaurant.DAL.Data;
+
 
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
@@ -10,12 +11,16 @@
     <li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
     </li>
+      
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
         </form>
     </li>
-}
+     
+
+
+    }
 else
 {
     <li class="nav-item">

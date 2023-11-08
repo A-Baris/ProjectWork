@@ -5,7 +5,7 @@ using Restaurant.Common;
 using Restaurant.DAL.Context;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -28,9 +28,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         {
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
             ViewBag.Customers = _customerService.GetAll();
-            
+
             var reservationList = _reservationService.GetAll();
             return View(reservationList);
+           
         }
         public IActionResult ReservationDay(DateTime testDate)
         {

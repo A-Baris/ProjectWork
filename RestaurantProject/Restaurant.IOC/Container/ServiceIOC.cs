@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Restaurant.BLL.AbstractRepositories;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.BLL.Mapping;
@@ -32,6 +33,7 @@ namespace Restaurant.IOC.Container
             services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IAccountingTransactionService, AccountingTransactionService>();
             services.AddScoped<IInvoiceService, InvoiceService>();
+           
 
             //automap servise ekledik
             services.AddAutoMapper(typeof(MapProfile));

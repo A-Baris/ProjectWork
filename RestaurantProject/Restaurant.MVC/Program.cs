@@ -8,7 +8,7 @@ using Restaurant.IOC.Container;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
-using Restaurant.MVC.Data;
+using Restaurant.DAL.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +36,7 @@ builder.Services.AddAuthentication().AddGoogle(options =>
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = "order_customer";
-    options.IdleTimeout = TimeSpan.FromHours(6);
+    options.IdleTimeout = TimeSpan.FromHours(24);
 });
 
 // Add Identity services

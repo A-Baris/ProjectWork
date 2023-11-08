@@ -187,6 +187,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [Authorize(Roles = "chief,admin,waiter")]
         public IActionResult OrderTracking()
         {
+            //signalR araştır!
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
             ViewBag.Products = _productService.GetAll();
             var orderList = _orderService.GetAll();
