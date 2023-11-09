@@ -304,3 +304,6 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\runtimes\win-x64\native\e_sqlite3.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\runtimes\win-x86\native\e_sqlite3.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\obj\Debug\net7.0\Restaurant.MVC.MvcApplicationPartsAssemblyInfo.cs
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\FluentValidation.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.MVC\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll

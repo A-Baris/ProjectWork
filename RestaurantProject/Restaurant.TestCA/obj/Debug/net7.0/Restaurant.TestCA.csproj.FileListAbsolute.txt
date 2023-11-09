@@ -24,17 +24,9 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debu
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Caching.Abstractions.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Caching.Memory.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Abstractions.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Logging.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
-D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Identity.Client.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
@@ -77,3 +69,6 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debu
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Restaurant.Common.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\Restaurant.Common.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\FluentValidation.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.TestCA\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll

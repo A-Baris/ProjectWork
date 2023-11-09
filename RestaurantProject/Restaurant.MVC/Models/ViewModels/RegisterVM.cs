@@ -4,6 +4,11 @@ namespace Restaurant.MVC.Models.ViewModels
 {
     public class RegisterVM
     {
+        [Required(ErrorMessage = "Boş bırakılamaz")]
+        public string CustomerName { get; set; }
+        [Required(ErrorMessage = "Boş bırakılamaz")]
+        public string CustomerSurname { get; set; }
+  
         [Required(ErrorMessage ="Boş bırakılamaz")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "Boş bırakılamaz")]

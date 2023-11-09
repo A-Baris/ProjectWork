@@ -7,6 +7,7 @@ using Restaurant.BLL.AbstractServices;
 using Restaurant.BLL.Services;
 using Restaurant.Common;
 using Restaurant.DAL.Context;
+using Restaurant.DAL.Data;
 using Restaurant.Entity.DTOs;
 using Restaurant.Entity.Entities;
 
@@ -19,6 +20,7 @@ namespace Restaurant.API.Controllers
         private readonly IMapper _mapper;
    
         private readonly ITableOfRestaurantService _tableOfRestaurant;
+     
 
         public ReservationController(IReservationService reservationService,ICustomerService customerService,IMapper mapper,ITableOfRestaurantService tableOfRestaurant)
         {
@@ -27,24 +29,31 @@ namespace Restaurant.API.Controllers
             _mapper = mapper;
           
             _tableOfRestaurant = tableOfRestaurant;
+          
         }
 
        
 
         [HttpPost]
        
-        public IActionResult PostReservation(ReservationCustomerDTO reservationCustomerDTO)
+        public async Task<IActionResult> PostReservation(ReservationCustomerDTO reservationCustomerDTO)
         {
-        
 
+         
             var reservationEntity = _mapper.Map<Reservation>(reservationCustomerDTO.Reservation);
-            var customerEntity = _mapper.Map<Customer>(reservationCustomerDTO.Customer);
-
-            _customerService.Create(customerEntity);
-            reservationEntity.CustomerId = customerEntity.Id;
+            var customer = _customerService.GetAll().Where(x => x.Email == reservationCustomerDTO.Customer.Email).First();
+            if (customer.Adress == null || customer.Phone == null)
+            {
+                customer.Adress = reservationCustomerDTO.Customer.Adress;
+                customer.Phone = reservationCustomerDTO.Customer.Phone;
+                _customerService.Update(customer);
+            }
+        
+            
+            reservationEntity.CustomerId = customer.Id;
             _reservationService.Create(reservationEntity);
 
-            MailSender.SendEmail(reservationCustomerDTO.Customer.Email, @"Rezervasyon Bilgisi", $"Sayın {reservationCustomerDTO.Customer.Name} {reservationCustomerDTO.Customer.Surname}, rezervasyonunuz başarıyla oluşturulmuştur." +
+            MailSender.SendEmail(customer.Email, @"Rezervasyon Bilgisi", $"Sayın {customer.Name} {customer.Surname}, rezervasyonunuz başarıyla oluşturulmuştur." +
                                                  $" \nRezervasyon Tarihi : {reservationCustomerDTO.Reservation.ReservationDate}  \nNot: {reservationCustomerDTO.Reservation.Description}");
 
           
@@ -53,6 +62,11 @@ namespace Restaurant.API.Controllers
 
 
         }
+
+        [HttpPost]
+
+
+
         [HttpGet]
         public IActionResult GetReservationDate(DateTime date)
         {

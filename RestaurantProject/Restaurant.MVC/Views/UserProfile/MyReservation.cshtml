@@ -1,0 +1,50 @@
+﻿@model List<CustomerReservationVM>
+@{
+    ViewData["Title"] = "MyReservation";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>MyReservation</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Reservasyon No</th>
+            <th>Misafir Adı</th>
+            <th>Misafir Soyad</th>
+            <th>Rezervasyon Tarihi</th>
+            <th>Durum</th>
+            <th>Email</th>
+            <th>Açıklama</th>
+
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+
+
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Surname</td>
+            <td>@item.ReservationDate</td>
+            <td>@item.ReservationStatus</td>
+            <td>@item.Email</td>
+            <td>@item.Description</td>
+            <td>
+
+                <a href="/userprofile/cancelreservation/@item.Id" onclick="return confirm('Rezervasyonu iptal etmek istiyor musunuz?')">
+                    <button class="btn btn-danger">İptal</button>
+                    </a>
+            </td>
+            
+
+        </tr>
+
+
+    }
+
+
+</table>
+

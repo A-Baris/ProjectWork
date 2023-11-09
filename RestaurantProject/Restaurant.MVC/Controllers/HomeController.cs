@@ -22,14 +22,14 @@ namespace Restaurant.MVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-       
+        private readonly ICustomerService _customerService;
 
-        public HomeController(ILogger<HomeController> logger,UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
+        public HomeController(ILogger<HomeController> logger,UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,ICustomerService customerService)
         {
             _logger = logger;
           _userManager = userManager;
             _signInManager = signInManager;
-          
+            _customerService = customerService;
         }
 
         public IActionResult Index()
@@ -37,9 +37,11 @@ namespace Restaurant.MVC.Controllers
             return View();
         }
         [Authorize]
-        public IActionResult Reservation()
+        public async Task<IActionResult> Reservation()
         {
-            
+            string UserName = User.Identity.Name;
+            var user = await _userManager.FindByNameAsync(UserName);
+            ViewBag.UserEmail = user.Email;
             return View();
         }
    
@@ -73,6 +75,8 @@ namespace Restaurant.MVC.Controllers
             {
                 AppUser user = new AppUser()
                 {
+                    CustomerName=registerVM.CustomerName,
+                    CustomerSurname=registerVM.CustomerSurname,
                     UserName = registerVM.UserName,
                     Email = registerVM.Email,
                     PhoneNumber = registerVM.PhoneNumber,
@@ -83,7 +87,17 @@ namespace Restaurant.MVC.Controllers
                 var result = await _userManager.CreateAsync(user, registerVM.Password);
                 if(result.Succeeded)
                 {
-                 
+
+                    Customer customer = new Customer()
+                    {
+                        Name = registerVM.CustomerName,
+                        Surname = registerVM.CustomerSurname,
+                        Email = registerVM.Email,
+                        Phone = registerVM.PhoneNumber,
+                       
+                    };
+                    _customerService.Create(customer);
+
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         var encodeToken = HttpUtility.UrlEncode(token.ToString());
                         string confirmationLink = Url.Action("Confirmation", "Home", new { id = user.Id, token = encodeToken }, Request.Scheme);
@@ -179,6 +193,7 @@ namespace Restaurant.MVC.Controllers
                         if(loginResult.Succeeded)
                         {
                             await _signInManager.SignInAsync(user, true);
+                            HttpContext.Session.SetString("UserName", user.UserName);
                             TempData["Message"] = $"Hoş Geldin {user.UserName}";
                             return RedirectToAction("index","home");
                         }

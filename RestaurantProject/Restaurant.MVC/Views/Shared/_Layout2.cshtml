@@ -42,9 +42,13 @@
 
                         </ul>
                         <div>
+                         
+                           
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <h3>@User.Identity.Name</h3>
+                               
+                                    <h3>@User.Identity.Name</h3>
+                          
                                 <a href="/home/logout">Logout</a>
                                 <a href="/UserProfile">Profile</a>
                             }
@@ -70,13 +74,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/userprofile/securityprofile" ">
+                                <a class="nav-link" href="/userprofile/securityprofile">
                                     Security Profile
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Menu Item 3
+                                <a class="nav-link" href="/userprofile/myreservation">
+                                    Rezervasyonlarım
                                 </a>
                             </li>
                             <!-- Add more menu items as needed -->

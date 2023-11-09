@@ -83,3 +83,7 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\obj\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\System.Web.Cors.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Restaurant.Common.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Restaurant.Common.pdb
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\FluentValidation.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\obj\Debug\net7.0\Restaurant.API.MvcApplicationPartsAssemblyInfo.cs

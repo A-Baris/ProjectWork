@@ -11,14 +11,14 @@ namespace Restaurant.DAL.Data
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("server=DESKTOP-KUQ9PNH;database=RestaurantUserDB;uid=sa;pwd=1234;TrustServerCertificate=True");
-            }
-            base.OnConfiguring(optionsBuilder);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer("server=DESKTOP-KUQ9PNH;database=RestaurantUserDB;uid=sa;pwd=1234;TrustServerCertificate=True");
+        //    }
+        //    base.OnConfiguring(optionsBuilder);
+        //}
 
 
     }

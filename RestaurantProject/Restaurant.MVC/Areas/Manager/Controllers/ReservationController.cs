@@ -165,6 +165,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             if(entity != null)
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
+                entity.ReservationStatus = Entity.Enums.ReservationStatus.Passive;
                 _reservationService.Update(entity);
                 TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Reservation", new {area="manager"});

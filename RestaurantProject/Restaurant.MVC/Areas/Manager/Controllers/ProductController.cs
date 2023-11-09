@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.BLL.Services;
+
 using Restaurant.Common.ImageUploader;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
@@ -11,6 +12,7 @@ using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
+  
     public class ProductController : Controller
     {
         private readonly IProductService _productService;

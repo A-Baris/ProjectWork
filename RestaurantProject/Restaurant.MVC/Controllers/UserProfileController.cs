@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Restaurant.BLL.AbstractServices;
+using Restaurant.DAL.Context;
 using Restaurant.DAL.Data;
+using Restaurant.Entity.Entities;
 using Restaurant.MVC.Models.ViewModels;
+using System.Security.Claims;
 
 namespace Restaurant.MVC.Controllers
 {
@@ -10,12 +14,20 @@ namespace Restaurant.MVC.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly ProjectContext _context;
+        private readonly IReservationService _reservationService;
+        private readonly ICustomerService _customerService;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly PasswordHasher<AppUser> _passwordHasher;
 
-        public UserProfileController(UserManager<AppUser> userManager,IMapper mapper)
+        public UserProfileController(UserManager<AppUser> userManager,IMapper mapper,ProjectContext context,IReservationService reservationService,ICustomerService customerService,SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _context = context;
+            _reservationService = reservationService;
+            _customerService = customerService;
+            _signInManager = signInManager;
         }
         public IActionResult Index()
         {
@@ -25,9 +37,12 @@ namespace Restaurant.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> ProfileDetail()
         {
-            var userNewName = HttpContext.Session.GetString("UserName");
-            var userName = userNewName;
-            var user = await _userManager.FindByNameAsync(userName);
+            //var userNewName = HttpContext.Session.GetString("UserName");
+            //var userName = userNewName;
+            //string UserName = User.Identity.Name;
+            string userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await _userManager.FindByEmailAsync(userEmail);
+
             if (user != null)
             {
                 var data = _mapper.Map<ProfileVM>(user);
@@ -49,9 +64,23 @@ namespace Restaurant.MVC.Controllers
              
                 if (user != null)
                 {
+                    var customer = _customerService.GetAll().Where(x => x.Email == user.Email);
+                    if(customer==null)
+                    {
+                        Customer newCustomer = new Customer()
+                        {
+                            Name = profileVM.CustomerName,
+                            Surname = profileVM.CustomerSurname,
+                            Phone = profileVM.PhoneNumber,
+                            Email = profileVM.Email,
+                        };
+                        _customerService.Create(newCustomer);
+                    }
                     user.Email = profileVM.Email;
                     user.PhoneNumber = profileVM.PhoneNumber; 
                     user.UserName = profileVM.UserName;
+                    user.CustomerName = profileVM.CustomerName;
+                    user.CustomerSurname = profileVM.CustomerSurname;
                     //if (profileVM.PasswordHash != null || profileVM.PasswordConfirmed != null)
                     //{
                     //    await _userManager.RemovePasswordAsync(user);
@@ -63,7 +92,7 @@ namespace Restaurant.MVC.Controllers
 
                         HttpContext.Session.Remove("UserName");
                         HttpContext.Session.SetString("UserName", profileVM.UserName);
-
+                        await _signInManager.RefreshSignInAsync(user);
                         TempData["Message"] = "Bilgileriniz başarılı şekilde güncellendi";
                         return RedirectToAction("index", "UserProfile");
                     }
@@ -79,7 +108,7 @@ namespace Restaurant.MVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SecurityProfile(ProfileSecurityVM securityVM)
+        public async Task<IActionResult> SecurityProfile(SecurityProfileVM securityVM)
         {
             string UserName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(UserName);
@@ -113,6 +142,43 @@ namespace Restaurant.MVC.Controllers
             }
             TempData["ErrorMessage"] = "Eksik veya hatalı değerler var";
             return View();
+        }
+        public async Task<IActionResult> MyReservation()
+        {
+            string UserName = User.Identity.Name;
+            var user = await _userManager.FindByNameAsync(UserName);
+
+            var reservationQuery = from r in _context.Reservations
+                                   join c in _context.Customers on r.CustomerId equals c.Id
+                                   select new CustomerReservationVM()
+                                   {
+                                       Id=r.Id,
+                                       ReservationDate = r.ReservationDate,
+                                       Description = r.Description,
+                                       ReservationStatus = r.ReservationStatus,
+                                       Name = c.Name,
+                                       Surname = c.Surname,
+                                       Email = c.Email,
+                                   };
+            var reservation = reservationQuery.Where(x=>x.Email == user.Email && x.ReservationStatus == Entity.Enums.ReservationStatus.Active).ToList();
+
+            //{ r.ReservationDate, r.Description, r.ReservationStatus, c.Name, c.Surname,c.Email };
+            return View(reservation);
+        }
+
+        public async Task<IActionResult> CancelReservation(int id)
+        {
+            var entity = await _reservationService.GetbyIdAsync(id);
+            if (entity != null)
+            {
+                entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
+                entity.ReservationStatus = Entity.Enums.ReservationStatus.Passive;
+                _reservationService.Update(entity);
+                TempData["Message"] = "Rezervasyon iptal edildi";
+                return RedirectToAction("myreservation","userprofile");
+            }
+            return View("myreservation");
+         
         }
 
     }
