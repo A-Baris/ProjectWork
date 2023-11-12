@@ -4,8 +4,7 @@
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
 <div class="container" style="margin-left:50px">
-    <h2>Masa Listesi</h2>
-    <h2><a href="/manager/tableofrestaurant/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+    
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -44,7 +43,7 @@
 
                
                 <td>
-                    <a href="/manager/bill/billrequestready/@item.Id"><button class="btn btn-secondary">Hesap Hazır</button></a>
+                    <a href="/manager/bill/billprint/@item.Id"><button class="btn btn-secondary">Hesap Yazdır</button></a>
                     <a href="/manager/tableofrestaurant/orderlist/@item.Id"><button class="btn btn-info">Siparişler</button></a>
                     <a href="/manager/bill/billdetail/@item.Id"><button class="btn btn-primary">Hesap Detay</button></a>
                    

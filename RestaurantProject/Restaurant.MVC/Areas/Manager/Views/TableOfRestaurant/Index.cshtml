@@ -14,6 +14,7 @@
                 <th>Kapasitesi</th>
                 <th>Rezervayon durum</th>
                 <th>Garson Adı</th>
+                <th>Hesap Talep</th>
                 <th></th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>@item.TableCapacity</td>
                 <td>@item.Status</td>
                 <td>@item.Employee?.Name @item.Employee?.Surname</td>
+                <td>@item.BillRequest</td>
                 <td>
                     <a href="/manager/tableofrestaurant/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
                     <a href="/manager/tableofrestaurant/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
