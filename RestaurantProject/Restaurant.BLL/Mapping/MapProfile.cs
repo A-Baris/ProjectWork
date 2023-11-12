@@ -23,6 +23,7 @@ namespace Restaurant.BLL.Mapping
             CreateMap<Product,ProductUpdateVM>().ReverseMap(); 
             CreateMap<AccountingTransaction,TransactionVM>().ReverseMap(); 
             CreateMap<Reservation,ReservationDTO>().ReverseMap(); 
+            CreateMap<Reservation,ReservationVM>().ReverseMap(); 
             CreateMap<Customer,CustomerDTO>().ReverseMap();
             CreateMap<Customer,CustomerVM>().ReverseMap();
             CreateMap<Order,OrderVM>().ReverseMap();
@@ -31,8 +32,10 @@ namespace Restaurant.BLL.Mapping
             CreateMap<Ingredient,IngredientVM>().ReverseMap();
             CreateMap<Kitchen,KitchenVM>().ReverseMap();
             CreateMap<Menu,MenuVM>().ReverseMap();
+            CreateMap<TableOfRestaurant,TableOfRestaurantVM>().ReverseMap();
             CreateMap<Invoice,InvoiceVM>().ReverseMap();
             CreateMap<AppUser,ProfileVM>().ReverseMap();
+           
          
         }
     }

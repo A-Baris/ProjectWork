@@ -14,6 +14,7 @@
                 <th>Kapasitesi</th>
                 <th>Rezervayon durum</th>
                 <th>Garson Adı</th>
+                <th>Hesap İstek</th>
             </tr>
         </thead>
 
@@ -27,8 +28,23 @@
                 <td>@item.TableCapacity</td>
                 <td>@item.Status</td>
                 <td>@item.Employee?.Name @item.Employee?.Surname</td>
+              
+                   @if((int)item.BillRequest == 1)
+                    {
+                        <td style="background-color:red">@item.BillRequest</td>
+                    }
+                    else if ((int) item.BillRequest ==2)
+                    {
+                    <td style="background-color:green">@item.BillRequest</td>
+                }
+                else
+                {
+                    <td>@item.BillRequest</td>
+                }
+
+               
                 <td>
-                    
+                    <a href="/manager/bill/billrequestready/@item.Id"><button class="btn btn-secondary">Hesap Hazır</button></a>
                     <a href="/manager/tableofrestaurant/orderlist/@item.Id"><button class="btn btn-info">Siparişler</button></a>
                     <a href="/manager/bill/billdetail/@item.Id"><button class="btn btn-primary">Hesap Detay</button></a>
                    

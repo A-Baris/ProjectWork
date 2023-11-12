@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PbRYYiy3uxUdhPIsuGJEkaFa5BlhvNlP3aVgLFXqDZ0=",
+  "Hash": "HzJt0APAqlMOI24AV27CL//ItM/Z2tsjPRwswoGADiM=",
   "Source": "Restaurant.MVC",
   "BasePath": "_content/Restaurant.MVC",
   "Mode": "Default",
@@ -5658,6 +5658,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\testpostreservation.js"
+    },
+    {
+      "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testReservation.js",
+      "SourceId": "Restaurant.MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\",
+      "BasePath": "_content/Restaurant.MVC",
+      "RelativePath": "testReservation.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\testReservation.js"
     }
   ]
 }

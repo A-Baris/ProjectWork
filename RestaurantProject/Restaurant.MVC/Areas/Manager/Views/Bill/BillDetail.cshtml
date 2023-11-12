@@ -13,6 +13,7 @@
     <h2>Hesap Detay</h2>
     <br />
     <a href="/manager/bill/">Hesaplar Dön</a>
+    
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -47,11 +48,14 @@
         }
       
         </table>
+
+
+    
 <div class="row">
     <div class="col-md-4" style="background-color: green">
         <h2 style="color: white">Hesap tutar: <span id="totalAmount">@totalAccount</span> TL</h2>
     </div>
-
+    
     <div class="col-md-8 text-right" >
         <a href="/manager/bill/completepayment?tableName=@tableName"><button class="btn btn-success">Ödemeyi Tamamla</button></a>
     </div>
@@ -68,7 +72,7 @@
     Alınan ödeme miktarı Toplam hesap tutarından parça parça düşülerek toplam tutar da kalan miktarı görebiliriz. 
     Böylelikle veritabanını etkilemeden parça parça ödemeler alıp toplam tutar karşılandığında ödeme tamamlaya tıklar ve veritabanına iletiliriz.
     Ödeme tamamlandığında günlük ciro olarak o gün ki tarihe eklenir *@
-    <script>
+     <script>
  
         document.getElementById("reduceButton").addEventListener("click", function () {
             var reductionAmount = parseFloat(document.getElementById("reductionAmount").value);
@@ -94,7 +98,6 @@
 
     </div>
      
-
 
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Common;
@@ -16,13 +17,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
         private readonly ICustomerService _customerService;
         private readonly ProjectContext _context;
+        private readonly IMapper _mapper;
 
-        public ReservationController(IReservationService reservationService,ITableOfRestaurantService tableOfRestaurantService,ICustomerService customerService,ProjectContext context)
+        public ReservationController(IReservationService reservationService,ITableOfRestaurantService tableOfRestaurantService,ICustomerService customerService,ProjectContext context,IMapper mapper)
         {
            _reservationService = reservationService;
             _tableOfRestaurantService = tableOfRestaurantService;
             _customerService = customerService;
             _context = context;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -121,16 +124,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var reservation = await _reservationService.GetbyIdAsync(id);
             if (reservation != null)
             {
-                var updated = new ReservationUpdateVM()
-                {
-                    Id = id,
-                    ReservationDate = reservation.ReservationDate,
-                    TableOfRestaurantId = reservation.TableOfRestaurantId,
-                    CustomerId = reservation.CustomerId,
-                    Description = reservation.Description,
-                    ReservationStatus = reservation.ReservationStatus,
-                };
-              
+               
+              var updated = _mapper.Map<ReservationVM>(reservation);
                return View(updated);
             }
             return RedirectToAction("index", "reservation", new { area = "manager" });
@@ -138,16 +133,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
            
         [HttpPost]
-        public async Task<IActionResult> Update(ReservationUpdateVM updatedVM)
+        public async Task<IActionResult> Update(int id,ReservationVM updatedVM)
         {
             if(ModelState.IsValid)
             {
-                var entity = await _reservationService.GetbyIdAsync(updatedVM.Id);
-                entity.ReservationDate = updatedVM.ReservationDate;
-                entity.CustomerId = updatedVM.CustomerId;
-                entity.TableOfRestaurantId=updatedVM.TableOfRestaurantId;
-                entity.Description = updatedVM.Description;
-                entity.ReservationStatus = updatedVM.ReservationStatus;
+                var entity = await _reservationService.GetbyIdAsync(id);
+                _mapper.Map(updatedVM, entity);
                _reservationService.Update(entity);
                 TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Reservation", new {area="manager"});

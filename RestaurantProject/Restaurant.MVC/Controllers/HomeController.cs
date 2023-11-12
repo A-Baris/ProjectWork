@@ -32,8 +32,24 @@ namespace Restaurant.MVC.Controllers
             _customerService = customerService;
         }
 
+        
         public IActionResult Index()
         {
+            //if (User.Identity.IsAuthenticated)
+            //{
+
+            //    if (User.Claims.Any(c => c.Type == ClaimTypes.Role))
+            //    {
+                   
+            //        return RedirectToAction("Index", "home", new { area = "manager" });
+            //    }
+            //    else
+            //    {
+                 
+            //        return RedirectToAction("Index", "home");
+            //    }
+            //}
+
             return View();
         }
         [Authorize]
@@ -135,9 +151,10 @@ namespace Restaurant.MVC.Controllers
                         HttpContext.Session.SetString("UserName", user.UserName);
                         HttpContext.Session.SetString("Phone", user.PhoneNumber);
                         HttpContext.Session.SetString("Password", user.PasswordHash);
-                        TempData["Message"] = $"Hoş Geldin {user.UserName}";
-                        return RedirectToAction("Index","Home");
+                        return RedirectToAction("checkauth", "home", new {area="manager"});
+
                     }
+                  
                 }
              
             }

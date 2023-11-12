@@ -20,16 +20,16 @@ namespace Restaurant.API.Controllers
         private readonly IMapper _mapper;
    
         private readonly ITableOfRestaurantService _tableOfRestaurant;
-     
+        private readonly ProjectContext _context;
 
-        public ReservationController(IReservationService reservationService,ICustomerService customerService,IMapper mapper,ITableOfRestaurantService tableOfRestaurant)
+        public ReservationController(IReservationService reservationService,ICustomerService customerService,IMapper mapper,ITableOfRestaurantService tableOfRestaurant,ProjectContext context)
         {
             _reservationService = reservationService;
             _customerService = customerService;
             _mapper = mapper;
           
             _tableOfRestaurant = tableOfRestaurant;
-          
+          _context = context;
         }
 
        
@@ -72,6 +72,25 @@ namespace Restaurant.API.Controllers
         {
 
             var reservationList = _reservationService.GetAll().Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
+
+            return Ok(reservationList);
+        }
+
+        [HttpGet]
+        public IActionResult GetReservationDates(DateTime date)
+        {
+
+            var query = from r in _context.Reservations
+                        join c in _context.Customers on r.CustomerId equals c.Id
+                        select new
+                        {
+                            r.ReservationDate,
+                            r.Description,
+                            r.ReservationStatus,
+                            c.Name,
+                            c.Surname
+                        };
+            var reservationList = query.Where(x=>x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
 
             return Ok(reservationList);
         }

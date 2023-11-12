@@ -587,7 +587,6 @@ namespace Restaurant.DAL.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("SupplierId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedComputerName")
@@ -768,6 +767,9 @@ namespace Restaurant.DAL.Migrations
                     b.Property<int>("BaseStatus")
                         .HasColumnType("int");
 
+                    b.Property<int>("BillRequest")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedComputerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -902,9 +904,7 @@ namespace Restaurant.DAL.Migrations
 
                     b.HasOne("Restaurant.Entity.Entities.Supplier", "Supplier")
                         .WithMany("Products")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SupplierId");
 
                     b.Navigation("Category");
 

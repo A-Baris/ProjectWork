@@ -17,15 +17,15 @@
 
                 </div>
                 <div class="form-group">
-                    <label asp-for="Location"></label>
-                    <input asp-for="Location" class="form-control" value="@Model.Location" />
-                    <span asp-validation-for="Location" class="text-bg-danger"></span>
+                    <label asp-for="TableLocation"></label>
+                    <input asp-for="TableLocation" class="form-control" value="@Model.TableLocation" />
+                    <span asp-validation-for="TableLocation" class="text-bg-danger"></span>
 
                 </div>
                 <div class="form-group">
-                    <label asp-for="Capacity"></label>
-                    <input asp-for="Capacity" class="form-control" value="@Model.Capacity" />
-                    <span asp-validation-for="Capacity" class="text-bg-danger"></span>
+                    <label asp-for="TableCapacity"></label>
+                    <input asp-for="TableCapacity" class="form-control" value="@Model.TableCapacity" />
+                    <span asp-validation-for="TableCapacity" class="text-bg-danger"></span>
 
                 </div>
                 <div class="form-group">
@@ -42,8 +42,8 @@
                 </div>
                 <div class="form-group">
                     <label>Waiter Name</label>
-                    <select asp-items="ViewBag.Employees" asp-for="EmployeId" class="form-control">
-                        <option selected="" disable value="@Model.EmployeId"></option>
+                    <select asp-items="ViewBag.Employees" asp-for="EmployeeId" class="form-control">
+                        <option selected="" disable value="@Model.EmployeeId"></option>
                     </select>
 
 

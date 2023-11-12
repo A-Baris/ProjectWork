@@ -24,6 +24,8 @@ function displayReservationData(reservationData) {
     reservationData.forEach(function (reservation) {
         var row = $("<tr>");
         row.append($("<td>").text(reservation.reservationDate));
+        row.append($("<td>").text(reservation.reservationStatus.toString()));
+        row.append($("<td>").text(reservation.customerId.toString()));
         row.append($("<td>").text(reservation.description));
         tableBody.append(row);
     });

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using System.Text;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -23,6 +24,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var menuList = _menuService.GetAll();
             return View(menuList);
         }
+       
 
         public IActionResult Create()
         {

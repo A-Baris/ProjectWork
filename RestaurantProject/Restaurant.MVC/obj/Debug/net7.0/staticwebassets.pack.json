@@ -937,6 +937,10 @@
       "PackagePath": "staticwebassets\\test.js"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testReservation.js",
+      "PackagePath": "staticwebassets\\testReservation.js"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testpost.js",
       "PackagePath": "staticwebassets\\testpost.js"
     },

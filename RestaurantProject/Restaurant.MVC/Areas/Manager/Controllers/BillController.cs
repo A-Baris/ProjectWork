@@ -5,7 +5,7 @@ using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 using Restaurant.DAL.Context;
-
+using System.Text;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -90,6 +90,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             if (tableEntity != null)
             {
                 tableEntity.Status = Entity.Enums.ReservationStatus.Passive;
+                tableEntity.BillRequest = Entity.Enums.BillRequest.Passive;
                 _tableOfRestaurantService.Update(tableEntity);
 
                 foreach (var item in orderItemIds)
@@ -108,6 +109,19 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return RedirectToAction("index", "bill", new { area = "manager" });
         }
 
+        public async Task<IActionResult> BillRequestReady(int id)
+        {
+            var table = await _tableOfRestaurantService.GetbyIdAsync(id);
+            if(table!=null)
+            {
+                table.BillRequest = Entity.Enums.BillRequest.Ready;
+                _tableOfRestaurantService.Update(table);
+                TempData["Message"] = "İşlem başarılı";
+                return RedirectToAction("index", "bill", new { area = "manager" });
+            }
+            return RedirectToAction("index", "bill", new { area = "manager" });
+
+        }
         //public async Task<IActionResult> PartOfPayment(string tableName,decimal payment)
         //{
         //    var table = _tableOfRestaurantService.GetAll().Where(x => x.TableName == tableName).FirstOrDefault();
@@ -122,8 +136,25 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         //   return RedirectToAction("billdetail", "bill", new {area="manager",id=table.Id});
         //}
+        //[HttpPost]
+     
+        //public IActionResult SaveToFile(string data)
+        //{
+        //    // Generate the content for the file based on your requirements
+        //    StringBuilder content = new StringBuilder();
 
-      
+        //    foreach (var item in data)
+        //    {
+        //        //content.AppendLine($"Table: {item.TableOfRestaurant.TableName}, Product: {item.Product.ProductName}, Quantity: {item.Quantity}, Price: {item.Product.Price}, TotalPrice: {item.TotalPrice}");
+        //        content.AppendLine(data);
+        //    }
+
+        //    // Save the content to a file
+        //    System.IO.File.WriteAllText("D:/Hesap/bill_details.txt", content.ToString());
+
+        //    // Redirect back to the BillDetail action
+        //    return RedirectToAction("BillDetail");
+        //}
     }
 }
 

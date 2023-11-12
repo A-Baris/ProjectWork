@@ -18,6 +18,7 @@ namespace Restaurant.Entity.Entities
       
         public int TableCapacity { get;set; }
         public ReservationStatus Status { get; set; }
+        public BillRequest BillRequest { get; set; }
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public virtual List<Customer> Customers { get; set; }
