@@ -3,9 +3,41 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
-@* @TempData["UpdateMessage"] *@
-<h1>Index</h1>
 
 
 
+<div class="row col-md-12">
+    <div class="container col-md-4" style="margin-left:50px;margin-top: 20px;">
+       
+        <div>
+            @* <canvas id="myChart" style="height:300px;width:300px"></canvas> *@
+            <table class="table-bordered" id="dataTable">
+                <thead>
+                <tr>
+                    <th>x</th>
+                    <th>y</th>
+                </tr>
+                </thead>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            
+            </table>
+        </div>
+    </div>
   
+    <div class="container col-md-3" style="margin-left:50px;margin-top: 20px;">
+
+        <div>
+            <canvas id="myChart2" style="height:300px;width:300px"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script src="~/js/weeklyRevenue.js"></script>
+<script src="~/js/bestOrders.js"></script>

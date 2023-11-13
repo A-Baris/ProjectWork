@@ -27,7 +27,21 @@
                 <td>@item.TableName</td>
                 <td>@item.TableLocation</td>
                 <td>@item.TableCapacity</td>
-                <td>@item.Status</td>
+                @* <td>@item.Status</td> *@
+                @switch ((int)item.Status)
+                {
+                    case 0:
+                        <td style="background-color:darkorange">@item.Status</td>
+                   break;
+
+                   case 1:
+                        <td style="background-color:green">@item.Status</td>
+                        break;
+
+                        default:
+                        <td>@item.Status</td>
+                        break;
+                }
                 <td>@item.Employee?.Name @item.Employee?.Surname</td>
                 <td>@item.BillRequest</td>
                 <td>

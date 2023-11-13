@@ -257,6 +257,10 @@
       "PackagePath": "staticwebassets\\img\\özbek-pilavi.jpg"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\bestOrders.js",
+      "PackagePath": "staticwebassets\\js\\bestOrders.js"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\datatables-simple-demo.js",
       "PackagePath": "staticwebassets\\js\\datatables-simple-demo.js"
     },
@@ -271,6 +275,10 @@
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\weeklyRevenue.js",
+      "PackagePath": "staticwebassets\\js\\weeklyRevenue.js"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\lib\\animate\\animate.css",
@@ -939,6 +947,10 @@
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testReservation.js",
       "PackagePath": "staticwebassets\\testReservation.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testchart.js",
+      "PackagePath": "staticwebassets\\testchart.js"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testpost.js",

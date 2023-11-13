@@ -25,7 +25,21 @@
             <td>@item.TableOfRestaurant.TableName</td>
             <td>@item.Product.ProductName</td>
             <td>@item.Quantity</td>
-            <td>@item.StatusOfOrder</td>
+            @switch ((int)item.StatusOfOrder)
+            {
+                case 0:
+                    <td style="background-color:red">@item.StatusOfOrder</td>
+                    break;
+                case 1:
+                    <td style="background-color:orange">@item.StatusOfOrder</td>
+                    break;
+                case 2:
+                    <td style="background-color:green">@item.StatusOfOrder</td>
+                    break;
+                case 3:
+                    <td style="background-color:dodgerblue">@item.StatusOfOrder</td>
+                    break;
+            }
             <td>@item.TotalPrice</td>
             <td>
                 <a href="/manager/orderitem/orderpreparing/@item.Id"><button class="btn btn-outline-primary">Preparing</button></a>

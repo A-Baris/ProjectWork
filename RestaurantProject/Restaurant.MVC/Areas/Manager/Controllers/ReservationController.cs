@@ -105,7 +105,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     //    MailSender.SendEmail(createVM.Email, "Rezervasyon Bilgisi", $"Sayın {createVM.Name} {createVM.Surname},\nRezervasyonunuz başarıyla oluşturulmuştur." +
                     //                                 $" \nRezervasyon Tarihi : {createVM.ReservationDate}  \nNot: {createVM.Description} \nİyi günler dileriz..");
                     //}
-                    TempData["Message"] = "Successful";
+                    TempData["Message"] = "İşlem başarılı";
                     return RedirectToAction("index", "reservation", new { area = "manager" });
 
                 }
@@ -113,7 +113,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 TempData["ErrorMessage"] = "ModelState is invalid";
                 return View(createVM);
             }
-            TempData["ErrorMessage"] = "Reservation is full in the day";
+            TempData["ErrorMessage"] = "Seçtiğiniz tarihteki rezervasyonlar dolu";
             return View(createVM);
 
         }

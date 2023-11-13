@@ -100,7 +100,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
             return View();
         }
-        public async Task<IActionResult> OrderList(int id)
+        public IActionResult OrderList(int id)
         {
             ViewBag.Tables = _tableOfRestaurant.GetAll();
             ViewBag.Products = _productService.GetAll();
@@ -120,10 +120,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData["ErrorMessage"] = "Id bulunamadı";
             return RedirectToAction("index", "tableofrestaurant", new { area = "Manager" });
         }
-        public IActionResult OrderReady()
-        {
-            return View();
-        }
+      
         void EmployeeList()
         {
             ViewBag.Employees = _employee.GetAll().Select(w => new SelectListItem
