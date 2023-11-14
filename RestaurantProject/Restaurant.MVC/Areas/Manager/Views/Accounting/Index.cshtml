@@ -5,15 +5,9 @@
 }
 
 
-
+@Html.Partial("_ToolbarPartialView")
 <div class="container" style="margin-left:50px">
-    <div class="toolbar">
-        <a href="/manager/Accounting/cashtracking"><button class="btn btn-outline-info">Kasa Takip</button></a>
-        <a href="/manager/Accounting/createtransaction"><button class="btn btn-outline-success">X</button></a>
-        <a href="/manager/invoice"><button class="btn btn-outline-success">Fatura Listesi</button></a>
-        <a href="/manager/supplier/index"><button class="btn btn-outline-success">Tedarikçi</button></a>
-        <!-- Add more buttons as needed -->
-    </div>
+ 
     <h2>İşlem Listesi</h2>
     <h2><a href="/manager/Accounting/createtransaction"><button class="btn btn-outline-success">Ekle</button></a></h2>
     <table class="table table-bordered">
@@ -44,7 +38,7 @@
 
                 <td>
                     <a href="/manager/Accounting/updatetransaction/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
-                    <a href="/manager/Accounting/removetransaction/@item.Id"><button class="btn btn-danger">Sil</button></a>
+                    <a href="/manager/Accounting/removetransaction/@item.Id" onclick="return confirm('İşlemi onaylıyor musunuz?')"><button class="btn btn-danger">Sil</button></a>
 
 
                 </td>

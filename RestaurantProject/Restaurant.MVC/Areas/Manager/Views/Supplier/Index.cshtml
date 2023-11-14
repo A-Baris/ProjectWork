@@ -3,8 +3,9 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
-
+@Html.Partial("_ToolbarPartialView")
 <div class="container" style="margin-left:50px">
+    
     <h2>Tedarikçi Listesi</h2>
     <h2><a href="/manager/supplier/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
     <table class="table table-bordered">

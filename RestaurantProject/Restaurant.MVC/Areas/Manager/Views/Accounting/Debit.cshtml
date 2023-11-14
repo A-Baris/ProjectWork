@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Debit";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-left:50px">
+    @Html.Partial("_ToolbarPartialView")
+
+    <h2>Borç Listesi</h2>
+  
+    <table class="table table-bordered" id="dataTable">
+        <thead>
+            <tr>
+                <th>Şirket Adı</th>
+                <th>Toplam Borç</th>
+               
+
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+       
+
+    </table>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="~/js/totalDebits.js"></script>

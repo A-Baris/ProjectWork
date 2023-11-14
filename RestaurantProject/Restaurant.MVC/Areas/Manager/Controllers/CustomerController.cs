@@ -68,7 +68,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 
              var customer =_mapper.Map<Customer>(customerVM);
                 _customerService.Create(customer);
-                TempData["Message"] = "Is created successfully";
+                TempData["Message"] = "İşlem başarılı";
 
                 return RedirectToAction("index", "customer", new { area = "manager" });
             }
@@ -85,7 +85,8 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                var updated = _mapper.Map<CustomerVM>(customerEntity);
                 return View(updated);
             }
-            return View();
+            TempData["ErrorMessage"] = "Id bulunamadı";
+            return View("index");
         }
         [HttpPost]
         public async Task<IActionResult> Update(CustomerVM customerVM)
@@ -112,7 +113,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 return RedirectToAction("index", "customer", new { area = "manager" });
 
             }
-            TempData["ErrorMessage"] = "Failed";
+            TempData["ErrorMessage"] = "Id bulunamadı";
             return View();
         }
         

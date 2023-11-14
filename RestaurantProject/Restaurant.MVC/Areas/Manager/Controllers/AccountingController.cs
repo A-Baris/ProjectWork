@@ -140,8 +140,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData["ErrorMessage"] = "Not Found";
             return View("Index");
         }
-
-
+        public IActionResult Debit()
+        {
+            return View();
+        }
+       
 
 
 

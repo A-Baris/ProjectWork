@@ -5,16 +5,16 @@
     var totalTurnover = 0;
 }
 
-<form method="get" action="/manager/Accounting/reportofturnover">
-    <input type="number" name="targetYear" placeholder="Year"/>
-    <input type="number" name="targetMonth" placeholder="Month"/>
-    <button class="btn btn-info" type="submit">Göster</button>
-</form>
 
 
+@Html.Partial("_ToolbarPartialView")
 <div class="container" style="margin-left:50px">
-    <h2>Ciro Listesi</h2>
-
+   
+    <form method="get" action="/manager/Accounting/reportofturnover">
+        <input type="number" name="targetYear" placeholder="Year" />
+        <input type="number" name="targetMonth" placeholder="Month" />
+        <button class="btn btn-info" type="submit">Göster</button>
+    </form>
     <table class="table table-bordered">
         <thead>
             <tr>

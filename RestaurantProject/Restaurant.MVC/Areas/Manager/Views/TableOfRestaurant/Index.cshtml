@@ -43,7 +43,18 @@
                         break;
                 }
                 <td>@item.Employee?.Name @item.Employee?.Surname</td>
-                <td>@item.BillRequest</td>
+                @if ((int)item.BillRequest == 1)
+                {
+                    <td style="background-color:red">@item.BillRequest</td>
+                }
+                else if ((int)item.BillRequest == 2)
+                {
+                    <td style="background-color:green">@item.BillRequest</td>
+                }
+                else
+                {
+                    <td>@item.BillRequest</td>
+                }
                 <td>
                     <a href="/manager/tableofrestaurant/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
                     <a href="/manager/tableofrestaurant/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>

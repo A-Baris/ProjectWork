@@ -139,7 +139,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var entity = await _productService.GetbyIdAsync(UpdateVM.Id);
                 _mapper.Map(UpdateVM,entity);
                 _productService.Update(entity);
-                TempData["Message"] = "Successful";
+                TempData["Message"] = "İşlem başarılı";
                 return RedirectToAction("index", "product", new { area = "Manager" });
 
             }
@@ -155,7 +155,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 dishEntity.BaseStatus= Entity.Enums.BaseStatus.Deleted;
                 _productService.Update(dishEntity);
-                TempData["Message"] = "Successful";
+                TempData["Message"] = "İşlem başarılı";
                 return RedirectToAction("index", "product", new { area = "Manager" });
             }
             return View();

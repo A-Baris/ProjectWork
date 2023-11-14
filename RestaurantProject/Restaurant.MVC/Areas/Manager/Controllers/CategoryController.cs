@@ -34,7 +34,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     CategoryName = dishCategoryVm.CategoryName
                 };
                 _categoryService.Create(category);
-                TempData["Message"] = "Is created successfully";
+                TempData["Message"] = "İşlem başarılı";
                 return RedirectToAction("index", "category", new { area = "Manager" });
             }
             TempData["ErrorMessage"] = "ModelState is invalid";
@@ -50,10 +50,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Id = id,
                     CategoryName = category.CategoryName
                 };
-                TempData["Message"] = "Successful";
+                TempData["Message"] = "İşlem başarılı";
                 return RedirectToAction("Index", "Category", new { area = "Manager" });
             }
-            TempData["ErrorMessage"] = "Successful";
+            TempData["ErrorMessage"] = "Id bulunamadı";
             return View("index");
         }
         [HttpPost]
@@ -78,10 +78,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _categoryService.Update(entity);
-                TempData["Message"] = "Successful";
+                TempData["Message"] = "İşlem başarılı";
                 return RedirectToAction("index", "category", new { area = "Manager" });
             }
-            return View();
+            TempData["ErrorMessage"] = "Id bulunamadı";
+            return View("index");
         }
     }
 }
