@@ -5,39 +5,57 @@
 }
 
 
-
 <div class="row col-md-12">
-    <div class="container col-md-4" style="margin-left:50px;margin-top: 20px;">
+    <div class="container col-md-9" style="margin-left:50px;margin-top: 20px;">
        
         <div>
-            @* <canvas id="myChart" style="height:300px;width:300px"></canvas> *@
-            <table class="table-bordered" id="dataTable">
-                <thead>
-                <tr>
-                    <th>x</th>
-                    <th>y</th>
-                </tr>
-                </thead>
-                </tr>
-                </thead>
-                <tbody></tbody>
-            
-            </table>
+            <canvas class="chart-canvas" id="myChart" style="height:300px;width:100%"></canvas>
+       
         </div>
-    </div>
-  
-    <div class="container col-md-3" style="margin-left:50px;margin-top: 20px;">
+    </div> 
+</div>
+<div class="row col-md-12">
+    <div class="container col-md-9" style="margin-left:50px;margin-top: 20px;">
 
         <div>
-            <canvas id="myChart2" style="height:300px;width:300px"></canvas>
+            <h3 style="background-color: black; color: red">Top 10 Lezzetlerimiz</h3>
+
+            <div class="input-group mb-3">
+                <select id="menuSelect" class="form-control">
+                    <!-- Menu options will be populated dynamically -->
+                </select>
+                <div class="input-group-append" style="margin-left:10px">
+                    <button class="btn btn-primary" type="button" onclick="fetchAndDisplayTopProducts()">Listele</button>
+                </div>
+            </div>
+
+            <table class="table table-sm table-dark" id="dataTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Ürün</th>
+                        <th scope="col">Sipariş Adet</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>
 
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
+<script src="~/js/top10.js"></script>
 <script src="~/js/weeklyRevenue.js"></script>
-<script src="~/js/bestOrders.js"></script>
+
+
+
+
+
+

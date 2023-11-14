@@ -277,6 +277,10 @@
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\top10.js",
+      "PackagePath": "staticwebassets\\js\\top10.js"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\weeklyRevenue.js",
       "PackagePath": "staticwebassets\\js\\weeklyRevenue.js"
     },

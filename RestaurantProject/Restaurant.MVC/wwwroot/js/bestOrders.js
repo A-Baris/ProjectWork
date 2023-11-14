@@ -28,17 +28,20 @@ function displayBestOrders(bestOrdersData) {
     tableBody.empty(); // Clear the table body.
 
     bestOrdersData.forEach(function (product) {
-        var row = $("<tr>");
-        row.append($("<td>").text(product.productName));
-        row.append($("<td>").text(product.toplamSiparis));
 
-        tableBody.append(row);
+      
+
+            var row = $("<tr>");
+            row.append($("<td>").text(product.productName));
+            row.append($("<td>").text(product.toplamSiparis));
+
+            tableBody.append(row);
+        
     });
 }
 
-//var barColors = ["red", "green", "blue", "orange", "brown", "yellow", "black"];
-//var productData = [];
 
+//var productData = [];
 //$(document).ready(function () {
 //    //     //Ajax
 //    $.ajax({
@@ -53,9 +56,9 @@ function displayBestOrders(bestOrdersData) {
 //        error: function (err) {
 
 //        }
-//    })
+//    });
 
-//})
+//});
 
 
 
@@ -65,6 +68,7 @@ function displayBestOrders(bestOrdersData) {
 
 
 //function BestSellerProduct() {
+//    var barColors = ["red", "green", "blue", "orange", "brown", "yellow", "black"];
 
 //    var products = productData.map(function (value) {
 //        return value.productName;

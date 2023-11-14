@@ -5,7 +5,8 @@ using Restaurant.DAL.Context;
 
 namespace Restaurant.API.Controllers
 {
-   
+    [Route("api/Order")]
+    [ApiController]
     public class OrderController : ControllerBase
     {
         private readonly ProjectContext _context;
@@ -16,38 +17,43 @@ namespace Restaurant.API.Controllers
             _context = context;
             _orderService = orderService;
         }
-        [HttpGet]
-        public IActionResult GetBestOrders()
+        [HttpGet("GetBestOrders")]
+    
+        public IActionResult GetBestOrders(string menuName)
         {
-            var query = (from order in _context.Orders
-                         join product in _context.Products on order.ProductId equals product.Id
-                         group order.Quantity by product.ProductName into grouped
-                         orderby grouped.Sum() descending
+            var query = (from o in _context.Orders
+                         join p in _context.Products on o.ProductId equals p.Id
+                         join m in _context.Menus on p.MenuId equals m.Id
+                         where m.MenuName == menuName
+                         group new { p.ProductName, o.Quantity } by new { p.Id, p.ProductName } into g
+                         orderby g.Sum(x => x.Quantity) descending
                          select new
                          {
-                             ProductName = grouped.Key,
-                             ToplamSiparis = grouped.Sum()
+                             ProductName = g.Key.ProductName,
+                             ToplamSatis = g.Sum(x => x.Quantity)
                          }).Take(10);
-
-            return Ok(query);
+            var products = query.ToList();
+            return Ok(products);
 
         }
-        [HttpGet]
+       
+        [HttpGet("GetWeeklyRevenue")]
         public IActionResult GetWeeklyRevenue()
         {
             var startDate = DateTime.Now.Date.AddDays(-7);
             var endDate = DateTime.Now.Date;
             var orders = _orderService.GetAllDeletedStatus();
 
-            var weeklyRevenue =orders
+            var weeklyRevenue = orders
                 .Where(order => order.CreatedDate >= startDate && order.CreatedDate < endDate)
                 .GroupBy(order => order.CreatedDate.DayOfWeek)
+                .OrderBy(group => group.Key)
                 .Select(group => new
                 {
                     GunAdi = group.Key.ToString(),
                     ToplamCiro = group.Sum(order => order.TotalPrice)
-                })
-                .OrderBy(result => result.GunAdi);
+                });
+              
             var dataRevenue = weeklyRevenue.ToList();
             return Ok(dataRevenue);
         }

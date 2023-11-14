@@ -15,9 +15,9 @@ $(document).ready(function () {
         error: function (err) {
 
         }
-    })
+    });
 
-})
+});
 
 
 
@@ -32,14 +32,14 @@ function BestSellerProduct() {
 
     console.log(days);
     console.log(totalRevenue);
-    const ctx2 = document.getElementById('myChart2');
+    const ctx2 = document.getElementById('myChart');
 
     new Chart(ctx2, {
         type: 'bar',
         data: {
             labels: days,
             datasets: [{
-                label: 'Top 10 Ürünler',
+                label: '7 Günlük Performans',
                 data: totalRevenue,
                 backgroundColor: barColors,
                 borderWidth: 2

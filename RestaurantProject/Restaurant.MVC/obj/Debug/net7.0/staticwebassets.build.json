@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BcVCYC/k6UfLVDjoGaCF8a+lbI1llT1YFRsu1VIflj0=",
+  "Hash": "NTZxX01yDBnSQ1IMn4SMgKcffE9TORANVMS6XG6eMEs=",
   "Source": "Restaurant.MVC",
   "BasePath": "_content/Restaurant.MVC",
   "Mode": "Default",
@@ -2466,6 +2466,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\top10.js",
+      "SourceId": "Restaurant.MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\",
+      "BasePath": "_content/Restaurant.MVC",
+      "RelativePath": "js/top10.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\top10.js"
     },
     {
       "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\weeklyRevenue.js",
