@@ -355,11 +355,6 @@ namespace Restaurant.DAL.Migrations
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("InvoiceNumber")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<decimal>("KDV")
                         .HasColumnType("decimal(18,2)");
 

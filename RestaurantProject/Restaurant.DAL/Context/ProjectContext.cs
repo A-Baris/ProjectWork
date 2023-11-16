@@ -39,15 +39,7 @@ namespace Restaurant.DAL.Context
 
 
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer("server=DESKTOP-KUQ9PNH;database=RestaurantDB;uid=sa;pwd=1234;TrustServerCertificate=True");
-        //    }
-        //    base.OnConfiguring(optionsBuilder);
-        //}
-
+   
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

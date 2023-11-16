@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Restaurant.DAL.Data;
+using Restaurant.BLL.Services;
 
 namespace Restaurant.MVC.Controllers
 {
@@ -50,6 +51,14 @@ namespace Restaurant.MVC.Controllers
             //    }
             //}
 
+            return View();
+        }
+        public IActionResult About()
+        {
+            return View();
+        }
+        public IActionResult Contact()
+        {
             return View();
         }
         [Authorize]
@@ -220,12 +229,7 @@ namespace Restaurant.MVC.Controllers
             return View("Login");
         }
      
-        public IActionResult Privacy()
-        {
-          
 
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -24,9 +24,10 @@
     <body>
 
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0 sticky-top shadow-sm">
                 <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Restaurant.MVC</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyRestaurant</a>
+                   
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -36,23 +37,30 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                          
-
+                           
                         </ul>
                         <div>
-
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="about">Hakkımızda</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Menu" asp-action="index">Menu</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="contact">İletişim</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Reservation">Rezervasyon</a>
+                        </div>
+                        <div>
+                          
 
                             @if (User.Identity.IsAuthenticated)
                             {
 
-                                <h3>@User.Identity.Name</h3>
+                                <h3 style="color:white">@User.Identity.Name</h3>
 
-                                <a href="/home/logout">Logout</a>
-                                <a href="/UserProfile/profiledetail">Profile</a>
+                                <a href="/home/logout">Çıkış</a>
+                                
+                                <a href="/UserProfile/profiledetail" style="margin-left:15px">Profil</a>
                             }
                             else
                             {
-                                <a href="/home/Login">Login</a>
+                                <a href="/home/Login">Üye Giriş</a>
                             }
                         </div>
                     </div>
@@ -68,12 +76,12 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link active" href="/userprofile/profiledetail">
-                                    Profile Detail
+                                    Profil Detay
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/userprofile/securityprofile">
-                                    Security Profile
+                                    Profil Gizlilik
                                 </a>
                             </li>
                             <li class="nav-item">

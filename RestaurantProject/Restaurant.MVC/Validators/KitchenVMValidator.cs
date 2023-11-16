@@ -7,6 +7,7 @@ namespace Restaurant.MVC.Validators
     {
         public KitchenVMValidator()
         {
+            
             RuleFor(x => x.KitchenName)
             .NotEmpty()
             .WithMessage("Mutfak Adı boş bırakılamaz");

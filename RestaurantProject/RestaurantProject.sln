@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.Entity", "Restau
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.DAL", "Restaurant.DAL\Restaurant.DAL.csproj", "{0F264558-E195-4626-A2A4-C95B933FFAA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.TestCA", "Restaurant.TestCA\Restaurant.TestCA.csproj", "{9583F49E-1F1A-4876-AF51-43FB119E5A26}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.MVC", "Restaurant.MVC\Restaurant.MVC.csproj", "{152F1102-220A-4D17-8510-268B4819CB6C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.BLL", "Restaurant.BLL\Restaurant.BLL.csproj", "{17C9E0A7-2CF2-45E6-B80E-07749BD0BEDA}"
@@ -17,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.IOC", "Restauran
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.Common", "Restaurant.Common\Restaurant.Common.csproj", "{221C2CDB-6506-4391-888B-68584E7D35B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.API", "Restaurant.API\Restaurant.API.csproj", "{1B5FBC60-6E8D-4445-AE35-0B508122F754}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.API", "Restaurant.API\Restaurant.API.csproj", "{1B5FBC60-6E8D-4445-AE35-0B508122F754}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{0F264558-E195-4626-A2A4-C95B933FFAA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F264558-E195-4626-A2A4-C95B933FFAA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F264558-E195-4626-A2A4-C95B933FFAA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9583F49E-1F1A-4876-AF51-43FB119E5A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9583F49E-1F1A-4876-AF51-43FB119E5A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9583F49E-1F1A-4876-AF51-43FB119E5A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9583F49E-1F1A-4876-AF51-43FB119E5A26}.Release|Any CPU.Build.0 = Release|Any CPU
 		{152F1102-220A-4D17-8510-268B4819CB6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{152F1102-220A-4D17-8510-268B4819CB6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{152F1102-220A-4D17-8510-268B4819CB6C}.Release|Any CPU.ActiveCfg = Release|Any CPU

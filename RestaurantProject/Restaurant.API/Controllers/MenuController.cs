@@ -18,8 +18,18 @@ namespace Restaurant.API.Controllers
         [HttpGet]
         public IActionResult GetAllMenus()
         {
-            var menus = _menuService.GetAll();
-            return Ok(menus);
+            try
+            {
+                var menus = _menuService.GetAll();
+                return Ok(menus);
+            }
+            catch (Exception ex)
+            {
+              
+
+                return StatusCode(500, $"Sunucu kaynaklı hata ile karşılaşıldı\n{ex}");
+             
+            }
         }
     }
 }

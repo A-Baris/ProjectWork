@@ -120,7 +120,20 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData["ErrorMessage"] = "Id bulunamadı";
             return RedirectToAction("index", "tableofrestaurant", new { area = "Manager" });
         }
-      
+        public async Task<IActionResult> BillRequestCancel(int id)
+        {
+            var table = await _tableOfRestaurant.GetbyIdAsync(id);
+            if (table != null)
+            {
+                table.BillRequest = Entity.Enums.BillRequest.Passive;
+                _tableOfRestaurant.Update(table);
+                TempData["Message"] = "İşlem başarılı";
+                return RedirectToAction("index", "tableofrestaurant", new { area = "Manager" });
+            }
+            TempData["ErrorMessage"] = "Id bulunamadı";
+            return RedirectToAction("index", "tableofrestaurant", new { area = "Manager" });
+        }
+
         void EmployeeList()
         {
             ViewBag.Employees = _employee.GetAll().Select(w => new SelectListItem

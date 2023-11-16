@@ -10,8 +10,7 @@ namespace Restaurant.Entity.Entities
 {
     public class Invoice:BaseEntity
     {
-        [MaxLength(100)]
-        public string InvoiceNumber { get; set; }
+       
         public DateTime InvoiceDate { get; set; }
         [MaxLength(250)]
         public string? Description { get; set; }

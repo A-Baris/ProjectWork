@@ -20,7 +20,7 @@ namespace Restaurant.Common
             sender.To.Add(email);
 
             SmtpClient smtpClient = new SmtpClient();
-            smtpClient.Credentials = new NetworkCredential("MyRestaurant34@outlook.com", "sardirim3434");
+            smtpClient.Credentials = new NetworkCredential("MyRestaurant34@outlook.com", "****");
             smtpClient.Port = 587;
             smtpClient.Host = "smtp-mail.outlook.com";
             smtpClient.EnableSsl = true;

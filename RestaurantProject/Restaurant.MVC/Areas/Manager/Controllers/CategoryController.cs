@@ -50,18 +50,19 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     Id = id,
                     CategoryName = category.CategoryName
                 };
-                TempData["Message"] = "İşlem başarılı";
-                return RedirectToAction("Index", "Category", new { area = "Manager" });
+
+                return View(updated);
             }
             TempData["ErrorMessage"] = "Id bulunamadı";
             return View("index");
+
         }
         [HttpPost]
-        public async Task <IActionResult> Update(CategoryVm updated)
+        public async Task <IActionResult> Update(int id,CategoryVm updated)
         {
             if(ModelState.IsValid)
             {
-                var category = await _categoryService.GetbyIdAsync(updated.Id);
+                var category = await _categoryService.GetbyIdAsync(id);
                 category.Id= updated.Id;
                 category.CategoryName = updated.CategoryName;
                 _categoryService.Update(category);

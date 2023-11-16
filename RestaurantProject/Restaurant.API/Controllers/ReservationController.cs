@@ -70,15 +70,19 @@ namespace Restaurant.API.Controllers
         [HttpGet]
         public IActionResult GetReservationDate(DateTime date)
         {
+            
+                var reservationList = _reservationService.GetAll().Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
 
-            var reservationList = _reservationService.GetAll().Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
+                return Ok(reservationList);
 
-            return Ok(reservationList);
+            
+            
         }
 
         [HttpGet]
         public IActionResult GetReservationDates(DateTime date)
         {
+        
 
             var query = from r in _context.Reservations
                         join c in _context.Customers on r.CustomerId equals c.Id
@@ -93,6 +97,7 @@ namespace Restaurant.API.Controllers
             var reservationList = query.Where(x=>x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
 
             return Ok(reservationList);
+          
         }
     }
 }

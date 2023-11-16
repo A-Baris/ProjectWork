@@ -30,7 +30,8 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0 sticky-top shadow-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyRestaurant</a>
+              
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -44,19 +45,26 @@
                             <a class="nav-link text-dark" href="/manager/home">Area</a>
                         </li> *@
                     </ul>
-                   
+                   <div>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a>
+
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="about">Hakkımızda</a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Menu" asp-action="index">Menu</a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="contact">İletişim</a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Reservation">Rezervasyon</a>
+                   </div>
                     <div>
                         @if (User.Identity.IsAuthenticated)
                         {
 
                                 <h3 style="color:white">@User.Identity.Name</h3>
-                                <a href="/home/logout">Logout</a>
-                                <a href="/UserProfile/profiledetail">Profile</a>
+                                <a href="/home/logout">Çıkış</a>
+                            <a href="/UserProfile/profiledetail" style="margin-left:15px">Profil</a>
                             
                         }
                         else
                         {
-                            <a href="/home/Login">Login</a>
+                            <a href="/home/Login">Üye Giriş</a>
                         }
 
                         

@@ -65,12 +65,20 @@
       "PackagePath": "staticwebassets\\images\\29689b8b-e57b-45fb-b45d-89a26047cfec.jpg"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\556349bc-74ab-4489-a9cd-3102f81e8ee7.jpg",
+      "PackagePath": "staticwebassets\\images\\556349bc-74ab-4489-a9cd-3102f81e8ee7.jpg"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\6b4b9eb0-0fd7-4872-ab51-2eb75c0bf984.jpeg",
       "PackagePath": "staticwebassets\\images\\6b4b9eb0-0fd7-4872-ab51-2eb75c0bf984.jpeg"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\7186bd2f-69c7-4291-a06d-a64baea7c5ac.jpeg",
       "PackagePath": "staticwebassets\\images\\7186bd2f-69c7-4291-a06d-a64baea7c5ac.jpeg"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\8236c73b-c82a-4ad7-bf42-bb380cf841a2.jpeg",
+      "PackagePath": "staticwebassets\\images\\8236c73b-c82a-4ad7-bf42-bb380cf841a2.jpeg"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\b6bd7f60-b7fd-4709-bfe6-2b93ab8a39c2.jpg",
@@ -81,12 +89,20 @@
       "PackagePath": "staticwebassets\\images\\baa14838-7fa5-4731-a1d5-ec0fd1dbc2d4.jpeg"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\d144daae-4b7b-455f-8b0d-dea28761d04d.jpeg",
+      "PackagePath": "staticwebassets\\images\\d144daae-4b7b-455f-8b0d-dea28761d04d.jpeg"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\f2be43d0-d075-40f5-988f-ffa8105a7b71.jpg",
       "PackagePath": "staticwebassets\\images\\f2be43d0-d075-40f5-988f-ffa8105a7b71.jpg"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\f8d8c71c-caab-4a1e-b198-f8192329ac77.jpeg",
       "PackagePath": "staticwebassets\\images\\f8d8c71c-caab-4a1e-b198-f8192329ac77.jpeg"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\f9aa7dc6-0b20-47dc-97e1-beabd767683a.jpg",
+      "PackagePath": "staticwebassets\\images\\f9aa7dc6-0b20-47dc-97e1-beabd767683a.jpg"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\img\\Akdeniz-kahvalti.jpg",
@@ -277,16 +293,16 @@
       "PackagePath": "staticwebassets\\js\\main.js"
     },
     {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\menuofProductDisplaying.js",
+      "PackagePath": "staticwebassets\\js\\menuofProductDisplaying.js"
+    },
+    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\scripts.js",
       "PackagePath": "staticwebassets\\js\\scripts.js"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
-    },
-    {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\toolBarAccounting.cs",
-      "PackagePath": "staticwebassets\\js\\toolBarAccounting.cs"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\top10.js",
