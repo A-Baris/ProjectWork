@@ -14,6 +14,8 @@ namespace Restaurant.Entity.DTOs
         public DateTime ReservationDate { get; set; }
         [Display(Name = "Açıklama")]
         public string? Description { get; set; }
+        [Display(Name = "Misafir Sayısı")]
+        public int GuestNumber { get; set; }
       
        
 

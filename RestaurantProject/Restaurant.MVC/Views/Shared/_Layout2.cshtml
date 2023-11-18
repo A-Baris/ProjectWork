@@ -51,7 +51,7 @@
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="about">Hakkımızda</a>
                         <a class="navbar-brand" asp-area="" asp-controller="Menu" asp-action="index">Menu</a>
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="contact">İletişim</a>
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Reservation">Rezervasyon</a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Reservation" asp-action="UserReservation">Rezervasyon</a>
                    </div>
                     <div>
                         @if (User.Identity.IsAuthenticated)
@@ -77,6 +77,25 @@
         </nav>
     </header>
     <div class="container">
+        <div class="message-container">
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success">
+                    <div class="d-flex justify-content-center align-items-center">
+                        @TempData["Message"]
+                    </div>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    <div class="d-flex justify-content-center align-items-center">
+                        @TempData["ErrorMessage"]
+                    </div>
+                </div>
+            }
+        </div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

@@ -73,6 +73,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     {
                         ReservationDate = createVM.ReservationDate,
                         TableOfRestaurantId = createVM.TableOfRestaurantId,
+                        GuestNumber = createVM.GuestNumber,
                         CustomerId = createVM.CustomerId,
                         Description = createVM.Description,
                        

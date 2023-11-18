@@ -10,11 +10,11 @@ namespace Restaurant.Entity.DTOs
     public class CustomerDTO
     {
 
-        [Display(Name = "Email")]
+      
         public string? Email { get; set; }
-        [Display(Name = "Cep No")]
+  
         public string? Phone { get; set; }
-        [Display(Name = "Adres")]
+  
         public string? Adress { get; set; }
 
     }

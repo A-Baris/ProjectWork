@@ -17,11 +17,24 @@
 
                 </div>
                 <div class="form-group">
+                    <label>Masa Konumu</label>
+                    <select class="form-control" asp-for="TableLocation" >
+                        <option selected="" value="@Model.TableLocation"></option>
+                        <option>Cam Kenarı</option>
+                        <option>Koridor Sol</option>
+                        <option>Koridor Sağ</option>
+                        <option>Bahçe</option>
+                    </select>
+
+
+
+                </div>
+               @*  <div class="form-group">
                     <label asp-for="TableLocation"></label>
                     <input asp-for="TableLocation" class="form-control" value="@Model.TableLocation" />
                     <span asp-validation-for="TableLocation" class="text-danger"></span>
 
-                </div>
+                </div> *@
                 <div class="form-group">
                     <label asp-for="TableCapacity"></label>
                     <input asp-for="TableCapacity" class="form-control" value="@Model.TableCapacity" />

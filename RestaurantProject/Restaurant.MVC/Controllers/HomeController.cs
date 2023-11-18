@@ -61,15 +61,7 @@ namespace Restaurant.MVC.Controllers
         {
             return View();
         }
-        [Authorize]
-        public async Task<IActionResult> Reservation()
-        {
-            string UserName = User.Identity.Name;
-            var user = await _userManager.FindByNameAsync(UserName);
-            ViewBag.UserEmail = user.Email;
-            return View();
-        }
-   
+        
 
         public IActionResult Register()
         {
@@ -227,6 +219,10 @@ namespace Restaurant.MVC.Controllers
                     }
             }
             return View("Login");
+        }
+        public IActionResult ServerMessage()
+        {
+            return View();
         }
      
 

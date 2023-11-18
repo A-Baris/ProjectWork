@@ -12,5 +12,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
         public string? Description { get; set; }
         [Display(Name = "Rezervasyon Tarih")]
         public DateTime ReservationDate { get; set; }
+        [Display(Name = "Misafir Sayısı")]
+        public int GuestNumber { get; set; }
     }
 }

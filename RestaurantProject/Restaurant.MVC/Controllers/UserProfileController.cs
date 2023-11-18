@@ -154,6 +154,7 @@ namespace Restaurant.MVC.Controllers
                                    {
                                        Id=r.Id,
                                        ReservationDate = r.ReservationDate,
+                                       GuestNumber = r.GuestNumber,
                                        Description = r.Description,
                                        ReservationStatus = r.ReservationStatus,
                                        Name = c.Name,

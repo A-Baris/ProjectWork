@@ -26,6 +26,7 @@ function displayReservationData(reservationData) {
         row.append($("<td>").text(reservation.reservationDate));
         row.append($("<td>").text(reservation.reservationStatus.toString()));
         row.append($("<td>").text(reservation.customerId.toString()));
+        row.append($("<td>").text(reservation.guestNumber));
         row.append($("<td>").text(reservation.description));
         tableBody.append(row);
     });
