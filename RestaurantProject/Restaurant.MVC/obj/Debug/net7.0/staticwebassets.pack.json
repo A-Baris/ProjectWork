@@ -5,10 +5,6 @@
       "PackagePath": "staticwebassets\\Restaurant.MVC.bundle.scp.css"
     },
     {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\ReservationDate.js",
-      "PackagePath": "staticwebassets\\ReservationDate.js"
-    },
-    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\assets\\demo\\chart-area-demo.js",
       "PackagePath": "staticwebassets\\assets\\demo\\chart-area-demo.js"
     },
@@ -43,10 +39,6 @@
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
-    },
-    {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\getUser.js",
-      "PackagePath": "staticwebassets\\getUser.js"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\0130584d-0bfb-4b47-9527-f76bfd5c3f0b.jpg",
@@ -281,8 +273,32 @@
       "PackagePath": "staticwebassets\\img\\özbek-pilavi.jpg"
     },
     {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\bestOrders.js",
-      "PackagePath": "staticwebassets\\js\\bestOrders.js"
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\Area\\Accounting\\totalDebits.js",
+      "PackagePath": "staticwebassets\\js\\Area\\Accounting\\totalDebits.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\Area\\Home\\top10.js",
+      "PackagePath": "staticwebassets\\js\\Area\\Home\\top10.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\Area\\Home\\weeklyRevenue.js",
+      "PackagePath": "staticwebassets\\js\\Area\\Home\\weeklyRevenue.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\Area\\Reservation\\ReservationDate.js",
+      "PackagePath": "staticwebassets\\js\\Area\\Reservation\\ReservationDate.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\Menu\\menufilter.js",
+      "PackagePath": "staticwebassets\\js\\Menu\\menufilter.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\Reservation\\postreservation.js",
+      "PackagePath": "staticwebassets\\js\\Reservation\\postreservation.js"
+    },
+    {
+      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\Reservation\\updatereservation.js",
+      "PackagePath": "staticwebassets\\js\\Reservation\\updatereservation.js"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\datatables-simple-demo.js",
@@ -303,18 +319,6 @@
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
-    },
-    {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\top10.js",
-      "PackagePath": "staticwebassets\\js\\top10.js"
-    },
-    {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\totalDebits.js",
-      "PackagePath": "staticwebassets\\js\\totalDebits.js"
-    },
-    {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\js\\weeklyRevenue.js",
-      "PackagePath": "staticwebassets\\js\\weeklyRevenue.js"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\lib\\animate\\animate.css",
@@ -977,28 +981,12 @@
       "PackagePath": "staticwebassets\\scss\\bootstrap\\scss\\vendor\\_rfs.scss"
     },
     {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\test.js",
-      "PackagePath": "staticwebassets\\test.js"
-    },
-    {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testReservation.js",
-      "PackagePath": "staticwebassets\\testReservation.js"
-    },
-    {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testchart.js",
       "PackagePath": "staticwebassets\\testchart.js"
     },
     {
       "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testpost.js",
       "PackagePath": "staticwebassets\\testpost.js"
-    },
-    {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testpostreservation.js",
-      "PackagePath": "staticwebassets\\testpostreservation.js"
-    },
-    {
-      "Id": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\testupdatereservation.js",
-      "PackagePath": "staticwebassets\\testupdatereservation.js"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.Restaurant.MVC.Microsoft.AspNetCore.StaticWebAssets.props",

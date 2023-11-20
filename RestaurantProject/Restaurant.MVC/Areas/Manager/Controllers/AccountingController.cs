@@ -39,16 +39,23 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public IActionResult CashTracking()
         {
-            
-            var cashList = _orderItemService.GetAllDeletedStatus()
-                .GroupBy(x => x.CreatedDate.Date)
-                .Select(group => new
+            try
             {
-                Day = group.Key,
-                TotalPrice = group.Sum(x => x.TotalPrice),
-            });
-            ViewBag.CashTracking = cashList.ToList();
-            return View();
+                var cashList = _orderItemService.GetAllDeletedStatus()
+                    .GroupBy(x => x.CreatedDate.Date)
+                    .Select(group => new
+                    {
+                        Day = group.Key,
+                        TotalPrice = group.Sum(x => x.TotalPrice),
+                    });
+                ViewBag.CashTracking = cashList.ToList();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View();
+            }
         }
         public IActionResult ReportOfTurnover(int targetYear, int targetMonth)
         {

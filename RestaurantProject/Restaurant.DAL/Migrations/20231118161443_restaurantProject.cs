@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Restaurant.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class restaurant1 : Migration
+    public partial class restaurantProject : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,7 +63,6 @@ namespace Restaurant.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -162,6 +161,7 @@ namespace Restaurant.DAL.Migrations
                     TableLocation = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TableCapacity = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    BillRequest = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -190,10 +190,10 @@ namespace Restaurant.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Payment = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    InvoiceCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InvoiceCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     RemainingDebt = table.Column<decimal>(type: "decimal(18,2)", nullable: true, computedColumnSql: "[Debit] - [Payment]"),
                     LastPaymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     SupplierId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -263,7 +263,7 @@ namespace Restaurant.DAL.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     KitchenId = table.Column<int>(type: "int", nullable: false),
                     MenuId = table.Column<int>(type: "int", nullable: false),
-                    SupplierId = table.Column<int>(type: "int", nullable: false),
+                    SupplierId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -297,8 +297,7 @@ namespace Restaurant.DAL.Migrations
                         name: "FK_Products_Suppliers_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -310,7 +309,7 @@ namespace Restaurant.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Adress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     TableOfRestaurantId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -407,9 +406,10 @@ namespace Restaurant.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GuestNumber = table.Column<int>(type: "int", nullable: false),
                     TableOfRestaurantId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     ReservationStatus = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),

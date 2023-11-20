@@ -25,7 +25,7 @@
                 var errorMessage = "An error occurred while processing your request.";
 
                 if (xhr.status === 400) {
-                    if (xhr.status === 400) {
+                   
                         errorMessage = "Bad Request: The server could not understand the request.";
                     } else if (xhr.status === 401) {
                         errorMessage = "Unauthorized: You are not authorized to perform this action.";

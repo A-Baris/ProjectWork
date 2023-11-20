@@ -16,7 +16,7 @@ namespace Restaurant.Entity.Entities
         [MaxLength(100)]
         public string? Adress { get; set; }
         [MaxLength(11)]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
         [MaxLength(250)]
         public string Email { get; set; }
 

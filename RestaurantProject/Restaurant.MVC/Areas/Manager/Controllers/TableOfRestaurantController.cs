@@ -32,7 +32,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         public IActionResult Index()
         {
             ViewBag.EmployeeList = _employee.GetAll();
-            var tableList = _tableOfRestaurant.GetAll();
+            var tableList = _tableOfRestaurant.GetAll().OrderBy(t => t.TableName).ToList();
+            //List<string> location = new List<string>();
+            //foreach (var item in tableList)
+            //{
+            //    location.Add(item.TableLocation);
+            //}
+            //ViewBag.TableLocations = location;
             return View(tableList);
         }
 
@@ -47,6 +53,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             if (ModelState.IsValid)
             {
                 var table = _mapper.Map<TableOfRestaurant>(tofVM);
+                table.Status = Entity.Enums.ReservationStatus.Passive;
                 _tableOfRestaurant.Create(table);
                 TempData["Message"] = "Başarılı şekilde oluşturuldu";
                 return RedirectToAction("index", "tableofrestaurant", new { area = "Manager" });
@@ -136,7 +143,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         void EmployeeList()
         {
-            ViewBag.Employees = _employee.GetAll().Select(w => new SelectListItem
+            ViewBag.Employees = _employee.GetAll().Where(x=>x.Title=="Garson").Select(w => new SelectListItem
             {
                 Text = w.Name + " " + w.Surname,
                 Value = w.Id.ToString()

@@ -65,6 +65,19 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                     PhoneNumber = userVM.PhoneNumber,
 
                 };
+                var emailCheck = await _userManager.FindByEmailAsync(userVM.Email);
+                if(emailCheck!=null)
+                {
+                    TempData["ErrorMessage"] = "Email başka kullanıcıya ait!";
+                    return View();
+                   
+                }
+                var userNameCheck = await _userManager.FindByNameAsync(userVM.UserName);
+                if(userNameCheck!=null)
+                {
+                    TempData["ErrorMessage"] = "Kullanıcı adı kullanılmaktadır";
+                    return View();
+                }
                 var result = await _userManager.CreateAsync(appUser, userVM.Password);
                 if(result.Succeeded)
                 {

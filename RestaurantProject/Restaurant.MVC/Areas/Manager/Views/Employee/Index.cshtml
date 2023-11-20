@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Employee>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
@@ -17,14 +17,14 @@
             <th>Not</th>
         </tr>
     </thead>
-    @foreach (var item in ViewBag.waiterList as List<Employee>)
+    @foreach (var item in Model)
     {
 
 
         <tr>
             <td>@item.Name</td>
             <td>@item.Surname</td>
-            <td>@item.Title</td>
+            <td>@item.Title.ToUpper()</td>
             <td>@item.Phone</td>
             <td>@item.TcNo</td>
             <td>@item.Notes</td>

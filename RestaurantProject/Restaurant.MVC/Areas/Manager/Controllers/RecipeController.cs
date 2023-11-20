@@ -49,7 +49,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var checkEntity = _context.ProductIngredients.Where(x => x.ProductId == pi.ProductId && x.IngredientId == pi.IngredientId).FirstOrDefault();
                 if(checkEntity!=null)
                 {
-                    TempData["ErrorMessage"] = @"The entity is already existing";
+                    TempData["ErrorMessage"] = "The entity is already existing";
                     return RedirectToAction("Create", "Recipe", new { area = "manager" });
                 }
              
@@ -60,8 +60,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = @"Some Values are invalid";
-                return View(createVM);
+                TempData["ErrorMessage"] = "Some Values are invalid";
+                SelectProductAndIngredient();
+                ViewBag.ProductIngredient = _context.ProductIngredients.ToList();
+                return View();
             }
             SelectProductAndIngredient();
             ViewBag.ProductIngredient = _context.ProductIngredients.ToList();      

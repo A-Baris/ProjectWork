@@ -61,7 +61,11 @@ namespace Restaurant.MVC.Controllers
         {
             return View();
         }
-        
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
 
         public IActionResult Register()
         {
@@ -155,6 +159,10 @@ namespace Restaurant.MVC.Controllers
                         return RedirectToAction("checkauth", "home", new {area="manager"});
 
                     }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Email veya Şifre yanlış ";
+                    }
                   
                 }
              
@@ -170,7 +178,7 @@ namespace Restaurant.MVC.Controllers
         public IActionResult GoogleLogin(string returnUrl)
         {
             string redirectUrl = Url.Action("Response", "Home", new { returnUrl = returnUrl });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);  
             return new ChallengeResult("Google", properties);
         }
         public async Task<IActionResult> Response(string ReturnUrl="/")
@@ -186,6 +194,7 @@ namespace Restaurant.MVC.Controllers
                 if (result.Succeeded)
                 {
                     TempData["Message"] = $"Hoş Geldin {info.Principal.Identity.Name}";
+                    
                     return RedirectToAction("index","home");
                 }
                 else
@@ -207,12 +216,16 @@ namespace Restaurant.MVC.Controllers
                     IdentityResult createResult = await _userManager.CreateAsync(user);
                     if (createResult.Succeeded)
                     {
+                        Customer customer = new Customer() { Name=user.UserName,Surname="Surname",Email=user.Email};
+                        _customerService.Create(customer);
                         IdentityResult loginResult = await _userManager.AddLoginAsync(user, info);
                         if(loginResult.Succeeded)
                         {
                             await _signInManager.SignInAsync(user, true);
+                            
                             HttpContext.Session.SetString("UserName", user.UserName);
-                            TempData["Message"] = $"Hoş Geldin {user.UserName}";
+                            
+                            TempData["Message"] = $"Hoş Geldin {user.UserName}";                          
                             return RedirectToAction("index","home");
                         }
                     }

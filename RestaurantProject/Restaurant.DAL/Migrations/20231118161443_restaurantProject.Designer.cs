@@ -12,8 +12,8 @@ using Restaurant.DAL.Context;
 namespace Restaurant.DAL.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20231117114235_reservationguestnumber")]
-    partial class reservationguestnumber
+    [Migration("20231118161443_restaurantProject")]
+    partial class restaurantProject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,7 +172,6 @@ namespace Restaurant.DAL.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 

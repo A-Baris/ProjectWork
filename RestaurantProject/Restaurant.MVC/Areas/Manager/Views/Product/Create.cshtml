@@ -38,9 +38,9 @@
 
 
         <div class="form-group">
-            <label>Yemek Kategori</label>
-            <select asp-items="ViewBag.DishCategoryList" asp-for="CategoryId" class="form-control">
-                        <option selected="" disable value="">Yemek Kategori Seçimi</option>
+            <label>Kategori</label>
+            <select asp-items="ViewBag.CategoryList" asp-for="CategoryId" class="form-control">
+                        <option selected="" disable value="">Kategori Seçimi</option>
             </select>
 
         </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="text-center">
 
-            <button type="submit" class="btn btn-primary" style="margin-top:10px">Create</button>
+            <button type="submit" class="btn btn-primary" style="margin-top:10px">Oluştur</button>
         </div>
 
         </form>

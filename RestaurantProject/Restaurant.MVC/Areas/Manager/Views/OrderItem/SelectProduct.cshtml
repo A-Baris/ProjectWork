@@ -23,7 +23,7 @@
         @foreach (var item in ViewBag.Menus as List<Menu>)
         {
             
-                <div class="col-md-2">
+                <div class="col-md-2" style="margin-top:5px">
                     <button class="btn btn-outline-primary btn-lg category-button" data-category="@item.MenuName">@item.MenuName</button>
                 </div>
             
@@ -83,26 +83,7 @@
 
 
 
-<script>
-    document.querySelectorAll('.category-button').forEach(button => {
-        button.addEventListener('click', () => {
-            const category = button.getAttribute('data-category');
-            filterProductsByCategory(category);
-        });
-    });
-
-    function filterProductsByCategory(category) {
-        const productCards = document.querySelectorAll('.product-card');
-        productCards.forEach(card => {
-            const cardCategory = card.getAttribute('data-category');
-            if (category === 'All' || cardCategory === category) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-</script>
+<script src="~/js/Menu/menufilter.js"></script>
 
 
 

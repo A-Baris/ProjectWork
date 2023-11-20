@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Restaurant.BLL.AbstractServices;
+using Restaurant.DAL.Data;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
@@ -13,24 +16,27 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     {
         private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
+        private readonly RoleManager<AppRole> _roleManager;
 
-        public EmployeeController(IEmployeeService employeeService,IMapper mapper)
+        public EmployeeController(IEmployeeService employeeService,IMapper mapper,RoleManager<AppRole> roleManager)
         {
             _employeeService = employeeService;
             _mapper = mapper;
+            _roleManager = roleManager;
         }
         public IActionResult Index()
         {
-            ViewBag.waiterList = _employeeService.GetAll();
-            return View();
+           var employees = _employeeService.GetAll();
+            return View(employees);
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Roles = await _roleManager.Roles.ToListAsync();
             return View();
         }
         [HttpPost]
-        public IActionResult Create(EmployeeVM employeeVM)
+        public async Task<IActionResult> Create(EmployeeVM employeeVM)
         {
             if (ModelState.IsValid)
             {
@@ -42,10 +48,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             }
             TempData["ErrorMessage"] = "ModelState is valid";
+            ViewBag.Roles = await _roleManager.Roles.ToListAsync();
+
             return View(employeeVM);
         }
         public async Task<IActionResult> Update(int id)
         {
+            ViewBag.Roles = await _roleManager.Roles.ToListAsync();
             var employee = await _employeeService.GetbyIdAsync(id);
           if(employee!=null)
             {
@@ -75,6 +84,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
                 }
                 TempData["ErrorMessage"] = "ModelState is valid";
+                ViewBag.Roles = await _roleManager.Roles.ToListAsync();
                 return View(updated);
             }
             TempData["ErrorMessage"] = "Employee is not found";
@@ -93,7 +103,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 employee.BaseStatus=Entity.Enums.BaseStatus.Deleted;
                 _employeeService.Update(employee);
                 TempData["Message"] = "Successful";
-                return RedirectToAction("Index", "Manager");
+                return RedirectToAction("Index", "employee", new { area = "manager" });
 
             }
             return View();

@@ -36,7 +36,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             var tableList = _tableOfRestaurantService.GetAll();
             return View(tableList);
         }
-        public async Task<IActionResult> BillDetail(int id)
+        public async Task<IActionResult> BillDetail(int id,decimal discount)
         {
             ViewBag.OrderItems = _orderItemService.GetAll();
             ViewBag.Product = _productService.GetAll();

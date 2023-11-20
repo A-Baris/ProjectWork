@@ -138,7 +138,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public IActionResult Index()
         {
-            var tables = _tableOfRestaurantService.GetAll();
+            var tables = _tableOfRestaurantService.GetAll().OrderBy(x=>x.TableName).ToList();
             return View(tables);
         }
 

@@ -33,13 +33,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Index()
         {
-            string dish = "Dish";
-            string drink = "Drink";
-            string salad = "Salad";
-            string dessert = "Dessert";
+            string dish = "Yemek";
+            string drink = "İçecek";
+            string salad = "Salata";
+            string dessert = "tatlı";
 
             SelectOptionList();
-            //pasife veya aktif durumdaki tüm ürünler listeleniyor// durum kontrolüde eklemeliyim!!
+          
 
             var dishList=_productService.GetAll();
             ViewBag.DishList = _productService.GetSelectedProducts(dish);
@@ -163,7 +163,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         void SelectOptionList() //liste metodu
         {
-            ViewBag.DishCategoryList = _categoryService.GetAll().Select(d => new SelectListItem
+            ViewBag.CategoryList = _categoryService.GetAll().Select(d => new SelectListItem
             {
                 Text = d.CategoryName,
                 Value = d.Id.ToString(),

@@ -64,7 +64,7 @@ namespace Restaurant.MVC.Controllers
              
                 if (user != null)
                 {
-                    var customer = _customerService.GetAll().Where(x => x.Email == user.Email);
+                    var customer = _customerService.GetAll().Where(x => x.Email == user.Email).FirstOrDefault();
                     if(customer==null)
                     {
                         Customer newCustomer = new Customer()
@@ -75,6 +75,15 @@ namespace Restaurant.MVC.Controllers
                             Email = profileVM.Email,
                         };
                         _customerService.Create(newCustomer);
+                    }
+                    else
+                    {
+                        customer.Name = profileVM.CustomerName;
+                        customer.Surname = profileVM.CustomerSurname;
+                        customer.Phone = profileVM.PhoneNumber;
+                        customer.Email = profileVM.Email;
+                        _customerService.Update(customer);
+                        
                     }
                     user.Email = profileVM.Email;
                     user.PhoneNumber = profileVM.PhoneNumber; 
@@ -94,12 +103,12 @@ namespace Restaurant.MVC.Controllers
                         HttpContext.Session.SetString("UserName", profileVM.UserName);
                         await _signInManager.RefreshSignInAsync(user);
                         TempData["Message"] = "Bilgileriniz başarılı şekilde güncellendi";
-                        return RedirectToAction("index", "UserProfile");
+                        return RedirectToAction("profiledetail", "UserProfile");
                     }
                  
                 }
             }
-            return View("profiledetail", "userprofile");
+            return View("profiledetail",profileVM);
         }
 
         public async Task<IActionResult> SecurityProfile()

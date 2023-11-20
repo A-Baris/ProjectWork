@@ -19,13 +19,14 @@
 function displayReservationData(reservationData) {
     var tableBody = $("#reservationTable tbody");
 
-    tableBody.empty(); // Clear the table body.
+    tableBody.empty(); 
 
     reservationData.forEach(function (reservation) {
         var row = $("<tr>");
         row.append($("<td>").text(reservation.reservationDate));
-        row.append($("<td>").text(reservation.reservationStatus.toString()));
-        row.append($("<td>").text(reservation.customerId.toString()));
+        row.append($("<td>").text(reservation.reservationStatus));
+        row.append($("<td>").text(reservation.name));
+        row.append($("<td>").text(reservation.surname));
         row.append($("<td>").text(reservation.guestNumber));
         row.append($("<td>").text(reservation.description));
         tableBody.append(row);

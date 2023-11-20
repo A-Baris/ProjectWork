@@ -44,7 +44,7 @@ namespace Restaurant.API.Controllers
             {
 
                 var reservationEntity = _mapper.Map<Reservation>(reservationCustomerDTO.Reservation);
-                var customer = _customerService.GetAll().Where(x => x.Email == reservationCustomerDTO.Customer.Email).First();
+                var customer = _customerService.GetAll().Where(x => x.Email == reservationCustomerDTO.Customer.Email).FirstOrDefault();
                 if (customer.Adress == null || customer.Phone == null)
                 {
                     customer.Adress = reservationCustomerDTO.Customer.Adress;
@@ -165,8 +165,19 @@ namespace Restaurant.API.Controllers
         [HttpGet]
         public IActionResult GetReservationDate(DateTime date)
         {
-
-            var reservationList = _reservationService.GetAll().Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
+            var reservationQuery = (from r in _context.Reservations
+                                   join c in _context.Customers on r.CustomerId equals c.Id
+                                   select new
+                                   {
+                                       r.ReservationDate,
+                                       r.ReservationStatus,
+                                       c.Name,
+                                       c.Surname,
+                                       r.GuestNumber,
+                                       r.Description
+                                   }).ToList();
+            var reservationList = reservationQuery.Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
+       
 
             return Ok(reservationList);
 

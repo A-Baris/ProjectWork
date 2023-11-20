@@ -3,12 +3,28 @@
     ViewData["Title"] = "SelectTable";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
+<div class="row" style="margin-left:60px">
+
+    <div class="col-md-2">
+        <button class="btn btn-outline-primary btn-lg category-button" onclick="showAllLocations()">Tümü</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-outline-primary btn-lg category-button" onclick="filterTables('Cam-Kenarı')">Cam-Kenarı</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-outline-primary btn-lg category-button" onclick="filterTables('Salon')">Salon</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-outline-primary btn-lg category-button" onclick="filterTables('Bahçe')">Bahçe</button>
+    </div>
+</div>
+
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var item in Model)
             {
-                <div class="card-body" >
+                <div class="card-body" data-location="@item.TableLocation" style="margin-top:5px">
 
                     
                         <div class="col-md-4">
@@ -21,4 +37,20 @@
         </div>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function filterTables(location) {
+        // Hide all cards initially
+        $('.card-body').hide();
+
+        // Show only the cards that match the selected location
+        $('.card-body[data-location="' + location + '"]').show();
+    }
+
+    function showAllLocations() {
+        // Show all cards
+        $('.card-body').show();
+    }
+</script>
 

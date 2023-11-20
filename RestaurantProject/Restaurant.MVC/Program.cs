@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using Restaurant.DAL.Data;
 using FluentValidation.AspNetCore;
+using Restaurant.MVC.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,7 +80,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    
     app.UseHsts();
 }
 
