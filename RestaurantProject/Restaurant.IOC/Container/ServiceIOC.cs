@@ -6,6 +6,7 @@ using Restaurant.BLL.Mapping;
 using Restaurant.BLL.Repositories;
 using Restaurant.BLL.Services;
 using Restaurant.Entity.Entities;
+using Restaurant.MVC.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,10 @@ namespace Restaurant.IOC.Container
 
             //automap servise ekledik
             services.AddAutoMapper(typeof(MapProfile));
+
+
+
+    
         }
     }
 }

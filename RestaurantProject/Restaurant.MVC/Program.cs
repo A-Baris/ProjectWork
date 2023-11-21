@@ -11,12 +11,15 @@ using System.Configuration;
 using Restaurant.DAL.Data;
 using FluentValidation.AspNetCore;
 using Restaurant.MVC.Validators;
+using FluentValidation;
+using Restaurant.Entity.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllersWithViews().AddFluentValidation(x=>x.RegisterValidatorsFromAssemblyContaining<Program>());
 
+builder.Services.AddTransient(typeof(IValidationService<>), typeof(ValidationService<>));
 //  DbContext
 builder.Services.AddDbContext<ProjectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

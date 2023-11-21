@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
@@ -8,6 +9,8 @@ using Restaurant.Common.ImageUploader;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -21,8 +24,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IMenuService _menuService;
         private readonly ISupplierService _supplierService;
         private readonly IMapper _mapper;
+        private readonly IValidator<ProductVM> _validator;
+        private readonly IValidator<ProductUpdateVM> _validatorUpdateVM;
 
-        public ProductController(IProductService productService,ICategoryService categoryService,IKitchenService kitchenService,IMenuService menuService,ISupplierService supplierService,IMapper mapper)
+        public ProductController(IProductService productService,ICategoryService categoryService,IKitchenService kitchenService,IMenuService menuService,ISupplierService supplierService,IMapper mapper,IValidator<ProductVM> validator,IValidator<ProductUpdateVM> validatorUpdateVM)
         {
             _productService = productService;
             _categoryService = categoryService;
@@ -30,13 +35,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _menuService = menuService;
             _supplierService = supplierService;
             _mapper = mapper;
+            _validator = validator;
+          _validatorUpdateVM = validatorUpdateVM;
         }
         public IActionResult Index()
         {
             string dish = "Yemek";
             string drink = "İçecek";
             string salad = "Salata";
-            string dessert = "tatlı";
+            string dessert = "Tatlı";
 
             SelectOptionList();
           
@@ -58,7 +65,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductVM productVM,IFormFile? productImage)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            var result = _validator.Validate(productVM);
+       
+            if(result.IsValid)
             {
                 string path = "";
                 var imageResult = "";
@@ -84,29 +94,44 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                        productImage.CopyToAsync(stream);
                     }
                 }
-
+              
                 var product = _mapper.Map<Product>(productVM);
                 _productService.Create(product);
-                TempData["Message"] = "Successful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("index", "product", new { area = "Manager" });
             }
-            TempData["ErrorMessage"] = "ModelState is invalid";
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            }
+            //ModelStateHelper.AddErrorsToModelState(ModelState, result.Errors);
+            TempData.SetErrorMessage();
             SelectOptionList();
-            return View();
+            return View(productVM);
         }
         public async Task<IActionResult> Update(int id)
         {
             SelectOptionList();
             var updated = await _productService.GetbyIdAsync(id);
+            if (updated != null)
+            {
 
-            var productUpdate = _mapper.Map<ProductUpdateVM>(updated);
-            
-            return View(productUpdate);
+                var productUpdate = _mapper.Map<ProductUpdateVM>(updated);
+
+                return View(productUpdate);
+            }
+            else
+            {
+                TempData.NotFoundId();
+                return RedirectToAction("index", "product", new { area = "manager" });
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Update(ProductUpdateVM UpdateVM, IFormFile? productImage)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            var result = _validatorUpdateVM.Validate(UpdateVM);
+            if (result.IsValid)
             {
                 string path = "";
                 var imageResult = "";
@@ -139,12 +164,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var entity = await _productService.GetbyIdAsync(UpdateVM.Id);
                 _mapper.Map(UpdateVM,entity);
                 _productService.Update(entity);
-                TempData["Message"] = "İşlem başarılı";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("index", "product", new { area = "Manager" });
 
             }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            }
             SelectOptionList();
-            TempData["ErrorMessage"] = "ModelState is invalid";
+           TempData.SetErrorMessage();
             return View(UpdateVM);
         }
         public async Task<IActionResult> Remove(int id)
@@ -155,9 +184,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 dishEntity.BaseStatus= Entity.Enums.BaseStatus.Deleted;
                 _productService.Update(dishEntity);
-                TempData["Message"] = "İşlem başarılı";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("index", "product", new { area = "Manager" });
             }
+            TempData.NotFoundId();
             return View();
         }
 

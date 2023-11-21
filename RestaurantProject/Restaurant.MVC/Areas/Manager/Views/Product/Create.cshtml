@@ -30,50 +30,57 @@
 
                 </div>
 
-        
-        <div class="form-group">
-            <label>Ürün Görsel</label>
+
+                <div class="form-group">
+                    <label>Ürün Görsel</label>
                     <input type="file" class="form-control" name="productImage">
-        </div>
+                </div>
 
 
-        <div class="form-group">
-            <label>Kategori</label>
-            <select asp-items="ViewBag.CategoryList" asp-for="CategoryId" class="form-control">
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select asp-items="ViewBag.CategoryList" asp-for="CategoryId" class="form-control">
                         <option selected="" disable value="">Kategori Seçimi</option>
-            </select>
 
-        </div>
-        <div class="form-group">
-            <label>Menu Adı</label>
-            <select asp-items="ViewBag.MenuList" asp-for="MenuId" class="form-control">
+
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+
+
+                </div>
+                <div class="form-group">
+                    <label>Menu Adı</label>
+                    <select asp-items="ViewBag.MenuList" asp-for="MenuId" class="form-control">
                         <option selected="" disable value="">Menu  Seçimi</option>
-            </select>
+                    </select>
+                    <span asp-validation-for="MenuId" class="text-danger"></span>
 
-        </div>
-        <div class="form-group">
-            <label>Mutfak</label>
-            <select asp-items="ViewBag.KitchenList" asp-for="KitchenId" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Mutfak</label>
+                    <select asp-items="ViewBag.KitchenList" asp-for="KitchenId" class="form-control">
                         <option selected="" disable value="">Mutfak Seçimi</option>
-            </select>
+                    </select>
+                    <span asp-validation-for="KitchenId" class="text-danger"></span>
 
-        </div>
-        <div class="form-group">
-            <label>Tedarikçi</label>
-            <select asp-items="ViewBag.SupplierList" asp-for="SupplierId" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Tedarikçi</label>
+                    <select asp-items="ViewBag.SupplierList" asp-for="SupplierId" class="form-control">
                         <option selected="" disable value="">Tedarikçi Seçimi</option>
-            </select>
+                    </select>
+                    <span asp-validation-for="SupplierId" class="text-danger"></span>
 
+                </div>
+                <div class="text-center">
+
+                    <button type="submit" class="btn btn-primary" style="margin-top:10px">Oluştur</button>
+                </div>
+
+            </form>
         </div>
-        <div class="text-center">
-
-            <button type="submit" class="btn btn-primary" style="margin-top:10px">Oluştur</button>
-        </div>
-
-        </form>
     </div>
 </div>
-        </div>
 
 
 

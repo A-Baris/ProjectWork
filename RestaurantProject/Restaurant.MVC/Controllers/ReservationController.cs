@@ -38,10 +38,10 @@ namespace Restaurant.MVC.Controllers
         public async Task<IActionResult> UserReservationUpdate(int id)
         {
 
-            // Replace the API URL with the actual URL of your API endpoint
+       
             string apiUrl = "https://localhost:7219/api/reservation/UpdateReservation?id=" + id;
 
-            // Fetch JSON data from the API endpoint
+           
             string jsonData;
             using (HttpClient client = new HttpClient())
             {
@@ -58,10 +58,9 @@ namespace Restaurant.MVC.Controllers
                 }
             }
 
-            // Deserialize JSON data into ReservationModel object
             ReservationModel reservation = JsonConvert.DeserializeObject<ReservationModel>(jsonData);
 
-            // Now 'reservation' object contains the deserialized data, and you can use it as needed.
+           
 
             return View(reservation);
         }

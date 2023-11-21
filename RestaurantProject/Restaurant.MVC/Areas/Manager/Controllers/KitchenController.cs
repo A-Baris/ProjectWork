@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
+using Restaurant.MVC.Validators;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -13,11 +17,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     {
         private readonly IKitchenService _kitchenService;
         private readonly IMapper _mapper;
+        private readonly IValidator<KitchenVM> _validator;
+        private readonly IValidationService<KitchenVM> _validationService;
 
-        public KitchenController(IKitchenService kitchenService,IMapper mapper)
+        public KitchenController(IKitchenService kitchenService,IMapper mapper,IValidator<KitchenVM> validator,IValidationService<KitchenVM> validationService)
         {
             _kitchenService = kitchenService;
           _mapper = mapper;
+            _validator = validator;
+            _validationService = validationService;
         }
         public IActionResult Index()
         {
@@ -32,15 +40,25 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [Authorize(Roles ="admin")]
         public IActionResult Create(KitchenVM kitchenVM)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            //var result = _validator.Validate(kitchenVM);
+            var errors = _validationService.GetValidationErrors(kitchenVM);
+           
+            if(errors.Any())
             {
-              var kitchen =_mapper.Map<Kitchen>(kitchenVM);
-                _kitchenService.Create(kitchen);
-                TempData["Message"] = "Successful";
-                return RedirectToAction("index", "kitchen", new { area = "Manager" });
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View(kitchenVM);
             }
-            TempData["ErrorMessage"] = "ModelState is invalid";
-            return View(kitchenVM);
+            
+                var kitchen = _mapper.Map<Kitchen>(kitchenVM);
+                _kitchenService.Create(kitchen);
+                TempData.SetSuccessMessage();
+                return RedirectToAction("index", "kitchen", new { area = "Manager" });
+            
+
+          
+            
         }
         public async Task<IActionResult> Update(int id)
         {
@@ -50,27 +68,34 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var updated = _mapper.Map<KitchenVM>(kitchen);
                 return View(updated);
             }
-            TempData["ErrorMessage"] = "Id is not found";
+            TempData.NotFoundId();
             return RedirectToAction("index", "kitchen", new { area = "Manager" });
         }
         [HttpPost]
         public async Task<IActionResult> Update(int id,KitchenVM updated)
         {
+            ModelState.Clear();
+            var result = _validator.Validate(updated);
             var kitchen = await _kitchenService.GetbyIdAsync(id);
             if (kitchen != null)
             {
-                if (ModelState.IsValid)
+                if (result.IsValid)
                 {
                     _mapper.Map(updated, kitchen);
                     _kitchenService.Update(kitchen);
 
-                    TempData["Message"] = "Updated";
+                    TempData.SetSuccessMessage();
                     return RedirectToAction("index", "kitchen", new { area = "Manager" });
                 }
-                TempData["ErrorMessage"] = "ModelState is invalid";
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                TempData.SetErrorMessage();
                 return View(updated);
             }
-            TempData["ErrorMessage"] = "Id is not found";
+            TempData.NotFoundId();
             return RedirectToAction("index", "kitchen", new { area = "Manager" });
         }
         public async Task<IActionResult> Remove(int id)
@@ -80,10 +105,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Restaurant.Entity.Enums.BaseStatus.Deleted;
                 _kitchenService.Update(entity);
-                TempData["Message"] = "Successful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("index", "kitchen", new { area = "Manager" });
             }
-            TempData["ErrorMessage"] = "Id is not found";
+            TempData.NotFoundId();
             return RedirectToAction("index", "kitchen", new { area = "Manager" });
         }
        
