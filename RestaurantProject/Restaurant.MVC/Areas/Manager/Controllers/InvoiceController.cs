@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
+using Restaurant.MVC.Validators;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -11,11 +14,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     {
         private readonly IInvoiceService _invoiceService;
         private readonly IMapper _mapper;
+        private readonly IValidationService<InvoiceVM> _validationService;
 
-        public InvoiceController(IInvoiceService invoiceService,IMapper mapper)
+        public InvoiceController(IInvoiceService invoiceService, IMapper mapper, IValidationService<InvoiceVM> validationService)
         {
             _invoiceService = invoiceService;
             _mapper = mapper;
+            _validationService = validationService;
         }
         public IActionResult Index()
         {
@@ -31,56 +36,76 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public IActionResult Create(InvoiceVM invoiceVM)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(invoiceVM);
+            if (errors.Any())
             {
-                var invoice = _mapper.Map<Invoice>(invoiceVM);
-                _invoiceService.Create(invoice);
-                TempData["Message"] = "Creating is successful";
-                return RedirectToAction("Index");
-
-
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View(invoiceVM);
             }
-            TempData["ErrorMessage"] = "ModelState is invalid";
-            return View(invoiceVM);
+
+            var invoice = _mapper.Map<Invoice>(invoiceVM);
+            _invoiceService.Create(invoice);
+            TempData.SetSuccessMessage();
+            return RedirectToAction("Index");
+
+
+
         }
         public async Task<IActionResult> Update(int id)
         {
             var invoice = await _invoiceService.GetbyIdAsync(id);
-            if(invoice!=null)
+            if (invoice != null)
             {
                 var invoiceUpdated = _mapper.Map<InvoiceVM>(invoice);
                 return View(invoiceUpdated);
             }
-            TempData["ErrorMessage"] = "Id is not found";
+            TempData.NotFoundId();
             return View("index");
         }
         [HttpPost]
-        public async Task<IActionResult> Update(int id,InvoiceVM invoiceVM)
+        public async Task<IActionResult> Update(int id, InvoiceVM invoiceVM)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            var errros = _validationService.GetValidationErrors(invoiceVM);
+            if (errros.Any())
             {
-                var invoice = await _invoiceService.GetbyIdAsync(id);
+                ModelStateHelper.AddErrorsToModelState(ModelState, errros);
+                TempData.SetErrorMessage();
+                return View(invoiceVM);
+            }
+
+
+            var invoice = await _invoiceService.GetbyIdAsync(id);
+            if (invoice != null)
+            {
                 _mapper.Map(invoiceVM, invoice);
                 _invoiceService.Update(invoice);
-                TempData["Message"] = "Update is successful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("index");
             }
-            TempData["ErrorMessage"] = "ModelState is invalid";
-            return View(invoiceVM);
+            else
+            {
+                TempData.NotFoundId();
+                return RedirectToAction("index");
+
+            }
+
         }
         public async Task<IActionResult> Remove(int id)
         {
             var invoice = await _invoiceService.GetbyIdAsync(id);
-            if(invoice!=null)
+            if (invoice != null)
             {
                 invoice.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _invoiceService.Update(invoice);
-                TempData["Message"] = "Deleting is succcessful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("Index");
             }
-            TempData["ErrorMessage"] = "Id is not found";
-            return View("index");
-            
+            TempData.NotFoundId();
+            return RedirectToAction("index");
+
         }
     }
 

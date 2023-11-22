@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
-using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using Restaurant.Entity.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
+using Restaurant.MVC.Validators;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -9,14 +13,18 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
+        private readonly IValidationService<CategoryVm> _validationService;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, IValidationService<CategoryVm> validationService, IMapper mapper)
         {
             _categoryService = categoryService;
+            _validationService = validationService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
-           var categoryList= _categoryService.GetAll();
+            var categoryList = _categoryService.GetAll();
             return View(categoryList);
         }
 
@@ -25,57 +33,64 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(CategoryVm dishCategoryVm)
+        public IActionResult Create(CategoryVm categoryVm)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(categoryVm);
+            if (errors.Any())
             {
-                Category category = new Category()
-                {
-                    CategoryName = dishCategoryVm.CategoryName
-                };
-                _categoryService.Create(category);
-                TempData["Message"] = "İşlem başarılı";
-                return RedirectToAction("index", "category", new { area = "Manager" });
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View(categoryVm);
             }
-            TempData["ErrorMessage"] = "ModelState is invalid";
-            return View(dishCategoryVm);
+            var category = _mapper.Map<Category>(categoryVm);
+            _categoryService.Create(category);
+            TempData.SetSuccessMessage();
+            return RedirectToAction("index", "category", new { area = "Manager" });
+
+
         }
         public async Task<IActionResult> Update(int id)
         {
-            var category= await _categoryService.GetbyIdAsync(id);
+            var category = await _categoryService.GetbyIdAsync(id);
             if (category != null)
             {
-                var updated = new Category()
-                {
-                    Id = id,
-                    CategoryName = category.CategoryName
-                };
+                var updated = _mapper.Map<CategoryVm>(category);
 
                 return View(updated);
             }
-            TempData["ErrorMessage"] = "Id bulunamadı";
-            return View("index");
+            TempData.NotFoundId();
+            return RedirectToAction("index", "category", new { area = "Manager" });
 
         }
         [HttpPost]
-        public async Task <IActionResult> Update(int id,CategoryVm updated)
+        public async Task<IActionResult> Update(int id, CategoryVm updated)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(updated);
+            if (errors.Any())
             {
-                var category = await _categoryService.GetbyIdAsync(id);
-                category.Id= updated.Id;
-                category.CategoryName = updated.CategoryName;
-                _categoryService.Update(category);
-                TempData["Message"] = "Successful";
-                return RedirectToAction("index", "category", new { area = "Manager" });
-
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View(updated);
             }
-            return View();
+           
+                var category = await _categoryService.GetbyIdAsync(id);
+            if(category!=null)
+            {
+                category = _mapper.Map(updated, category);
+                _categoryService.Update(category);
+                TempData.SetSuccessMessage();
+                return RedirectToAction("index", "category", new { area = "Manager" });
+            }
+            TempData.NotFoundId();
+            return RedirectToAction("index", "category", new { area = "Manager" });
+
         }
-        public async Task <IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove(int id)
         {
             var entity = await _categoryService.GetbyIdAsync(id);
-            if(entity != null)
+            if (entity != null)
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _categoryService.Update(entity);

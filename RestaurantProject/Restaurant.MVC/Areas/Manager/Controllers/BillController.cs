@@ -6,8 +6,7 @@ using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 using Restaurant.DAL.Context;
 using System.Text;
-
-
+using Restaurant.MVC.Utility.TempDataHelpers;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -116,7 +115,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 table.BillRequest = Entity.Enums.BillRequest.Ready;
                 _tableOfRestaurantService.Update(table);
-                TempData["Message"] = "İşlem başarılı";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("index", "bill", new { area = "manager" });
             }
             return RedirectToAction("index", "bill", new { area = "manager" });
@@ -158,7 +157,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
                     }
                 }
-                TempData["Message"] = "Successful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("billdetail", "bill", new { area = "manager",id=tableEntity.Id });
             }
             return RedirectToAction("index", "bill", new { area = "manager" });

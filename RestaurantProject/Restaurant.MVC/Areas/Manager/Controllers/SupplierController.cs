@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
+using Restaurant.MVC.Validators;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -11,11 +14,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     {
         private readonly ISupplierService _supplierService;
         private readonly IMapper _mapper;
+        private readonly IValidationService<SupplierVM> _validationService;
 
-        public SupplierController(ISupplierService supplierService, IMapper mapper)
+        public SupplierController(ISupplierService supplierService, IMapper mapper, IValidationService<SupplierVM> validationService)
         {
             _supplierService = supplierService;
             _mapper = mapper;
+            _validationService = validationService;
         }
         public IActionResult Index()
         {
@@ -29,14 +34,21 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public IActionResult Create(SupplierVM supplierVM)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(supplierVM);
+            if (errors.Any())
             {
-                var supplier = _mapper.Map<Supplier>(supplierVM);
-                _supplierService.Create(supplier);
-                TempData["Message"] = "Successful";
-                return RedirectToAction("Index", "supplier", new { area = "manager" });
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View(supplierVM);
             }
-            return View(supplierVM);
+
+            var supplier = _mapper.Map<Supplier>(supplierVM);
+            _supplierService.Create(supplier);
+            TempData.SetSuccessMessage();
+            return RedirectToAction("Index", "supplier", new { area = "manager" });
+
+
         }
         public async Task<IActionResult> Update(int Id)
         {
@@ -46,26 +58,38 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var updated = _mapper.Map<SupplierVM>(entity);
                 return View(updated);
             }
+            TempData.NotFoundId();
             return RedirectToAction("Index", "supplier", new { area = "manager" });
 
         }
         [HttpPost]
         public async Task<IActionResult> Update(int Id, SupplierVM supplierVM)
         {
-
-            if (ModelState.IsValid)
+            var entity = await _supplierService.GetbyIdAsync(Id);
+            if (entity == null)
             {
-                var entity = await _supplierService.GetbyIdAsync(Id);
-                if (entity != null)
-                {
-                    _mapper.Map(supplierVM, entity); 
-                    _supplierService.Update(entity);
-                }
-                TempData["Message"] = "Successful";
-                return RedirectToAction("Index", "supplier", new { area = "manager" });
-
+                TempData.NotFoundId();
+                return RedirectToAction("index");
             }
-            return View(supplierVM);
+
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(supplierVM);
+            if (errors.Any())
+            {
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View(supplierVM);
+            }
+
+
+
+            _mapper.Map(supplierVM, entity);
+            _supplierService.Update(entity);
+
+            TempData.SetSuccessMessage();
+            return RedirectToAction("Index", "supplier", new { area = "manager" });
+
+
 
         }
         public async Task<IActionResult> Remove(int id)
@@ -75,7 +99,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _supplierService.Update(entity);
-                TempData["Message"] = "Successful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("Index", "supplier", new { area = "manager" });
             }
             return RedirectToAction("Index", "supplier", new { area = "manager" });

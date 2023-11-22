@@ -6,7 +6,7 @@ namespace Restaurant.MVC.Areas.Manager.Models.ViewModels
     {
 
 
-        [Required(ErrorMessage ="boş bırakılamaz")]
+       
         [Display(Name = "Menu Adı")]
         public string MenuName { get; set; }
     }

@@ -11,11 +11,12 @@ using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 using Restaurant.MVC.Utility.ModelStateHelper;
 using Restaurant.MVC.Utility.TempDataHelpers;
+using Restaurant.MVC.Validators;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-  
+
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -24,10 +25,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IMenuService _menuService;
         private readonly ISupplierService _supplierService;
         private readonly IMapper _mapper;
-        private readonly IValidator<ProductVM> _validator;
-        private readonly IValidator<ProductUpdateVM> _validatorUpdateVM;
+        private readonly IValidationService<ProductVM> _validationforProductVM;
+        private readonly IValidationService<ProductUpdateVM> _validationforUpdateVM;
 
-        public ProductController(IProductService productService,ICategoryService categoryService,IKitchenService kitchenService,IMenuService menuService,ISupplierService supplierService,IMapper mapper,IValidator<ProductVM> validator,IValidator<ProductUpdateVM> validatorUpdateVM)
+
+        public ProductController(IProductService productService, ICategoryService categoryService, IKitchenService kitchenService, IMenuService menuService, ISupplierService supplierService, IMapper mapper, IValidationService<ProductVM> validationforProductVM, IValidationService<ProductUpdateVM> validationforUpdateVM)
         {
             _productService = productService;
             _categoryService = categoryService;
@@ -35,8 +37,9 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _menuService = menuService;
             _supplierService = supplierService;
             _mapper = mapper;
-            _validator = validator;
-          _validatorUpdateVM = validatorUpdateVM;
+            _validationforProductVM = validationforProductVM;
+            _validationforUpdateVM = validationforUpdateVM;
+
         }
         public IActionResult Index()
         {
@@ -46,14 +49,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             string dessert = "Tatlı";
 
             SelectOptionList();
-          
 
-            var dishList=_productService.GetAll();
+
+            var dishList = _productService.GetAll();
             ViewBag.DishList = _productService.GetSelectedProducts(dish);
             ViewBag.DrinkList = _productService.GetSelectedProducts(drink);
             ViewBag.SaladList = _productService.GetSelectedProducts(salad);
             ViewBag.DessertList = _productService.GetSelectedProducts(dessert);
-           
+
             return View(dishList);
         }
         public IActionResult Create()
@@ -63,51 +66,50 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(ProductVM productVM,IFormFile? productImage)
+        public async Task<IActionResult> Create(ProductVM productVM, IFormFile? productImage)
         {
             ModelState.Clear();
-            var result = _validator.Validate(productVM);
-       
-            if(result.IsValid)
+            var errors = _validationforProductVM.GetValidationErrors(productVM);
+            if (errors.Any())
             {
-                string path = "";
-                var imageResult = "";
-              
-                
-                if (productImage != null)
-                {
-
-                    imageResult = ImageUploader.ImageChangeName(productImage.FileName);
-                }
-
-                if (imageResult != "" && imageResult != "0")
-                {
-                    
-                   productVM.ImageUrl = imageResult;
-
-                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", imageResult);
-
-
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                       productImage.CopyToAsync(stream);
-                    }
-                }
-              
-                var product = _mapper.Map<Product>(productVM);
-                _productService.Create(product);
-                TempData.SetSuccessMessage();
-                return RedirectToAction("index", "product", new { area = "Manager" });
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View(productVM);
             }
-            foreach (var error in result.Errors)
+
+
+            string path = "";
+            var imageResult = "";
+
+
+            if (productImage != null)
             {
-                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+
+                imageResult = ImageUploader.ImageChangeName(productImage.FileName);
             }
-            //ModelStateHelper.AddErrorsToModelState(ModelState, result.Errors);
-            TempData.SetErrorMessage();
-            SelectOptionList();
-            return View(productVM);
+
+            if (imageResult != "" && imageResult != "0")
+            {
+
+                productVM.ImageUrl = imageResult;
+
+                path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", imageResult);
+
+
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    productImage.CopyToAsync(stream);
+                }
+            }
+
+            var product = _mapper.Map<Product>(productVM);
+            _productService.Create(product);
+            TempData.SetSuccessMessage();
+            return RedirectToAction("index", "product", new { area = "Manager" });
+
+
+
         }
         public async Task<IActionResult> Update(int id)
         {
@@ -130,59 +132,58 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         public async Task<IActionResult> Update(ProductUpdateVM UpdateVM, IFormFile? productImage)
         {
             ModelState.Clear();
-            var result = _validatorUpdateVM.Validate(UpdateVM);
-            if (result.IsValid)
+            var errors = _validationforUpdateVM.GetValidationErrors(UpdateVM);
+            if (errors.Any())
             {
-                string path = "";
-                var imageResult = "";
-
-
-                if (productImage != null)
-                {
-
-                    imageResult = ImageUploader.ImageChangeName(productImage.FileName);
-                }
-
-                if (imageResult != "" && imageResult != "0")
-                {
-
-                    UpdateVM.ImageUrl = imageResult;
-
-                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", imageResult);
-
-
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        productImage.CopyToAsync(stream);
-                    }
-                }
-
-
-
-
-                var entity = await _productService.GetbyIdAsync(UpdateVM.Id);
-                _mapper.Map(UpdateVM,entity);
-                _productService.Update(entity);
-                TempData.SetSuccessMessage();
-                return RedirectToAction("index", "product", new { area = "Manager" });
-
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View(UpdateVM);
             }
-            foreach (var error in result.Errors)
+
+            string path = "";
+            var imageResult = "";
+
+
+            if (productImage != null)
             {
-                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+
+                imageResult = ImageUploader.ImageChangeName(productImage.FileName);
             }
-            SelectOptionList();
-           TempData.SetErrorMessage();
-            return View(UpdateVM);
+
+            if (imageResult != "" && imageResult != "0")
+            {
+
+                UpdateVM.ImageUrl = imageResult;
+
+                path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", imageResult);
+
+
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    productImage.CopyToAsync(stream);
+                }
+            }
+
+
+
+
+            var entity = await _productService.GetbyIdAsync(UpdateVM.Id);
+            _mapper.Map(UpdateVM, entity);
+            _productService.Update(entity);
+            TempData.SetSuccessMessage();
+            return RedirectToAction("index", "product", new { area = "Manager" });
+
+
+
         }
         public async Task<IActionResult> Remove(int id)
 
         {
-            var dishEntity =  await _productService.GetbyIdAsync(id);
-            if(dishEntity!=null)
+            var dishEntity = await _productService.GetbyIdAsync(id);
+            if (dishEntity != null)
             {
-                dishEntity.BaseStatus= Entity.Enums.BaseStatus.Deleted;
+                dishEntity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _productService.Update(dishEntity);
                 TempData.SetSuccessMessage();
                 return RedirectToAction("index", "product", new { area = "Manager" });
@@ -204,7 +205,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 Text = k.KitchenName,
                 Value = k.Id.ToString(),
             });
-            ViewBag.MenuList=_menuService.GetAll().Select(m => new SelectListItem
+            ViewBag.MenuList = _menuService.GetAll().Select(m => new SelectListItem
             {
                 Text = m.MenuName,
                 Value = m.Id.ToString(),

@@ -79,7 +79,7 @@ namespace Restaurant.MVC.Controllers
 
             if (mail != null)
             {
-                TempData["ErrorMessage"] = "Mail is already existing";
+                TempData["ErrorMessage"] = "Email sistemde kayıtlı!";
                 return View(registerVM);
             }
             else
@@ -87,7 +87,7 @@ namespace Restaurant.MVC.Controllers
                 var username = await _userManager.FindByNameAsync(registerVM.UserName);
                 if (username != null)
                 {
-                    TempData["ErrorMessage"] = "User is already existing";
+                    TempData["ErrorMessage"] = "Kullanıcı Adı sistemde kayıtlı!";
                     return View(registerVM);
                 }
             }
@@ -165,7 +165,8 @@ namespace Restaurant.MVC.Controllers
                     }
                   
                 }
-             
+                TempData["ErrorMessage"] = "Email veya Şifre yanlış ";
+
             }
             return View(loginVM);
         }

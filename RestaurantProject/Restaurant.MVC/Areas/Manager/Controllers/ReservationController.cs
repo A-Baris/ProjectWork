@@ -6,7 +6,7 @@ using Restaurant.Common;
 using Restaurant.DAL.Context;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
-
+using Restaurant.MVC.Utility.TempDataHelpers;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
@@ -141,7 +141,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var entity = await _reservationService.GetbyIdAsync(id);
                 _mapper.Map(updatedVM, entity);
                _reservationService.Update(entity);
-                TempData["Message"] = "Successful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("Index", "Reservation", new {area="manager"});
 
             }
@@ -159,10 +159,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 entity.ReservationStatus = Entity.Enums.ReservationStatus.Passive;
                 _reservationService.Update(entity);
-                TempData["Message"] = "Successful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("Index", "Reservation", new {area="manager"});
             }
-            return View();
+            TempData.NotFoundId();
+            return RedirectToAction("Index");
         }
 
     

@@ -5,6 +5,9 @@ using Restaurant.BLL.AbstractServices;
 using Restaurant.DAL.Context;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
+using Restaurant.MVC.Validators;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
@@ -15,19 +18,21 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IProductService _productService;
         private readonly IIngredientService _ingredientService;
         private readonly ProjectContext _context;
+        private readonly IValidationService<RecipeVM> _validationService;
 
-        public RecipeController(IProductService productService,IIngredientService ingredientService,ProjectContext context)
+        public RecipeController(IProductService productService, IIngredientService ingredientService, ProjectContext context, IValidationService<RecipeVM> validationService)
         {
             _productService = productService;
-           _ingredientService = ingredientService;
-           _context = context;
+            _ingredientService = ingredientService;
+            _context = context;
+            _validationService = validationService;
         }
         public IActionResult Index()
         {
             SelectProductAndIngredient();
             ViewBag.ProductIngredient = _context.ProductIngredients.ToList();
             return View();
-          
+
         }
         public IActionResult Create()
         {
@@ -38,35 +43,36 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public IActionResult Create(RecipeVM createVM)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(createVM);
+            if (errors.Any())
             {
-                ProductIngredient pi = new ProductIngredient()
-                {
-                    ProductId = createVM.ProductId,
-                    IngredientId = createVM.IngredientId,
-                    Quantity = createVM.Quantity,
-                };
-                var checkEntity = _context.ProductIngredients.Where(x => x.ProductId == pi.ProductId && x.IngredientId == pi.IngredientId).FirstOrDefault();
-                if(checkEntity!=null)
-                {
-                    TempData["ErrorMessage"] = "The entity is already existing";
-                    return RedirectToAction("Create", "Recipe", new { area = "manager" });
-                }
-             
-                
-                _context.Set<ProductIngredient>().Add(pi);
-                _context.SaveChanges();
-                TempData["Message"] = "Is created successfully";
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "Some Values are invalid";
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
                 SelectProductAndIngredient();
                 ViewBag.ProductIngredient = _context.ProductIngredients.ToList();
-                return View();
+                return View(createVM);
             }
+
+            ProductIngredient pi = new ProductIngredient()
+            {
+                ProductId = createVM.ProductId,
+                IngredientId = createVM.IngredientId,
+                Quantity = createVM.Quantity,
+            };
+            var checkEntity = _context.ProductIngredients.Where(x => x.ProductId == pi.ProductId && x.IngredientId == pi.IngredientId).FirstOrDefault();
+            if (checkEntity != null)
+            {
+                TempData["ErrorMessage"] = "Ürün sisteme kayıtlı,dilerseniz güncelleme yapabilirsiniz";
+                return RedirectToAction("Create", "Recipe", new { area = "manager" });
+            }
+
+
+            _context.Set<ProductIngredient>().Add(pi);
+            _context.SaveChanges();
+            TempData.SetSuccessMessage();
             SelectProductAndIngredient();
-            ViewBag.ProductIngredient = _context.ProductIngredients.ToList();      
+            ViewBag.ProductIngredient = _context.ProductIngredients.ToList();
             return RedirectToAction("Create", "Recipe", new { area = "manager" });
         }
 
@@ -75,11 +81,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             SelectProductAndIngredient();
 
             var entityFinding = _context.ProductIngredients.Where(x => x.ProductId == productId && x.IngredientId == ingredientId).FirstOrDefault();
-            ViewData["x"]=entityFinding;
-          
+            ViewData["x"] = entityFinding;
+
             if (entityFinding != null)
             {
-                        
+
                 var updated = new RecipeVM
                 {
                     ProductId = productId,
@@ -91,49 +97,49 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 _context.ProductIngredients.Remove(entityFinding);
                 _context.SaveChanges();
 
-                return View(updated); 
+                return View(updated);
             }
             else
             {
-                TempData["ErrorMessage"] = @"Entity is not found";
+                TempData.NotFoundId();
                 return RedirectToAction("Create", "Recipe", new { area = "manager" });
             }
-           
+
         }
         [HttpPost]
         public IActionResult Update(RecipeVM updated)
         {
 
-           
-
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(updated);
+            if (errors != null)
             {
-                ProductIngredient pi = new ProductIngredient()
-                {
-                    ProductId = updated.ProductId,
-                    IngredientId = updated.IngredientId,
-                    Quantity = updated.Quantity,
-                };
-                var checkEntity = _context.ProductIngredients.Where(x => x.ProductId == pi.ProductId && x.IngredientId == pi.IngredientId).FirstOrDefault();
-                if (checkEntity != null)
-                {
-                    TempData["ErrorMessage"] = @"The entity is already existing";
-                    return RedirectToAction("Create", "Recipe", new { area = "manager" });
-                }
-                
-                _context.ProductIngredients.Add(pi);
-                _context.SaveChanges();
-                TempData["Message"] = "Is completed successfully";
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                SelectProductAndIngredient();
+                TempData.SetErrorMessage();
+                return View(updated);
+            }
+
+
+            ProductIngredient pi = new ProductIngredient()
+            {
+                ProductId = updated.ProductId,
+                IngredientId = updated.IngredientId,
+                Quantity = updated.Quantity,
+            };
+            var checkEntity = _context.ProductIngredients.Where(x => x.ProductId == pi.ProductId && x.IngredientId == pi.IngredientId).FirstOrDefault();
+            if (checkEntity != null)
+            {
+                TempData["ErrorMessage"] = "Ürün sisteme kayıtlı,dilerseniz güncelleme yapabilirsiniz";
                 return RedirectToAction("Create", "Recipe", new { area = "manager" });
             }
-            else
-            {
-                TempData["ErrorMessage"] = "Some values are invalid";
-            }
 
-       
+            _context.ProductIngredients.Add(pi);
+            _context.SaveChanges();
+            TempData.SetSuccessMessage();
+            return RedirectToAction("Create", "Recipe", new { area = "manager" });
 
-            return View();
+
         }
 
         public IActionResult Remove(int productId, int ingredientId)
@@ -144,12 +150,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 _context.ProductIngredients.Remove(entityFinding);
                 _context.SaveChanges();
-                TempData["Message"] = "Is deleted successfully";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("Create", "Recipe", new { area = "manager" });
             }
             else
             {
-                TempData["ErrorMessage"] = "Entity is not found to delete";
+                TempData.NotFoundId();
                 return RedirectToAction("Create", "Recipe", new { area = "manager" });
             }
             return View();

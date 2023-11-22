@@ -7,6 +7,9 @@ using Restaurant.DAL.Context;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
+using Restaurant.MVC.Validators;
 using System.Text.RegularExpressions;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
@@ -20,21 +23,23 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         private readonly IAccountingTransactionService _transactionService;
         private readonly ISupplierService _supplierService;
         private readonly ProjectContext _context;
+        private readonly IValidationService<TransactionVM> _validationService;
 
-        public AccountingController(IMapper mapper,IOrderService orderItemService,ITableOfRestaurantService tableOfRestaurantService,IAccountingTransactionService transactionService,ISupplierService supplierService,ProjectContext context)
+        public AccountingController(IMapper mapper, IOrderService orderItemService, ITableOfRestaurantService tableOfRestaurantService, IAccountingTransactionService transactionService, ISupplierService supplierService, ProjectContext context, IValidationService<TransactionVM> validationService)
         {
             _mapper = mapper;
             _orderItemService = orderItemService;
-           _tableOfRestaurantService = tableOfRestaurantService;
+            _tableOfRestaurantService = tableOfRestaurantService;
             _transactionService = transactionService;
             _supplierService = supplierService;
             _context = context;
+            _validationService = validationService;
         }
         public IActionResult Index()
         {
             SelectSupplier();
-          var transactions =  _transactionService.GetAll();
-         return View(transactions);
+            var transactions = _transactionService.GetAll();
+            return View(transactions);
         }
 
         public IActionResult CashTracking()
@@ -59,13 +64,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult ReportOfTurnover(int targetYear, int targetMonth)
         {
-              // SELECT DATEPART(WEEKDAY, CreatedDate),SUM(TotalPrice)
-             //FROM OrderItems where DATEPART(MONTH, CreatedDate) = DATEPART(MONTH, '2023-10-22') group by DATEPART(WEEKDAY, CreatedDate)
+            // SELECT DATEPART(WEEKDAY, CreatedDate),SUM(TotalPrice)
+            //FROM OrderItems where DATEPART(MONTH, CreatedDate) = DATEPART(MONTH, '2023-10-22') group by DATEPART(WEEKDAY, CreatedDate)
 
 
             var orderItemsForMonth = _orderItemService.GetAllDeletedStatus()
                 .Where(item => item.CreatedDate.Year == targetYear && item.CreatedDate.Month == targetMonth)
-                .ToList(); 
+                .ToList();
 
             var weeklyTotalPrices = orderItemsForMonth
                 .GroupBy(item => item.CreatedDate.Date)
@@ -81,29 +86,35 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             return View(weeklyTotalPrices);
         }
-     
+
 
         public IActionResult CreateTransaction()
         {
             SelectSupplier();
-            
+
             return View();
         }
         [HttpPost]
         public IActionResult CreateTransaction(TransactionVM transactionVM)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(transactionVM);
+            if (errors.Any())
             {
-                var transaction = _mapper.Map<AccountingTransaction>(transactionVM);
-                _transactionService.Create(transaction);
-                TempData["Message"] = "Successful";
-                return RedirectToAction("Index", "Accounting", new {area="manager"});
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                SelectSupplier();
+                return View(transactionVM);
             }
-            TempData["ErrorMessage"] = "ModelState is invalid";
-            SelectSupplier();
-            return View(transactionVM);
+
+            var transaction = _mapper.Map<AccountingTransaction>(transactionVM);
+            _transactionService.Create(transaction);
+            TempData.SetSuccessMessage();
+            return RedirectToAction("Index", "Accounting", new { area = "manager" });
+
+
         }
-     
+
         public async Task<IActionResult> UpdateTransaction(int id)
         {
             SelectSupplier();
@@ -113,45 +124,57 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 var updated = _mapper.Map<TransactionVM>(entity);
                 return View(updated);
             }
-            TempData["ErrorMessage"] = $"{id} is Not found";
+            TempData.NotFoundId();
             return View("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateTransaction(int id,TransactionVM transactionVM)
+        public async Task<IActionResult> UpdateTransaction(int id, TransactionVM transactionVM)
         {
-            if(ModelState.IsValid)
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(transactionVM);
+            if (errors.Any())
             {
-                var entity = await _transactionService.GetbyIdAsync(id);
-                if(entity!=null)
-                {
-                    _mapper.Map(transactionVM, entity);
-                    _transactionService.Update(entity);
-                    TempData["Message"] = "Successful";
-                    return RedirectToAction("index");
-                }
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                SelectSupplier();
+                return View(transactionVM);
             }
-            TempData["ErrorMessage"] = "ModelState is invalid";
-            return View(transactionVM);
+
+            var entity = await _transactionService.GetbyIdAsync(id);
+            if (entity != null)
+            {
+                _mapper.Map(transactionVM, entity);
+                _transactionService.Update(entity);
+                TempData.SetSuccessMessage();
+                return RedirectToAction("index");
+            }
+            else
+            {
+                TempData.NotFoundId();
+                return RedirectToAction("Index");
+            }
+
+
 
         }
         public async Task<IActionResult> RemoveTransaction(int id)
         {
             var entity = await _transactionService.GetbyIdAsync(id);
-            if(entity != null)
+            if (entity != null)
             {
                 entity.BaseStatus = Entity.Enums.BaseStatus.Deleted;
                 _transactionService.Update(entity);
-                TempData["Message"] = "Successful";
+                TempData.SetSuccessMessage();
                 return RedirectToAction("index");
             }
-            TempData["ErrorMessage"] = "Not Found";
+            TempData.NotFoundId();
             return View("Index");
         }
         public IActionResult Debit()
         {
             return View();
         }
-       
+
 
 
 

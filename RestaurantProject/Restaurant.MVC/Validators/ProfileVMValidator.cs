@@ -3,9 +3,9 @@ using Restaurant.MVC.Models.ViewModels;
 
 namespace Restaurant.MVC.Validators
 {
-    public class ProfileVMValidators:AbstractValidator<ProfileVM>
+    public class ProfileVMValidator:AbstractValidator<ProfileVM>
     {
-        public ProfileVMValidators()
+        public ProfileVMValidator()
         {
             RuleFor(x => x.UserName)
                 .NotEmpty()

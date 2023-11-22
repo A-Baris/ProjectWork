@@ -49,6 +49,7 @@
                     <select asp-items="ViewBag.Supplier" asp-for="SupplierId" class="form-control">
                         <option selected="" disable value="@Model.SupplierId">Tedarikçi Seçiniz</option>
                     </select>
+                    <span asp-validation-for="SupplierId" class="text-danger"></span>
 
                 </div>
 

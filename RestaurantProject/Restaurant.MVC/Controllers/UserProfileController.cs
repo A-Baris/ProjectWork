@@ -6,6 +6,9 @@ using Restaurant.DAL.Context;
 using Restaurant.DAL.Data;
 using Restaurant.Entity.Entities;
 using Restaurant.MVC.Models.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
+using Restaurant.MVC.Validators;
 using System.Security.Claims;
 
 namespace Restaurant.MVC.Controllers
@@ -18,9 +21,10 @@ namespace Restaurant.MVC.Controllers
         private readonly IReservationService _reservationService;
         private readonly ICustomerService _customerService;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IValidationService<SecurityProfileVM> _validationService;
         private readonly PasswordHasher<AppUser> _passwordHasher;
 
-        public UserProfileController(UserManager<AppUser> userManager,IMapper mapper,ProjectContext context,IReservationService reservationService,ICustomerService customerService,SignInManager<AppUser> signInManager)
+        public UserProfileController(UserManager<AppUser> userManager,IMapper mapper,ProjectContext context,IReservationService reservationService,ICustomerService customerService,SignInManager<AppUser> signInManager,IValidationService<SecurityProfileVM> validationService)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -28,6 +32,7 @@ namespace Restaurant.MVC.Controllers
             _reservationService = reservationService;
             _customerService = customerService;
             _signInManager = signInManager;
+            _validationService = validationService;
         }
         public IActionResult Index()
         {
@@ -119,38 +124,53 @@ namespace Restaurant.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> SecurityProfile(SecurityProfileVM securityVM)
         {
+            ModelState.Clear();
+            var errors = _validationService.GetValidationErrors(securityVM);
+            if(errors.Any())
+            {
+                ModelStateHelper.AddErrorsToModelState(ModelState,errors);
+                TempData.SetErrorMessage();
+                return View(securityVM);
+
+            }
+
+
             string UserName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(UserName);
             var passwordHasher = new PasswordHasher<AppUser>();
 
-            if (ModelState.IsValid)
-            {
+            
               //passwordhasher yardımıyla göndermiş olduğumuz PasswordNow değeri veritabanındaki güncel parolayla uyuşma sonucuna göre değer dönüyor.
               //Böylelikle başarılı sonuçla beraber şifre değiştirme işlemine devam edebiliyoruz.
              
                 var resultPassword = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, securityVM.PasswordNow);
-                if (resultPassword == PasswordVerificationResult.Success)
-                {
-                    
-                
+            if (resultPassword == PasswordVerificationResult.Success)
+            {
+
+
                 await _userManager.RemovePasswordAsync(user);
-                    await _userManager.AddPasswordAsync(user, securityVM.PasswordHash);
-                    var result = await _userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        TempData["Message"] = "Şifreniz başarılı şekilde değiştirildi";
-                        return RedirectToAction("index", "UserProfile");
-                    }
+                await _userManager.AddPasswordAsync(user, securityVM.PasswordHash);
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    TempData["Message"] = "Şifreniz başarılı şekilde değiştirildi";
+                    return RedirectToAction("index", "UserProfile");
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Güncel Şifreniz hatalı";
-                    return View();
+                    TempData["ErrorMessage"] = "Şifreniz değiştirilemedi.Lütfen tekrar deneyin.";
+                    return View(securityVM);
                 }
-
             }
-            TempData["ErrorMessage"] = "Eksik veya hatalı değerler var";
-            return View();
+            else
+            {
+                TempData["ErrorMessage"] = "Güncel Şifreniz hatalı";
+                return View(securityVM);
+            }
+            
+
+           
+
         }
         public async Task<IActionResult> MyReservation()
         {
