@@ -42,7 +42,6 @@ namespace Restaurant.API.Controllers
         {
             try
             {
-
                 var reservationEntity = _mapper.Map<Reservation>(reservationCustomerDTO.Reservation);
                 var customer = _customerService.GetAll().Where(x => x.Email == reservationCustomerDTO.Customer.Email).FirstOrDefault();
                 if (customer.Adress == null || customer.Phone == null)
@@ -107,6 +106,12 @@ namespace Restaurant.API.Controllers
                               
             if (reservation != null)
             {
+                var timeSinceReservation = DateTime.UtcNow - reservation.ReservationDate;
+                if (timeSinceReservation.TotalHours < 24)
+                {
+                    return BadRequest("24 saatten az süre kalan rezervasyonlar günccellenemez.");
+                }
+
                 return Ok(reservation);
             }
             else

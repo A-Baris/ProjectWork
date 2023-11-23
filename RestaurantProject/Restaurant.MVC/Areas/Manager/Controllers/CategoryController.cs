@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
@@ -10,7 +11,8 @@ using Restaurant.MVC.Validators;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class CategoryController : Controller
+    [Authorize(Roles = "admin,manager")]
+    public class CategoryController : AreaBaseController
     {
         private readonly ICategoryService _categoryService;
         private readonly IValidationService<CategoryVm> _validationService;
@@ -24,17 +26,32 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Index()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var categoryList = _categoryService.GetAll();
             return View(categoryList);
         }
 
         public IActionResult Create()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             return View();
         }
         [HttpPost]
         public IActionResult Create(CategoryVm categoryVm)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(categoryVm);
             if (errors.Any())
@@ -52,6 +69,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Update(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var category = await _categoryService.GetbyIdAsync(id);
             if (category != null)
             {
@@ -66,6 +88,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, CategoryVm updated)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(updated);
             if (errors.Any())
@@ -89,6 +116,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Remove(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var entity = await _categoryService.GetbyIdAsync(id);
             if (entity != null)
             {

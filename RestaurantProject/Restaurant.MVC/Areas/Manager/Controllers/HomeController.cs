@@ -13,16 +13,16 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
     public class HomeController : Controller
     {
 
-        [Authorize]
+        [Authorize(Roles ="employee")] // her görevli bir çalışandır böylelikle çalışan dışındakiler sayfaya ulaşamazlar
         public IActionResult Index()
         {
             //            select p.ProductName,Count(o.ProductId) as 'Toplam Sipariş' from orders o
             //join Products p on o.ProductId = p.Id
             //group by p.ProductName
             //En çok sipariş edilen ürünleri listelemeliyim
-
-
             return View();
+
+           
         }
         public IActionResult CheckAuth()
         {

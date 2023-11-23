@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,9 @@ using System.Text.RegularExpressions;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class AccountingController : Controller
+  
+    
+    public class AccountingController : AreaBaseController
     {
         private readonly IMapper _mapper;
         private readonly IOrderService _orderItemService;
@@ -35,15 +38,32 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _context = context;
             _validationService = validationService;
         }
+       
         public IActionResult Index()
         {
+            //if (!User.IsInRole("accountant"))
+            //{
+
+            //    TempData["ErrorMessage"] = "Bu sayfaya erişme yetkiniz yoktur";
+            //    return RedirectToAction("index", "Home", new {area="manager"});
+            //}
+            if (!CheckAuthorization(new[] { "admin", "manager","accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectSupplier();
             var transactions = _transactionService.GetAll();
             return View(transactions);
         }
-
+    
         public IActionResult CashTracking()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             try
             {
                 var cashList = _orderItemService.GetAllDeletedStatus()
@@ -67,7 +87,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             // SELECT DATEPART(WEEKDAY, CreatedDate),SUM(TotalPrice)
             //FROM OrderItems where DATEPART(MONTH, CreatedDate) = DATEPART(MONTH, '2023-10-22') group by DATEPART(WEEKDAY, CreatedDate)
 
-
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var orderItemsForMonth = _orderItemService.GetAllDeletedStatus()
                 .Where(item => item.CreatedDate.Year == targetYear && item.CreatedDate.Month == targetMonth)
                 .ToList();
@@ -90,6 +114,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public IActionResult CreateTransaction()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectSupplier();
 
             return View();
@@ -97,6 +126,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public IActionResult CreateTransaction(TransactionVM transactionVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(transactionVM);
             if (errors.Any())
@@ -117,6 +151,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public async Task<IActionResult> UpdateTransaction(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectSupplier();
             var entity = await _transactionService.GetbyIdAsync(id);
             if (entity != null)
@@ -130,6 +169,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTransaction(int id, TransactionVM transactionVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(transactionVM);
             if (errors.Any())
@@ -159,6 +203,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> RemoveTransaction(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData["ErrorMessage"] = "Bu Sayfa için yetkiniz yok";
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var entity = await _transactionService.GetbyIdAsync(id);
             if (entity != null)
             {
@@ -172,6 +221,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Debit()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData["ErrorMessage"] = "Bu Sayfa için yetkiniz yok";
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             return View();
         }
 
@@ -186,5 +240,6 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 Value = x.Id.ToString()
             });
         }
+        
     }
 }

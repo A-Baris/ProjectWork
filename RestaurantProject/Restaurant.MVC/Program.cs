@@ -44,7 +44,7 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromHours(24);
 });
 
-// Add Identity services
+// Identity services
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<UserRoleContext>()
     .AddDefaultTokenProviders();

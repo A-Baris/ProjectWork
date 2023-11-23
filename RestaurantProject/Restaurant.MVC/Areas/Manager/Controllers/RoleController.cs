@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.DAL.Data;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
-
+using Restaurant.MVC.Utility.TempDataHelpers;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class RoleController : Controller
+   
+    public class RoleController : AreaBaseController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
@@ -30,11 +32,22 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Create()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(RoleCreateVM roleVM)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             if (ModelState.IsValid)
             {
                 var result = await _roleManager.CreateAsync(new AppRole()
@@ -47,6 +60,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Update(string id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var role = await _roleManager.FindByIdAsync(id);
             if(role!=null)
             {
@@ -63,7 +82,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(RoleVM roleVM)
         {
-            if(ModelState.IsValid)
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
+            if (ModelState.IsValid)
             {
                 var role = await _roleManager.FindByIdAsync(roleVM.Id);
                 if(role!=null)
@@ -79,6 +104,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Remove(string id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var role = await _roleManager.FindByIdAsync(id);
              if(role!=null)
             {
@@ -90,6 +121,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> AssignRole(string id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var selectedUser = await _userManager.FindByIdAsync(id);
             ViewBag.UserId = id;
             var roles = await _roleManager.Roles.ToListAsync();
@@ -117,6 +154,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<ActionResult> AssignRole(string userId, List<RoleAssignVM> requestList)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var userToRole = await _userManager.FindByIdAsync(userId);
 
             if (userToRole == null)

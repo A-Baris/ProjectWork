@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
@@ -11,7 +12,7 @@ using Restaurant.MVC.Utility.TempDataHelpers;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class ReservationController : Controller
+    public class ReservationController : AreaBaseController
     {
         private readonly IReservationService _reservationService;
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
@@ -27,15 +28,17 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _context = context;
             _mapper = mapper;
         }
+        [Authorize(Roles = "employee")]
         public IActionResult Index()
         {
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
             ViewBag.Customers = _customerService.GetAll();
 
-            var reservationList = _reservationService.GetAll();
+            var reservationList = _reservationService.GetAll().OrderBy(x=>x.ReservationDate).ToList();
             return View(reservationList);
            
         }
+        [Authorize(Roles = "employee")]
         public IActionResult ReservationDay(DateTime testDate)
         {
             TableAndCustomerSelect();
@@ -49,15 +52,26 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             return View();
         }
-
+      
         public IActionResult Create()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "booker" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             TableAndCustomerSelect();
             return View();
         }
         [HttpPost]
+   
         public async Task<IActionResult> Create(ReservationCreateVM createVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "booker" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var tables = _tableOfRestaurantService.GetAll().ToList();
             var reservations = _reservationService.GetAll().Where(x => x.ReservationDate.DayOfYear == createVM.ReservationDate.DayOfYear).ToList();
           
@@ -118,9 +132,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View(createVM);
 
         }
-
+      
         public async Task<IActionResult> Update(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "booker" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             TableAndCustomerSelect();
             var reservation = await _reservationService.GetbyIdAsync(id);
             if (reservation != null)
@@ -134,9 +153,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
            
         [HttpPost]
+   
         public async Task<IActionResult> Update(int id,ReservationVM updatedVM)
         {
-            if(ModelState.IsValid)
+            if (!CheckAuthorization(new[] { "admin", "manager", "booker" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
+            if (ModelState.IsValid)
             {
                 var entity = await _reservationService.GetbyIdAsync(id);
                 _mapper.Map(updatedVM, entity);
@@ -150,9 +175,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         
             
         }
-
+        
         public async Task<IActionResult> Remove(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "booker" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var entity = await _reservationService.GetbyIdAsync(id);
             if(entity != null)
             {

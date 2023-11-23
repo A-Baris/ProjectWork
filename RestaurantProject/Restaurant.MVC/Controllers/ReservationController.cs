@@ -53,8 +53,8 @@ namespace Restaurant.MVC.Controllers
                 }
                 else
                 {
-                    
-                    return View("Error");
+                    TempData["ErrorMessage"] = "24 saatten az kalan sürede rezervasyonlar güncellenemez";
+                    return RedirectToAction("myreservation","userprofile");
                 }
             }
 

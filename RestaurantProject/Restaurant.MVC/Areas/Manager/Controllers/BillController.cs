@@ -7,11 +7,13 @@ using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 using Restaurant.DAL.Context;
 using System.Text;
 using Restaurant.MVC.Utility.TempDataHelpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class BillController : Controller
+    
+    public class BillController : AreaBaseController
     {
     
         private readonly ITableOfRestaurantService _tableOfRestaurantService;
@@ -31,12 +33,22 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Index()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "cashier" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ViewBag.EmployeeList = _employeeService.GetAll();
-            var tableList = _tableOfRestaurantService.GetAll();
+            var tableList = _tableOfRestaurantService.GetAll().OrderBy(x=>x.TableName).ToList();
             return View(tableList);
         }
         public async Task<IActionResult> BillDetail(int id,decimal discount)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "cashier" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ViewBag.OrderItems = _orderItemService.GetAll();
             ViewBag.Product = _productService.GetAll();
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
@@ -70,6 +82,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> BillPrint(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "cashier" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
 
             decimal totalAccount = 0;
             var tableName = "";
@@ -124,7 +141,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public async Task<IActionResult> CompletePayment(string tableName)
         {
-
+            if (!CheckAuthorization(new[] { "admin", "manager", "cashier" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             //select o.Id from Order o
             //join TableOfRestaurants t on o.TableofRestaurantId = t.Id
             //where t.TableName = 'k-2'

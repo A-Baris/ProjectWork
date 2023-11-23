@@ -17,5 +17,9 @@ namespace Restaurant.MVC.Utility.TempDataHelpers
         {
             tempData["ErrorMessage"] = "Id No bulunamadı";
         }
+        public static void NoAuthorizationMessage(this ITempDataDictionary tempData)
+        {
+            tempData["ErrorMessage"] = "Bu Sayfa için yetkiniz yok";
+        }
     }
 }

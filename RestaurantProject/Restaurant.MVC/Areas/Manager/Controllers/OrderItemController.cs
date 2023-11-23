@@ -12,11 +12,13 @@ using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 using Restaurant.MVC.Utility;
+using Restaurant.MVC.Utility.TempDataHelpers;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class OrderItemController : Controller
+    
+    public class OrderItemController : AreaBaseController
     {
         private readonly IMapper _mapper;
 
@@ -42,9 +44,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _categoryService = categoryService;
             _menuService = menuService;
         }
-
+   
         public IActionResult Selectproduct(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager","waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ViewBag.Category = _categoryService.GetAll();
             ViewBag.Menus = _menuService.GetAll();
           
@@ -53,9 +61,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View(products);
         }
 
-
+        
         public IActionResult CreateOrder()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             Select();
             return View();
         }
@@ -63,8 +76,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
         [HttpPost]
+       
         public async Task<IActionResult> CreateOrder(int tableId, int Id, OrderItemCreateVM createVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
 
             createVM.ProductId = Id;
 
@@ -114,7 +133,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                         }
                        
                      
-                        TempData["Message"] = "Successful";
+                        TempData.SetSuccessMessage();
                         //TempData["TableId"] = tableId;
                         ViewBag.Dish = _productService.GetSelectedProducts("Dish");
                         return RedirectToAction("selectproduct", "orderitem", new { area = "manager",id=tableId });
@@ -128,22 +147,32 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
 
             //TempData["TableId"] = tableId;
-            TempData["Message"] = "Successful";
+            TempData.SetSuccessMessage();
             return RedirectToAction("selectproduct", "orderitem", new { area = "manager", id = tableId });
 
         }
 
 
 
-
+        
         public IActionResult Index()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var tables = _tableOfRestaurantService.GetAll().OrderBy(x=>x.TableName).ToList();
             return View(tables);
         }
-
+       
         public async Task<IActionResult> Update(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
 
             var orderItem = await _orderService.GetbyIdAsync(id);
             if (orderItem != null)
@@ -155,8 +184,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
 
         [HttpPost]
+        
         public async Task<IActionResult> Update(int id, OrderVM orderVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var product = await _productService.GetbyIdAsync(orderVM.ProductId);
             var entity = await _orderService.GetbyIdAsync(id);
             if (ModelState.IsValid)
@@ -170,9 +205,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData["ErrorMessage"] = "ModelState is invalid";
             return View(orderVM);
         }
-
+       
         public async Task<IActionResult> Remove(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var entity = await _orderService.GetbyIdAsync(id);
             if (entity != null)
             {
@@ -184,9 +224,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         }
 
-        [Authorize(Roles = "chief,admin,waiter")]
+ 
         public IActionResult OrderTracking()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             //signalR araştır!
             ViewBag.Tables = _tableOfRestaurantService.GetAll();
             ViewBag.Products = _productService.GetAll();
@@ -194,9 +239,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             return View(orderList);
         }
-        [Authorize(Roles = "chief,admin")]
+        
         public async Task<IActionResult> OrderReady(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var entity = await _orderService.GetbyIdAsync(id);
             if (entity != null)
             {
@@ -206,9 +256,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData["Message"] = "Successful";
             return RedirectToAction("ordertracking", "Orderitem", "manager");
         }
-        [Authorize(Roles = "chief,admin")]
+        
         public async Task<IActionResult> OrderDelivered(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var entity = await _orderService.GetbyIdAsync(id);
             if (entity != null)
             {
@@ -218,9 +273,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData["Message"] = "Successful";
             return RedirectToAction("ordertracking", "Orderitem", "manager");
         }
-        [Authorize(Roles = "chief,admin")]
+       
         public async Task<IActionResult> OrderPreparing(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             // ürün hazırlanmaya başladığında o ürünü oluşturmak için gerekli malzeme miktarı ürün adetine göre stoktaki malzeme miktarlarından düşülecek
             var products = _productService.GetAll();
             var entity = await _orderService.GetbyIdAsync(id);

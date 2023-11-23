@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
@@ -12,7 +13,8 @@ using Restaurant.MVC.Validators;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class IngredientController : Controller
+    
+    public class IngredientController : AreaBaseController
     {
         private readonly IIngredientService _ingredientService;
         private readonly ICategoryService _categoryService;
@@ -28,20 +30,44 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _mapper = mapper;
             _validationService = validationService;
         }
+       
         public IActionResult Index()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager","accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
+            SelectCategoryAndSupplier();
+            var ingredientList = _ingredientService.GetAll();
+            return View(ingredientList);
+        }
+        [Authorize(Roles ="employee")]
+        public IActionResult StockTracking()
+        {
+          
             SelectCategoryAndSupplier();
             var ingredientList = _ingredientService.GetAll();
             return View(ingredientList);
         }
         public IActionResult Create()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectCategoryAndSupplier();
             return View();
         }
         [HttpPost]
         public IActionResult Create(IngredientVM ingredientVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(ingredientVM);
             if (errors.Any())
@@ -61,6 +87,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Update(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectCategoryAndSupplier();
             var ingredient = await _ingredientService.GetbyIdAsync(id);
             if (ingredient != null)
@@ -69,12 +100,17 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 return View(updateEntity);
 
             }
-            TempData["ErrorMessage"] = "Ingredient is not found";
+            TempData.NotFoundId();
             return RedirectToAction("Index", "Ingredient", new { area = "Manager" });
         }
         [HttpPost]
         public async Task<IActionResult> Update(int id, IngredientVM updateVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(updateVM);
             if(errors.Any())
@@ -109,6 +145,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public async Task<IActionResult> Remove(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var entity = await _ingredientService.GetbyIdAsync(id);
             if (entity != null)
             {

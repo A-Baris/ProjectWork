@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class EmployeeController : Controller
+   
+    public class EmployeeController : AreaBaseController
     {
         private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
@@ -31,18 +33,33 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Index()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var employees = _employeeService.GetAll();
             return View(employees);
         }
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ViewBag.Roles = await _roleManager.Roles.ToListAsync();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(EmployeeVM employeeVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(employeeVM);
             if (errors.Any())
@@ -66,6 +83,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Update(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ViewBag.Roles = await _roleManager.Roles.ToListAsync();
             var employee = await _employeeService.GetbyIdAsync(id);
             if (employee != null)
@@ -81,6 +103,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, EmployeeVM updated)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(updated);
             if (errors.Any())
@@ -116,6 +143,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public async Task<IActionResult> Remove(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var employee = await _employeeService.GetbyIdAsync(id);
             if (employee != null)
             {

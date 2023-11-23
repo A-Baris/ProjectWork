@@ -8,25 +8,23 @@ namespace Restaurant.MVC.Validators
         public ProfileVMValidator()
         {
             RuleFor(x => x.UserName)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Kullanıcı Adı boş bırakılamaz");
+                .NotEmpty().WithMessage("Kullanıcı Adı boş bırakılamaz")
+                .MinimumLength(3).WithMessage("Kullanıcı Adı 3 karakterden az olamaz");
+
             RuleFor(x => x.CustomerName)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Ad boş bırakılamaz");
-            RuleFor(x => x.Email)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Email boş bırakılamaz");
+                .NotEmpty().WithMessage("Ad boş bırakılamaz");
+
             RuleFor(x => x.CustomerSurname)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Soyad boş bırakılamaz");
+             .NotEmpty().WithMessage("Soyad boş bırakılamaz");
+
+            RuleFor(x => x.Email)
+                .NotEmpty().WithMessage("Email boş bırakılamaz")
+                .EmailAddress().WithMessage("örn. abc@abc formatında olmalıdır");
+
             RuleFor(x => x.PhoneNumber)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Cep No boş bırakılamaz");
+                .NotEmpty().WithMessage("Cep No boş bırakılamaz")
+                .MinimumLength(10).MaximumLength(11).WithMessage("Cep No 5351112233 şeklinde veya başında 0 rakamıyla yazılmalıdır");
+
             
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Restaurant.BLL.AbstractServices;
@@ -13,7 +14,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class RecipeController : Controller
+    
+    public class RecipeController : AreaBaseController
     {
         private readonly IProductService _productService;
         private readonly IIngredientService _ingredientService;
@@ -29,6 +31,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Index()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectProductAndIngredient();
             ViewBag.ProductIngredient = _context.ProductIngredients.ToList();
             return View();
@@ -36,6 +43,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Create()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectProductAndIngredient();
             ViewBag.ProductIngredient = _context.ProductIngredients.ToList();
             return View();
@@ -43,6 +55,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public IActionResult Create(RecipeVM createVM)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(createVM);
             if (errors.Any())
@@ -78,6 +95,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public IActionResult Update(int productId, int ingredientId)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectProductAndIngredient();
 
             var entityFinding = _context.ProductIngredients.Where(x => x.ProductId == productId && x.IngredientId == ingredientId).FirstOrDefault();
@@ -109,6 +131,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public IActionResult Update(RecipeVM updated)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
 
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(updated);
@@ -144,6 +171,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
         public IActionResult Remove(int productId, int ingredientId)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager", "chef" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
 
             var entityFinding = _context.ProductIngredients.Where(x => x.ProductId == productId && x.IngredientId == ingredientId).FirstOrDefault();
             if (entityFinding != null)
@@ -158,7 +190,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 TempData.NotFoundId();
                 return RedirectToAction("Create", "Recipe", new { area = "manager" });
             }
-            return View();
+            
         }
 
         void SelectProductAndIngredient()

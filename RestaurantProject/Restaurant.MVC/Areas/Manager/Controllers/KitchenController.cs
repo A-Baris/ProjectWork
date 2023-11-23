@@ -13,7 +13,8 @@ using Restaurant.MVC.Validators;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class KitchenController : Controller
+  
+    public class KitchenController : AreaBaseController
     {
         private readonly IKitchenService _kitchenService;
         private readonly IMapper _mapper;
@@ -29,17 +30,35 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Index()
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager"}))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var kitchenList=_kitchenService.GetAll();   
             return View(kitchenList);
         }
         public IActionResult Create()
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             return View();
         }
         [HttpPost]
-        [Authorize(Roles ="admin")]
+       
         public IActionResult Create(KitchenVM kitchenVM)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             //var result = _validator.Validate(kitchenVM);
             var errors = _validationService.GetValidationErrors(kitchenVM);
@@ -62,6 +81,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Update(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var kitchen = await _kitchenService.GetbyIdAsync(id);
            if(kitchen != null)
             {
@@ -74,6 +99,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id,KitchenVM updated)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var result = _validator.Validate(updated);
             var kitchen = await _kitchenService.GetbyIdAsync(id);
@@ -100,6 +131,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Remove(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var entity = await _kitchenService.GetbyIdAsync(id);
             if (entity != null)
             {

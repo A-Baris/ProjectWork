@@ -22,9 +22,10 @@ namespace Restaurant.MVC.Controllers
         private readonly ICustomerService _customerService;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IValidationService<SecurityProfileVM> _validationService;
+        private readonly IValidationService<ProfileVM> _validationProfileVM;
         private readonly PasswordHasher<AppUser> _passwordHasher;
 
-        public UserProfileController(UserManager<AppUser> userManager,IMapper mapper,ProjectContext context,IReservationService reservationService,ICustomerService customerService,SignInManager<AppUser> signInManager,IValidationService<SecurityProfileVM> validationService)
+        public UserProfileController(UserManager<AppUser> userManager, IMapper mapper, ProjectContext context, IReservationService reservationService, ICustomerService customerService, SignInManager<AppUser> signInManager, IValidationService<SecurityProfileVM> validationService, IValidationService<ProfileVM> validationProfileVM)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -33,6 +34,7 @@ namespace Restaurant.MVC.Controllers
             _customerService = customerService;
             _signInManager = signInManager;
             _validationService = validationService;
+            _validationProfileVM = validationProfileVM;
         }
         public IActionResult Index()
         {
@@ -56,69 +58,89 @@ namespace Restaurant.MVC.Controllers
             return View();
 
         }
-    
-      
+
+
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(ProfileVM profileVM)
         {
+
+            ModelState.Clear();
+            var errors = _validationProfileVM.GetValidationErrors(profileVM);
+            if (errors.Any())
+            {
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
+                return View("profiledetail",profileVM);
+            }
             string UserName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(UserName);
-            if (ModelState.IsValid)
+
+            if (user != null)
             {
-
-             
-                if (user != null)
+                var customer = _customerService.GetAll().Where(x => x.Email == user.Email).FirstOrDefault();
+                if (customer == null)
                 {
-                    var customer = _customerService.GetAll().Where(x => x.Email == user.Email).FirstOrDefault();
-                    if(customer==null)
+                    Customer newCustomer = new Customer()
                     {
-                        Customer newCustomer = new Customer()
-                        {
-                            Name = profileVM.CustomerName,
-                            Surname = profileVM.CustomerSurname,
-                            Phone = profileVM.PhoneNumber,
-                            Email = profileVM.Email,
-                        };
-                        _customerService.Create(newCustomer);
-                    }
-                    else
-                    {
-                        customer.Name = profileVM.CustomerName;
-                        customer.Surname = profileVM.CustomerSurname;
-                        customer.Phone = profileVM.PhoneNumber;
-                        customer.Email = profileVM.Email;
-                        _customerService.Update(customer);
-                        
-                    }
-                    user.Email = profileVM.Email;
-                    user.PhoneNumber = profileVM.PhoneNumber; 
-                    user.UserName = profileVM.UserName;
-                    user.CustomerName = profileVM.CustomerName;
-                    user.CustomerSurname = profileVM.CustomerSurname;
-                    //if (profileVM.PasswordHash != null || profileVM.PasswordConfirmed != null)
-                    //{
-                    //    await _userManager.RemovePasswordAsync(user);
-                    //    await _userManager.AddPasswordAsync(user, profileVM.PasswordHash);
-                    //}
-                    var result = await _userManager.UpdateAsync(user);
-                    if(result.Succeeded)
-                    {
-
-                        HttpContext.Session.Remove("UserName");
-                        HttpContext.Session.SetString("UserName", profileVM.UserName);
-                        await _signInManager.RefreshSignInAsync(user);
-                        TempData["Message"] = "Bilgileriniz başarılı şekilde güncellendi";
-                        return RedirectToAction("profiledetail", "UserProfile");
-                    }
-                 
+                        Name = profileVM.CustomerName,
+                        Surname = profileVM.CustomerSurname,
+                        Phone = profileVM.PhoneNumber,
+                        Email = profileVM.Email,
+                    };
+                    _customerService.Create(newCustomer);
                 }
+                else
+                {
+                    customer.Name = profileVM.CustomerName;
+                    customer.Surname = profileVM.CustomerSurname;
+                    customer.Phone = profileVM.PhoneNumber;
+                    customer.Email = profileVM.Email;
+                    _customerService.Update(customer);
+
+                }
+                user.Email = profileVM.Email;
+                user.PhoneNumber = profileVM.PhoneNumber;
+                user.UserName = profileVM.UserName;
+                user.CustomerName = profileVM.CustomerName;
+                user.CustomerSurname = profileVM.CustomerSurname;
+                //if (profileVM.PasswordHash != null || profileVM.PasswordConfirmed != null)
+                //{
+                //    await _userManager.RemovePasswordAsync(user);
+                //    await _userManager.AddPasswordAsync(user, profileVM.PasswordHash);
+                //}
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+
+                    HttpContext.Session.Remove("UserName");
+                    HttpContext.Session.SetString("UserName", profileVM.UserName);
+                    await _signInManager.RefreshSignInAsync(user);
+                    TempData["Message"] = "Bilgileriniz başarılı şekilde güncellendi";
+                    return RedirectToAction("profiledetail", "UserProfile");
+                }
+                else
+                {
+                    TempData["Message"] = "Bilgileriniz güncellerken hata oluştu. Lütfen tekrar deneyiniz";
+                    return RedirectToAction("profiledetail", "UserProfile");
+
+                }
+
+
+
+
             }
-            return View("profiledetail",profileVM);
+            else
+            {
+                TempData["Message"] = "Kullanıcı bilgilerine ulaşılamadı. Lütfen tekrar deneyiniz";
+                return View("profiledetail");
+
+            }
+
         }
 
         public async Task<IActionResult> SecurityProfile()
         {
-           
+
             return View();
         }
         [HttpPost]
@@ -126,9 +148,9 @@ namespace Restaurant.MVC.Controllers
         {
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(securityVM);
-            if(errors.Any())
+            if (errors.Any())
             {
-                ModelStateHelper.AddErrorsToModelState(ModelState,errors);
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
                 TempData.SetErrorMessage();
                 return View(securityVM);
 
@@ -139,11 +161,11 @@ namespace Restaurant.MVC.Controllers
             var user = await _userManager.FindByNameAsync(UserName);
             var passwordHasher = new PasswordHasher<AppUser>();
 
-            
-              //passwordhasher yardımıyla göndermiş olduğumuz PasswordNow değeri veritabanındaki güncel parolayla uyuşma sonucuna göre değer dönüyor.
-              //Böylelikle başarılı sonuçla beraber şifre değiştirme işlemine devam edebiliyoruz.
-             
-                var resultPassword = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, securityVM.PasswordNow);
+
+            //passwordhasher yardımıyla göndermiş olduğumuz PasswordNow değeri veritabanındaki güncel parolayla uyuşma sonucuna göre değer dönüyor.
+            //Böylelikle başarılı sonuçla beraber şifre değiştirme işlemine devam edebiliyoruz.
+
+            var resultPassword = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, securityVM.PasswordNow);
             if (resultPassword == PasswordVerificationResult.Success)
             {
 
@@ -167,9 +189,9 @@ namespace Restaurant.MVC.Controllers
                 TempData["ErrorMessage"] = "Güncel Şifreniz hatalı";
                 return View(securityVM);
             }
-            
 
-           
+
+
 
         }
         public async Task<IActionResult> MyReservation()
@@ -181,7 +203,7 @@ namespace Restaurant.MVC.Controllers
                                    join c in _context.Customers on r.CustomerId equals c.Id
                                    select new CustomerReservationVM()
                                    {
-                                       Id=r.Id,
+                                       Id = r.Id,
                                        ReservationDate = r.ReservationDate,
                                        GuestNumber = r.GuestNumber,
                                        Description = r.Description,
@@ -190,7 +212,7 @@ namespace Restaurant.MVC.Controllers
                                        Surname = c.Surname,
                                        Email = c.Email,
                                    };
-            var reservation = reservationQuery.Where(x=>x.Email == user.Email && x.ReservationStatus == Entity.Enums.ReservationStatus.Active).ToList();
+            var reservation = reservationQuery.Where(x => x.Email == user.Email && x.ReservationStatus == Entity.Enums.ReservationStatus.Active).ToList();
 
             //{ r.ReservationDate, r.Description, r.ReservationStatus, c.Name, c.Surname,c.Email };
             return View(reservation);
@@ -205,10 +227,10 @@ namespace Restaurant.MVC.Controllers
                 entity.ReservationStatus = Entity.Enums.ReservationStatus.Passive;
                 _reservationService.Update(entity);
                 TempData["Message"] = "Rezervasyon iptal edildi";
-                return RedirectToAction("myreservation","userprofile");
+                return RedirectToAction("myreservation", "userprofile");
             }
             return View("myreservation");
-         
+
         }
 
     }

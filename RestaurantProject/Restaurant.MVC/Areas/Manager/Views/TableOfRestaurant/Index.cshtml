@@ -5,29 +5,14 @@
 }
 <div class="container" style="margin-left:50px">
 
-    <div class="row" style="margin-left:60px">
 
-        <div class="col-md-2" >
-            <button class="btn btn-outline-primary btn-lg category-button" onclick="showAllLocations()">Tümü</button>
-        </div>
-
-        <div class="col-md-2" >
-            <button class="btn btn-outline-primary btn-lg category-button" onclick="filterTables('Cam-Kenarı')">Cam-Kenarı</button>
-        </div>
-        <div class="col-md-2" >
-            <button class="btn btn-outline-primary btn-lg category-button" onclick="filterTables('Salon')">Salon</button>
-        </div>
-        <div class="col-md-2" >
-            <button class="btn btn-outline-primary btn-lg category-button" onclick="filterTables('Bahçe')">Bahçe</button>
-        </div>
-
+    <div style="margin-top:5px;margin-bottom:10px">
+        @Html.Partial("_ToolbarTablePartialView")
     </div>
 
 
 
-
-
-    <h2><a href="/manager/tableofrestaurant/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+ 
 
     <table class="table table-bordered">
         <thead>
@@ -35,7 +20,7 @@
                 <th>Masa Adı</th>
                 <th>Konumu</th>
                 <th>Kapasitesi</th>
-                <th>Rezervayon durum</th>
+                <th>Masa Durumu</th>
                 <th>Garson Adı</th>
                 <th>Hesap Talep</th>
                 <th></th>
@@ -79,8 +64,7 @@
                     <td>@item.BillRequest</td>
                 }
                 <td>
-                    <a href="/manager/tableofrestaurant/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
-                    <a href="/manager/tableofrestaurant/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+                   
                     <a href="/manager/tableofrestaurant/orderlist/@item.Id"><button class="btn btn-info">Siparişler</button></a>
                     <a href="/manager/tableofrestaurant/billrequest/@item.Id" onclick="return confirm('Hesap talep işlemi onaylıyor musunuz?')"><button class="btn btn-primary">Hesap İste</button></a>
                     <a href="/manager/tableofrestaurant/billrequestcancel/@item.Id" onclick="return confirm('Hesap talep erteleme işlemi onaylıyor musunuz?')"><button class="btn btn-outline-danger">Hesap İptal</button></a>

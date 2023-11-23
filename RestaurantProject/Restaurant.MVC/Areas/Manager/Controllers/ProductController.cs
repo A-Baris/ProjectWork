@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
@@ -17,7 +18,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
 
-    public class ProductController : Controller
+    public class ProductController : AreaBaseController
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
@@ -41,8 +42,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _validationforUpdateVM = validationforUpdateVM;
 
         }
+      
         public IActionResult Index()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             string dish = "Yemek";
             string drink = "İçecek";
             string salad = "Salata";
@@ -59,15 +66,27 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
             return View(dishList);
         }
+     
         public IActionResult Create()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectOptionList();
 
             return View();
         }
         [HttpPost]
+      
         public async Task<IActionResult> Create(ProductVM productVM, IFormFile? productImage)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationforProductVM.GetValidationErrors(productVM);
             if (errors.Any())
@@ -111,8 +130,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
         }
+        
         public async Task<IActionResult> Update(int id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             SelectOptionList();
             var updated = await _productService.GetbyIdAsync(id);
             if (updated != null)
@@ -129,8 +154,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
         }
         [HttpPost]
+      
         public async Task<IActionResult> Update(ProductUpdateVM UpdateVM, IFormFile? productImage)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationforUpdateVM.GetValidationErrors(UpdateVM);
             if (errors.Any())
@@ -177,9 +208,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
         }
+       
         public async Task<IActionResult> Remove(int id)
-
-        {
+{
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var dishEntity = await _productService.GetbyIdAsync(id);
             if (dishEntity != null)
             {
@@ -190,6 +226,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
             TempData.NotFoundId();
             return View();
+        }
+        [Authorize(Roles = "employee")]
+        public IActionResult ProductList()
+        {
+          
+            ViewBag.Category = _categoryService.GetAll();
+            ViewBag.Menus = _menuService.GetAll();
+            var products = _productService.GetAll();
+            return View(products);
         }
 
         void SelectOptionList() //liste metodu

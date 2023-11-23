@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.Entity.Entities;
@@ -10,7 +11,8 @@ using Restaurant.MVC.Validators;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class InvoiceController : Controller
+    
+    public class InvoiceController : AreaBaseController
     {
         private readonly IInvoiceService _invoiceService;
         private readonly IMapper _mapper;
@@ -24,18 +26,35 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Index()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager","accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var invoices = _invoiceService.GetAll();
             return View(invoices);
         }
 
         public IActionResult Create()
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(InvoiceVM invoiceVM)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(invoiceVM);
             if (errors.Any())
@@ -55,6 +74,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Update(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var invoice = await _invoiceService.GetbyIdAsync(id);
             if (invoice != null)
             {
@@ -67,6 +92,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, InvoiceVM invoiceVM)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errros = _validationService.GetValidationErrors(invoiceVM);
             if (errros.Any())
@@ -95,6 +126,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Remove(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager", "accountant" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var invoice = await _invoiceService.GetbyIdAsync(id);
             if (invoice != null)
             {

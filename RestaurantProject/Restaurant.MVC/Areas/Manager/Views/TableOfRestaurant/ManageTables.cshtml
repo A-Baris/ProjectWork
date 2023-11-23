@@ -1,0 +1,102 @@
+﻿@model List<TableOfRestaurant>
+@{
+    ViewData["Title"] = "ManageTables";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="margin-left:50px">
+    <div style="margin-top:5px">
+    @Html.Partial("_ToolbarTablePartialView")
+    </div>
+
+
+
+
+    <h2><a href="/manager/tableofrestaurant/create"><button class="btn btn-outline-success">Ekle</button></a></h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Masa Adı</th>
+                <th>Konumu</th>
+                <th>Kapasitesi</th>
+                <th>Masa Durumu</th>
+                <th>Garson Adı</th>
+                <th>Hesap Talep</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+
+
+            <tr data-location="@item.TableLocation">
+                <td>@item.TableName</td>
+                <td>@item.TableLocation</td>
+                <td>@item.TableCapacity</td>
+                @* <td>@item.Status</td> *@
+                @switch ((int)item.Status)
+                {
+                    case 0:
+                        <td style="background-color:darkorange">@item.Status</td>
+                        break;
+
+                    case 1:
+                        <td style="background-color:green">@item.Status</td>
+                        break;
+
+                    default:
+                        <td>@item.Status</td>
+                        break;
+                }
+                <td>@item.Employee?.Name @item.Employee?.Surname</td>
+                @if ((int)item.BillRequest == 1)
+                {
+                    <td style="background-color:red">@item.BillRequest</td>
+                }
+                else if ((int)item.BillRequest == 2)
+                {
+                    <td style="background-color:green">@item.BillRequest</td>
+                }
+                else
+                {
+                    <td>@item.BillRequest</td>
+                }
+                <td>
+                    <a href="/manager/tableofrestaurant/update/@item.Id"><button class="btn btn-outline-primary">Güncelle</button></a>
+                    <a href="/manager/tableofrestaurant/remove/@item.Id"><button class="btn btn-danger">Sil</button></a>
+                   
+
+
+
+                </td>
+
+
+
+            </tr>
+
+        }
+
+
+    </table>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function filterTables(location) {
+        // Hide all rows initially
+        $('table tr').hide();
+
+        // Show only the rows that match the selected location
+        $('table tr[data-location="' + location + '"]').show();
+    }
+
+</script>
+<script>
+    function showAllLocations() {
+        // Show all rows
+        $('table tr').show();
+    }
+</script>
+
+

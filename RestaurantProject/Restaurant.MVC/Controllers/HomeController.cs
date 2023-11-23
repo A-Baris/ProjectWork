@@ -79,7 +79,7 @@ namespace Restaurant.MVC.Controllers
 
             if (mail != null)
             {
-                TempData["ErrorMessage"] = "Email sistemde kayıtlı!";
+                TempData["ErrorMessage"] = "Email kullanılmaktadır";
                 return View(registerVM);
             }
             else
@@ -87,7 +87,7 @@ namespace Restaurant.MVC.Controllers
                 var username = await _userManager.FindByNameAsync(registerVM.UserName);
                 if (username != null)
                 {
-                    TempData["ErrorMessage"] = "Kullanıcı Adı sistemde kayıtlı!";
+                    TempData["ErrorMessage"] = "Kullanıcı Adı kullanılmaktadır";
                     return View(registerVM);
                 }
             }

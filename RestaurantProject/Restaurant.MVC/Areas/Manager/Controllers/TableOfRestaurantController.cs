@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Restaurant.BLL.AbstractServices;
@@ -12,7 +13,7 @@ using Restaurant.MVC.Validators;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-    public class TableOfRestaurantController : Controller
+    public class TableOfRestaurantController : AreaBaseController
     {
 
         private readonly ITableOfRestaurantService _tableOfRestaurant;
@@ -33,6 +34,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _mapper = mapper;
            _validationService = validationService;
         }
+        [Authorize(Roles = "employee")]
         public IActionResult Index()
         {
             ViewBag.EmployeeList = _employee.GetAll();
@@ -45,15 +47,48 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             //ViewBag.TableLocations = location;
             return View(tableList);
         }
+       
+        public IActionResult ManageTables()
+        {
 
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
+            ViewBag.EmployeeList = _employee.GetAll();
+            var tableList = _tableOfRestaurant.GetAll().OrderBy(t => t.TableName).ToList();
+            //List<string> location = new List<string>();
+            //foreach (var item in tableList)
+            //{
+            //    location.Add(item.TableLocation);
+            //}
+            //ViewBag.TableLocations = location;
+            return View(tableList);
+        }
+
+       
         public IActionResult Create()
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             EmployeeList();
             return View();
         }
         [HttpPost]
+        
         public IActionResult Create(TableOfRestaurantVM tofVM)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(tofVM);
             if(errors.Any())
@@ -72,8 +107,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             
           
         }
+        
         public async Task<IActionResult> Update(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             EmployeeList();
 
 
@@ -90,8 +132,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
 
         [HttpPost]
+      
         public async Task<IActionResult> Update(int id,TableOfRestaurantVM updated)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ModelState.Clear();
             var errors = _validationService.GetValidationErrors(updated);
             if(errors.Any())
@@ -112,8 +161,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
           
 
         }
+       
         public async Task<IActionResult> Remove(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var table = await _tableOfRestaurant.GetbyIdAsync(id);
             if (table != null)
             {
@@ -125,15 +181,29 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData.NotFoundId();
             return RedirectToAction("index");
         }
+        
         public IActionResult OrderList(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager","waiter","cashier" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             ViewBag.Tables = _tableOfRestaurant.GetAll();
             ViewBag.Products = _productService.GetAll();
             var orderList = _orderItem.GetAll().Where(x => x.TableofRestaurantId == id).ToList();
             return View(orderList);
         }
+       
         public async Task<IActionResult> BillRequest(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager", "waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var table = await _tableOfRestaurant.GetbyIdAsync(id);
             if(table !=null)
             {
@@ -145,8 +215,15 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             TempData["ErrorMessage"] = "Id bulunamadı";
             return RedirectToAction("index", "tableofrestaurant", new { area = "Manager" });
         }
+        
         public async Task<IActionResult> BillRequestCancel(int id)
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager", "waiter" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var table = await _tableOfRestaurant.GetbyIdAsync(id);
             if (table != null)
             {

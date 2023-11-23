@@ -1,0 +1,50 @@
+﻿@model List<Ingredient>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="margin-left:50px">
+    <h2>Malzeme Stok Takip</h2>
+   
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Malzeme Adı</th>
+                <th>Kategori</th>
+                <th>Tedarikçi</th>
+               
+                <th>Adet/KG</th>
+
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Category.CategoryName</td>
+                <td>@item.Supplier.CompanyName</td>
+                
+
+                @if (item.Quantity <= 3)
+                {
+                    <td style="background-color:darkorange">@item.Quantity</td>
+                }
+                else
+                {
+                    <td>@item.Quantity</td>
+                }
+
+
+
+
+
+            </tr>
+
+
+        }
+
+    </table>
+
+</div>

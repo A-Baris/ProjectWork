@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.DAL.Data;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
 using Restaurant.MVC.Models.ViewModels;
+using Restaurant.MVC.Utility.TempDataHelpers;
 
 namespace Restaurant.MVC.Areas.Manager.Controllers
-{ // USer için güncelleme ve remove action eklenecek unutulmamalı
+{ // User için güncelleme ve remove action eklenecek unutulmamalı
     [Area("Manager")]
-    public class UserController : Controller
+  
+    public class UserController : AreaBaseController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IPasswordHasher<AppUser> _passwordHasher;
@@ -20,6 +23,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Index()
         {
+
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var users = await _userManager.Users.ToListAsync();
             var userList = new List<UserVM>();
 
@@ -51,12 +60,22 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public IActionResult Create()
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(UserCreateVM userVM)
         {
-            if(ModelState.IsValid)
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
+            if (ModelState.IsValid)
             {
                 AppUser appUser = new AppUser()
                 {
@@ -88,6 +107,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Update(string id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var user = await _userManager.FindByIdAsync(id);
             var updatedUser = new UserUpdateVM
             {
@@ -102,7 +126,12 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UserUpdateVM updateVM)
         {
-            if(ModelState.IsValid)
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
+            if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByIdAsync(updateVM.Id);
                 if(user != null)
@@ -124,6 +153,11 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         }
         public async Task<IActionResult> Remove(string id)
         {
+            if (!CheckAuthorization(new[] { "admin", "manager" }))
+            {
+                TempData.NoAuthorizationMessage();
+                return RedirectToAction("Index", "Home", new { area = "manager" });
+            }
             var user = await _userManager.FindByIdAsync(id);
             if(user!=null)
             {
