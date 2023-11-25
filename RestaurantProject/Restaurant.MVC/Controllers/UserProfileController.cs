@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.AbstractServices;
 using Restaurant.DAL.Context;
-using Restaurant.DAL.Data;
+
 using Restaurant.Entity.Entities;
+using Restaurant.MVC.Models;
 using Restaurant.MVC.Models.ViewModels;
 using Restaurant.MVC.Utility.ModelStateHelper;
 using Restaurant.MVC.Utility.TempDataHelpers;
@@ -16,7 +17,7 @@ namespace Restaurant.MVC.Controllers
     public class UserProfileController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IMapper _mapper;
+
         private readonly ProjectContext _context;
         private readonly IReservationService _reservationService;
         private readonly ICustomerService _customerService;
@@ -25,10 +26,10 @@ namespace Restaurant.MVC.Controllers
         private readonly IValidationService<ProfileVM> _validationProfileVM;
         private readonly PasswordHasher<AppUser> _passwordHasher;
 
-        public UserProfileController(UserManager<AppUser> userManager, IMapper mapper, ProjectContext context, IReservationService reservationService, ICustomerService customerService, SignInManager<AppUser> signInManager, IValidationService<SecurityProfileVM> validationService, IValidationService<ProfileVM> validationProfileVM)
+        public UserProfileController(UserManager<AppUser> userManager, ProjectContext context, IReservationService reservationService, ICustomerService customerService, SignInManager<AppUser> signInManager, IValidationService<SecurityProfileVM> validationService, IValidationService<ProfileVM> validationProfileVM)
         {
             _userManager = userManager;
-            _mapper = mapper;
+
             _context = context;
             _reservationService = reservationService;
             _customerService = customerService;
@@ -52,7 +53,17 @@ namespace Restaurant.MVC.Controllers
 
             if (user != null)
             {
-                var data = _mapper.Map<ProfileVM>(user);
+                //var data = _mapper.Map<ProfileVM>(user);
+                var data = new ProfileVM()
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    CustomerName = user.CustomerName,
+                    CustomerSurname = user.CustomerSurname,
+
+
+                };
                 return View(data);
             }
             return View();
@@ -70,7 +81,7 @@ namespace Restaurant.MVC.Controllers
             {
                 ModelStateHelper.AddErrorsToModelState(ModelState, errors);
                 TempData.SetErrorMessage();
-                return View("profiledetail",profileVM);
+                return View("profiledetail", profileVM);
             }
             string UserName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(UserName);

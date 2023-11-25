@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Restaurant.DAL.Data;
+using Restaurant.MVC.Models.Context;
 
 #nullable disable
 
-namespace Restaurant.DAL.Migrations.UserRole
+namespace Restaurant.MVC.Migrations
 {
-    [DbContext(typeof(UserRoleContext))]
-    partial class UserRoleContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(UserRoleIdentityContext))]
+    partial class UserRoleIdentityContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -128,7 +128,7 @@ namespace Restaurant.DAL.Migrations.UserRole
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Restaurant.DAL.Data.AppRole", b =>
+            modelBuilder.Entity("Restaurant.MVC.Models.AppRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -155,7 +155,7 @@ namespace Restaurant.DAL.Migrations.UserRole
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Restaurant.DAL.Data.AppUser", b =>
+            modelBuilder.Entity("Restaurant.MVC.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -168,12 +168,12 @@ namespace Restaurant.DAL.Migrations.UserRole
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("CustomerSurname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -215,6 +215,9 @@ namespace Restaurant.DAL.Migrations.UserRole
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<bool>("UserRight")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -230,7 +233,7 @@ namespace Restaurant.DAL.Migrations.UserRole
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Restaurant.DAL.Data.AppRole", null)
+                    b.HasOne("Restaurant.MVC.Models.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -239,7 +242,7 @@ namespace Restaurant.DAL.Migrations.UserRole
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Restaurant.DAL.Data.AppUser", null)
+                    b.HasOne("Restaurant.MVC.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -248,7 +251,7 @@ namespace Restaurant.DAL.Migrations.UserRole
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Restaurant.DAL.Data.AppUser", null)
+                    b.HasOne("Restaurant.MVC.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -257,13 +260,13 @@ namespace Restaurant.DAL.Migrations.UserRole
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Restaurant.DAL.Data.AppRole", null)
+                    b.HasOne("Restaurant.MVC.Models.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Restaurant.DAL.Data.AppUser", null)
+                    b.HasOne("Restaurant.MVC.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -272,7 +275,7 @@ namespace Restaurant.DAL.Migrations.UserRole
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Restaurant.DAL.Data.AppUser", null)
+                    b.HasOne("Restaurant.MVC.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

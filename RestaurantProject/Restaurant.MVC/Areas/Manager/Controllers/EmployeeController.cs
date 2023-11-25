@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.BLL.AbstractServices;
-using Restaurant.DAL.Data;
+
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
 using Restaurant.MVC.Areas.Manager.Models.ViewModels;
+using Restaurant.MVC.Models;
 using Restaurant.MVC.Utility.ModelStateHelper;
 using Restaurant.MVC.Utility.TempDataHelpers;
 using Restaurant.MVC.Validators;

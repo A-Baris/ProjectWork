@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Restaurant.DAL.Data
+
+namespace Restaurant.MVC.Models.Context
 {
-    public class UserRoleContext : IdentityDbContext<AppUser, AppRole, string>
+    public class UserRoleIdentityContext : IdentityDbContext<AppUser, AppRole, string>
     {
 
-        public UserRoleContext(DbContextOptions<UserRoleContext> options) : base(options)
+
+        public UserRoleIdentityContext(DbContextOptions<UserRoleIdentityContext> options) : base(options)
         {
         }
 
@@ -20,10 +21,6 @@ namespace Restaurant.DAL.Data
         //    }
         //    base.OnConfiguring(optionsBuilder);
         //}
-
     }
-
-
-
 }
 

@@ -1,26 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Restaurant.Entity.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Restaurant.MVC.Models.ViewModels
 {
     public class RegisterVM
     {
-        [Required(ErrorMessage = "Boş bırakılamaz")]
+        [Display(Name = "Müşteri Ad")]
         public string CustomerName { get; set; }
-        [Required(ErrorMessage = "Boş bırakılamaz")]
+        [Display(Name = "Müşteri Soyad")]
         public string CustomerSurname { get; set; }
-  
-        [Required(ErrorMessage ="Boş bırakılamaz")]
+
+        [Display(Name = "Kullanıcı Adı")]
         public string UserName { get; set; }
-        [Required(ErrorMessage = "Boş bırakılamaz")]
+        [Display(Name = "Şifre")]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Boş bırakılamaz")]
-        [Compare("Password")]
+        [Display(Name = "Şifre Tekrar")]
         public string PasswordConfirmed { get; set; }
-        [Required(ErrorMessage = "Boş bırakılamaz")]
-        [EmailAddress]
+        [Display(Name = "Email")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Boş bırakılamaz")]
-        [Phone]
+        [Display(Name = "Cep No")]
+        
         public string PhoneNumber { get; set; }
+        
+        public bool UserRight { get; set; }
     }
 }

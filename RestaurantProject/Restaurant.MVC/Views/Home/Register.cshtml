@@ -61,6 +61,15 @@
                     <span asp-validation-for="PasswordConfirmed" class="text-danger"></span>
 
                 </div>
+                <div class="form-group">
+                    <label > Kullanıcı haklarını onaylıyorum.</label>
+                    
+                    <input type="checkbox"asp-for="UserRight" required />
+                    <span asp-validation-for="UserRight" class="text-danger"></span>
+                    <a href="/home/privacy" target="_blank">Kullanıcı Hakları Bilgi</a>
+                    
+
+                </div>
            
                
 

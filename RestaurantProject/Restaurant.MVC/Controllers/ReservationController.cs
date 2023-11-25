@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 using Restaurant.BLL.AbstractServices;
-using Restaurant.DAL.Data;
+using Restaurant.MVC.Models;
 using Restaurant.MVC.Models.ViewModels;
 
 namespace Restaurant.MVC.Controllers

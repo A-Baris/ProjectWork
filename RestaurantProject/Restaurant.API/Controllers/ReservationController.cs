@@ -8,7 +8,7 @@ using Restaurant.BLL.AbstractServices;
 using Restaurant.BLL.Services;
 using Restaurant.Common;
 using Restaurant.DAL.Context;
-using Restaurant.DAL.Data;
+
 using Restaurant.Entity.DTOs;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
@@ -106,7 +106,7 @@ namespace Restaurant.API.Controllers
                               
             if (reservation != null)
             {
-                var timeSinceReservation = DateTime.UtcNow - reservation.ReservationDate;
+                var timeSinceReservation =reservation.ReservationDate - DateTime.UtcNow ;
                 if (timeSinceReservation.TotalHours < 24)
                 {
                     return BadRequest("24 saatten az süre kalan rezervasyonlar günccellenemez.");

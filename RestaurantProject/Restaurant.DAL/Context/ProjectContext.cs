@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Net;
 using Restaurant.Common.IpFinder;
+
 
 namespace Restaurant.DAL.Context
 {
@@ -170,12 +171,14 @@ namespace Restaurant.DAL.Context
                     var entityRepository = item.Entity as BaseEntity;
                     if (entityRepository != null)
                     {
-
+                       
                         if (item.State == EntityState.Added)
                         {
                             entityRepository.CreatedDate = DateTime.Now;
                             entityRepository.CreatedComputerName = Environment.MachineName;
                             entityRepository.CreatedIpAddress = IpAdressFinder.GetIpAddress();
+                            
+                            
                         }
                         if (item.State == EntityState.Modified)
                         {

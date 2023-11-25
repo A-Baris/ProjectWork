@@ -49,11 +49,11 @@
                       
                         @if(item.ImageUrl!=null)
                         {
-                        <img class="card-img-top"  src="/images/@item.ImageUrl" width="268" height="178" />
+                            <img class="card-img-top" src="/images/@item.ImageUrl" style="height: 200px; object-fit: cover;" />
                         }
                         else
                         {
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" style="height: 200px; object-fit: cover;" alt="...">
                         }
                    
                         <!-- Product details-->
@@ -64,7 +64,7 @@
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">@item.ProductName</h5>
                                 <!-- Product price-->
-                                @item.Price
+                                @item.Price TL
                             </div>
                         </div>
                         <!-- Product actions-->

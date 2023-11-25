@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Entity.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Restaurant.Entity.Entities
         public string? Phone { get; set; }
         [MaxLength(250)]
         public string Email { get; set; }
-
+      
         public int? TableOfRestaurantId { get;set; }
         public TableOfRestaurant? TableOfRestaurant { get;set; }
         public virtual List<Reservation> Reservations { get; set; }

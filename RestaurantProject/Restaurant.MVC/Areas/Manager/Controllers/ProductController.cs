@@ -42,7 +42,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             _validationforUpdateVM = validationforUpdateVM;
 
         }
-      
+
         public IActionResult Index()
         {
             if (!CheckAuthorization(new[] { "admin", "manager" }))
@@ -50,23 +50,14 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
                 TempData.NoAuthorizationMessage();
                 return RedirectToAction("Index", "Home", new { area = "manager" });
             }
-            string dish = "Yemek";
-            string drink = "İçecek";
-            string salad = "Salata";
-            string dessert = "Tatlı";
+
 
             SelectOptionList();
-
-
+            ViewBag.MenuList = _menuService.GetAll();
             var dishList = _productService.GetAll();
-            ViewBag.DishList = _productService.GetSelectedProducts(dish);
-            ViewBag.DrinkList = _productService.GetSelectedProducts(drink);
-            ViewBag.SaladList = _productService.GetSelectedProducts(salad);
-            ViewBag.DessertList = _productService.GetSelectedProducts(dessert);
-
             return View(dishList);
         }
-     
+
         public IActionResult Create()
         {
             if (!CheckAuthorization(new[] { "admin", "manager" }))
@@ -79,12 +70,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             return View();
         }
         [HttpPost]
-      
+
         public async Task<IActionResult> Create(ProductVM productVM, IFormFile? productImage)
         {
             if (!CheckAuthorization(new[] { "admin", "manager" }))
             {
                 TempData.NoAuthorizationMessage();
+               
                 return RedirectToAction("Index", "Home", new { area = "manager" });
             }
             ModelState.Clear();
@@ -93,6 +85,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 ModelStateHelper.AddErrorsToModelState(ModelState, errors);
                 TempData.SetErrorMessage();
+                SelectOptionList();
                 return View(productVM);
             }
 
@@ -130,12 +123,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
         }
-        
+
         public async Task<IActionResult> Update(int id)
         {
             if (!CheckAuthorization(new[] { "admin", "manager" }))
             {
                 TempData.NoAuthorizationMessage();
+               
                 return RedirectToAction("Index", "Home", new { area = "manager" });
             }
             SelectOptionList();
@@ -154,12 +148,13 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             }
         }
         [HttpPost]
-      
+
         public async Task<IActionResult> Update(ProductUpdateVM UpdateVM, IFormFile? productImage)
         {
             if (!CheckAuthorization(new[] { "admin", "manager" }))
             {
                 TempData.NoAuthorizationMessage();
+              
                 return RedirectToAction("Index", "Home", new { area = "manager" });
             }
             ModelState.Clear();
@@ -168,6 +163,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
             {
                 ModelStateHelper.AddErrorsToModelState(ModelState, errors);
                 TempData.SetErrorMessage();
+                SelectOptionList();
                 return View(UpdateVM);
             }
 
@@ -200,6 +196,10 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
             var entity = await _productService.GetbyIdAsync(UpdateVM.Id);
+            if (UpdateVM.ImageUrl== null)
+            {
+                UpdateVM.ImageUrl =entity.ImageUrl;
+            }
             _mapper.Map(UpdateVM, entity);
             _productService.Update(entity);
             TempData.SetSuccessMessage();
@@ -208,9 +208,9 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
 
 
         }
-       
+
         public async Task<IActionResult> Remove(int id)
-{
+        {
             if (!CheckAuthorization(new[] { "admin", "manager" }))
             {
                 TempData.NoAuthorizationMessage();
@@ -230,7 +230,7 @@ namespace Restaurant.MVC.Areas.Manager.Controllers
         [Authorize(Roles = "employee")]
         public IActionResult ProductList()
         {
-          
+
             ViewBag.Category = _categoryService.GetAll();
             ViewBag.Menus = _menuService.GetAll();
             var products = _productService.GetAll();

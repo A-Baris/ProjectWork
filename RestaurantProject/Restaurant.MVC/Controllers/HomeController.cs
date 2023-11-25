@@ -13,8 +13,11 @@ using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Restaurant.DAL.Data;
+
 using Restaurant.BLL.Services;
+using Restaurant.MVC.Validators;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Utility.TempDataHelpers;
 
 namespace Restaurant.MVC.Controllers
 {
@@ -24,13 +27,15 @@ namespace Restaurant.MVC.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ICustomerService _customerService;
+        private readonly IValidationService<RegisterVM> _validationServiceForRegisterVM;
 
-        public HomeController(ILogger<HomeController> logger,UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,ICustomerService customerService)
+        public HomeController(ILogger<HomeController> logger,UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,ICustomerService customerService,IValidationService<RegisterVM> validationServiceForRegisterVM)
         {
             _logger = logger;
           _userManager = userManager;
             _signInManager = signInManager;
             _customerService = customerService;
+            _validationServiceForRegisterVM = validationServiceForRegisterVM;
         }
 
         
@@ -75,25 +80,32 @@ namespace Restaurant.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-            var mail = await _userManager.FindByEmailAsync(registerVM.Email);
-
-            if (mail != null)
+          ModelState.Clear();
+            var errors = _validationServiceForRegisterVM.GetValidationErrors(registerVM);
+            if(errors.Any())
             {
-                TempData["ErrorMessage"] = "Email kullanılmaktadır";
+                ModelStateHelper.AddErrorsToModelState(ModelState, errors);
+                TempData.SetErrorMessage();
                 return View(registerVM);
             }
-            else
-            {
-                var username = await _userManager.FindByNameAsync(registerVM.UserName);
-                if (username != null)
+
+            
+                var mail = await _userManager.FindByEmailAsync(registerVM.Email);
+
+                if (mail != null)
                 {
-                    TempData["ErrorMessage"] = "Kullanıcı Adı kullanılmaktadır";
+                    TempData["ErrorMessage"] = "Email kullanılmaktadır";
                     return View(registerVM);
                 }
-            }
-
-            if (ModelState.IsValid)
-            {
+                else
+                {
+                    var username = await _userManager.FindByNameAsync(registerVM.UserName);
+                    if (username != null)
+                    {
+                        TempData["ErrorMessage"] = "Kullanıcı Adı kullanılmaktadır";
+                        return View(registerVM);
+                    }
+                }
                 AppUser user = new AppUser()
                 {
                     CustomerName=registerVM.CustomerName,
@@ -101,6 +113,7 @@ namespace Restaurant.MVC.Controllers
                     UserName = registerVM.UserName,
                     Email = registerVM.Email,
                     PhoneNumber = registerVM.PhoneNumber,
+                    UserRight=registerVM.UserRight,
                 };
                 
 
@@ -118,19 +131,29 @@ namespace Restaurant.MVC.Controllers
                        
                     };
                     _customerService.Create(customer);
-
+                    try
+                    {
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         var encodeToken = HttpUtility.UrlEncode(token.ToString());
                         string confirmationLink = Url.Action("Confirmation", "Home", new { id = user.Id, token = encodeToken }, Request.Scheme);
 
                         MailSender.SendEmail(registerVM.Email, "Üyelik AKtivasyon", $"Kayıt işlemi başarılı.\n Aramıza Hoş Geldin {registerVM.UserName} \n {confirmationLink} ");
-                    TempData["Message"] = "Tebrikler üyelik başarılı şekilde oluşturuldu \n  Bilgilerinizle giriş yapabilirsiniz";
+                        TempData["Message"] = "Tebrikler üyelik başarılı şekilde oluşturuldu \n  Bilgilerinizle giriş yapabilirsiniz";
                         return RedirectToAction("login", "home");
-                  
+                    }
+                    catch(Exception ex)
+                    {
+                        return RedirectToAction("login", "home");
+                    }
                 }
-               
+                else
+            {
+                TempData["ErrrorMessage"] = "Kullanıcı oluşturulurken bir hatayla karşılaşıldı.\nLütfen Tekrar Deneyiniz.";
+                return View(registerVM);
             }
-            return View(registerVM);
+               
+            
+           
         }
 
        
@@ -151,6 +174,7 @@ namespace Restaurant.MVC.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
+                        
                         HttpContext.Session.SetString("Email",user.Email);
                         HttpContext.Session.SetString("Id",user.Id);
                         HttpContext.Session.SetString("UserName", user.UserName);
@@ -217,7 +241,9 @@ namespace Restaurant.MVC.Controllers
                     IdentityResult createResult = await _userManager.CreateAsync(user);
                     if (createResult.Succeeded)
                     {
-                        Customer customer = new Customer() { Name=user.UserName,Surname="Surname",Email=user.Email};
+                        // Farklı kayıt türlerini kullanan müşterilerinin ad,soyad,email bilgilerini kendi customer tablomuza kaydederek rezervasyonda yaşancak olası hataların önüne geçiyoruz.
+                        //Müşteriler profil sayfasında kişisel bilgilerini güncelleyebilecekler
+                        Customer customer = new Customer() { Name=user.UserName,Surname="Surname",Email=user.Email}; 
                         _customerService.Create(customer);
                         IdentityResult loginResult = await _userManager.AddLoginAsync(user, info);
                         if(loginResult.Succeeded)

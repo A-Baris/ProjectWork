@@ -8,11 +8,13 @@ using Restaurant.IOC.Container;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
-using Restaurant.DAL.Data;
+
 using FluentValidation.AspNetCore;
 using Restaurant.MVC.Validators;
 using FluentValidation;
 using Restaurant.Entity.ViewModels;
+using Restaurant.MVC.Models.Context;
+using Restaurant.MVC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +29,7 @@ builder.Services.AddDbContext<ProjectContext>(options =>
 
 
 // Identity DbContext
-builder.Services.AddDbContext<UserRoleContext>(options =>
+builder.Services.AddDbContext<UserRoleIdentityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection2")));
 
 //Google
@@ -46,7 +48,7 @@ builder.Services.AddSession(options =>
 
 // Identity services
 builder.Services.AddIdentity<AppUser, AppRole>()
-    .AddEntityFrameworkStores<UserRoleContext>()
+    .AddEntityFrameworkStores<UserRoleIdentityContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(x =>
