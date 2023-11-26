@@ -24,8 +24,8 @@
   ## BLL (Business Logic Layer)
 
 -AbstractRepositories
-  - IRepository: Oluşturmuş olduğumuz entityler için  gerçekleştirelecek eylemleri soyut olarak dahil ettiğimiz interface kontratımızı temsil eder. Bu interface dışarıdan T tipinde bir BaseEntity almalıdır. 
- -Repositories
+  - IRepository: Oluşturmuş olduğumuz entityler için  gerçekleştirilecek eylemleri soyut olarak dahil ettiğimiz interface kontratımızı temsil eder. Bu interface dışarıdan T tipinde bir BaseEntity almalıdır. 
+ - Repositories
    - BaseRepository: Bu class IRepository interface'i üzerinden implement edilen somut bir class'dır. Interface içerisinde tanımlı olan eylemler burada bütün entity'ler için somut olarak oluşturuldu. Bunun mantığı ise BaseEntity tipinde olan bütün varlıklara uygulanacak olan ortak eylemleri içermesidir. (Create, Read, Update, Delete)
 - AbstractServices
 	*Entityler için özel oluşturulacak soyut sınıflar burada yer almaktadır.Bu sınıflar IRepository interface i implement etmektedir.Temel CRUD eylemleri dışında da entity için farklı eylemlemler gerçekleştirmek isteyebiliriz. Burada soyut olarak entity e özel eylemlerimizi tanımlayabiliriz.
@@ -43,7 +43,7 @@
 *Kod maliyeti azaltma,kurala dayalı eşleşme sağlama,bağımlılık olarak eklenerek kullanma ve test edilebilirliği arttırma,kaynaklarda yapılacak değişiklikte haritalama mantığıyla daha hızlı ve kolay şekilde güncellemeler gerçekleştirmeyi sağlamak gibi avantajlar vardır.
 
 - FluentValidationService
-      -IValidation interface ile beraber ValidationService sınıfına rehber oluştururak T tipinde nesne almasını sağladık. ValidationService Constructor da FluentValidation kütüphanesiyle gelen IValidator<T> interface ine sahip olduğu T tipini gönderek bağımlı hale gelir.Controller üzerinde dependency injection edeceğimiz IValidation<T> interface i generic bir yapıyla beraber her bir View Model için uygulanabilir hale gelerek tekrar edecek kodlardan kurtulmamıza yardımcı olur.Dahası farklı View Model veya türler için farklı IValidation<T> bağımlılıkları eklememize olanak vererek esneklik sağlamış olur.
+      - IValidation interface ile beraber ValidationService sınıfına rehber oluştururak T tipinde nesne almasını sağladık. ValidationService Constructor da FluentValidation kütüphanesiyle gelen IValidator<T> interface ine sahip olduğu T tipini gönderek bağımlı hale gelir.Controller üzerinde dependency injection edeceğimiz IValidation<T> interface i generic bir yapıyla beraber her bir View Model için uygulanabilir hale gelerek tekrar edecek kodlardan kurtulmamıza yardımcı olur.Dahası farklı View Model veya türler için farklı IValidation<T> bağımlılıkları eklememize olanak vererek esneklik sağlamış olur.
 **Fluent Validation karmaşık tanımlamalarından kurtarır ve ayrı doğrulama kurallarını ayrı sınıflarda tanımlamamıza izin vererek temiz bir kod yazmamıza yardımcı olur.Güncellemek veya silmek istediğimiz kodlara kolayca ulaşabilir hızlı bir şekilde değiklik yapabiliriz.
 
   ## IOC
