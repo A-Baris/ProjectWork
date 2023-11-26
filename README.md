@@ -13,7 +13,7 @@
 
   ## DAL (Data Access Layer)
 
-- Proje Context sınıfımız bu katmanda yer almaktadır ve veri tabanı nesnesini temsil etmektedir.
+- Proje Context  ve Identity Context olarak iki ayrı context sınıfımız bu katmanda yer almaktadır ve veri tabanı nesnesini temsil etmektedir.
 
 #Kurulu olan paketlerimiz şunlardır;
 
@@ -39,7 +39,7 @@
   - FluentValidation.AspNetCore
 
 - Mapping
-  -MapProfile clasımız AutoMapper ile gelen Profile sınıfından miras alır.Böylelikle CreateMap metotu yardımıyla kaynak ve hedef arasında eşleşme gerçekleştirebiliriz. Dilersek bunu tersine çevirerek hedef sınıftan kaynağa yönlü eşleşmede gerçekleştirmemize olanak sağlanır. Data Transfer Objects ve View Model lerimizi  AutoMapper yardımıyla entity lerimizle eşleştirerek birçok avantaj sağlarız.
+  - MapProfile clasımız AutoMapper ile gelen Profile sınıfından miras alır.Böylelikle CreateMap metotu yardımıyla kaynak ve hedef arasında eşleşme gerçekleştirebiliriz. Dilersek bunu tersine çevirerek hedef sınıftan kaynağa yönlü eşleşmede gerçekleştirmemize olanak sağlanır. Data Transfer Objects ve View Model lerimizi  AutoMapper yardımıyla entity lerimizle eşleştirerek birçok avantaj sağlarız.
 *Kod maliyeti azaltma,kurala dayalı eşleşme sağlama,bağımlılık olarak eklenerek kullanma ve test edilebilirliği arttırma,kaynaklarda yapılacak değişiklikte haritalama mantığıyla daha hızlı ve kolay şekilde güncellemeler gerçekleştirmeyi sağlamak gibi avantajlar vardır.
 
 - FluentValidationService
