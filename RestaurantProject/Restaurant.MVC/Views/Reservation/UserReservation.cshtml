@@ -18,12 +18,12 @@
 
                 <div class="form-group d-flex flex-column align-items-center">
                     <label for="Reservation.ReservationDate">Rezervasyon Tarihi</label>
-                    <input type="datetime-local" id="Reservation.ReservationDate" name="Reservation.ReservationDate" class="form-control">
+                    <input type="datetime-local" id="Reservation.ReservationDate" name="Reservation.ReservationDate" class="form-control" required>
                     <div id="errorMessage" class="alert alert-danger" style="display:none;"></div>
                 </div>
                 <div class="form-group d-flex flex-column align-items-center">
                     <label for="Reservation.GuestNumber">Misafir Sayısı</label>
-                    <input type="number" id="Reservation.GuestNumber" name="Reservation.GuestNumber" class="form-control">
+                    <input type="number" id="Reservation.GuestNumber" name="Reservation.GuestNumber" class="form-control" required>
                 </div>
                 <div class="form-group d-flex flex-column align-items-center">
                     <label for="Reservation.Description">Not</label>
@@ -36,7 +36,7 @@
 
                 <div class="form-group d-flex flex-column align-items-center">
                     <label for="Customer.Adress">Adres</label>
-                    <input type="text" id="Customer.Adress" name="Customer.Adress" class="form-control">
+                    <input type="text" id="Customer.Adress" name="Customer.Adress" class="form-control" >
                 </div>
                 <div class="form-group d-flex flex-column align-items-center">
                     <label for="Customer.Phone">Telefon</label>

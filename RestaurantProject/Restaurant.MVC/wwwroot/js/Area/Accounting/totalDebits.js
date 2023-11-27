@@ -22,12 +22,13 @@ function getDebits() {
 
 function displayDebits(debitData) {
     var tableBody = $("#dataTable tbody");
+    
 
-    tableBody.empty(); // Clear the table body.
+    tableBody.empty(); 
 
     debitData.forEach(function (debit) {
 
-
+        
 
         var row = $("<tr>");
         row.append($("<td>").text(debit.companyName));
@@ -36,4 +37,6 @@ function displayDebits(debitData) {
         tableBody.append(row);
 
     });
+ 
+
 }

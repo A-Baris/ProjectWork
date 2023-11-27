@@ -16,8 +16,6 @@ using System.Text.RegularExpressions;
 namespace Restaurant.MVC.Areas.Manager.Controllers
 {
     [Area("Manager")]
-  
-    
     public class AccountingController : AreaBaseController
     {
         private readonly IMapper _mapper;

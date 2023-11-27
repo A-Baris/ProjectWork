@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YsqbY5XDI4E4nY8HEhEUn2ezS7PoSa4hcLnD3q7P0vo=",
+  "Hash": "72NMdf6x1KDP5JsUs6S92gaXyqygrK+8FYhRH5ySWi8=",
   "Source": "Restaurant.MVC",
   "BasePath": "_content/Restaurant.MVC",
   "Mode": "Default",
@@ -1404,6 +1404,25 @@
       "OriginalItemSpec": "wwwroot\\images\\08b68d43-0579-4601-854a-28451dd4e65c.jpg"
     },
     {
+      "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\0dbc5b09-3878-4a92-aac0-117454431948.jpg",
+      "SourceId": "Restaurant.MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\",
+      "BasePath": "_content/Restaurant.MVC",
+      "RelativePath": "images/0dbc5b09-3878-4a92-aac0-117454431948.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\0dbc5b09-3878-4a92-aac0-117454431948.jpg"
+    },
+    {
       "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\1026be67-ad85-4fa1-be74-48d708dc574b.jpeg",
       "SourceId": "Restaurant.MVC",
       "SourceType": "Discovered",
@@ -2143,6 +2162,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\fc8a473a-060d-407e-9091-404495ac9cd0.jpg"
+    },
+    {
+      "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\images\\ff33f72a-40c1-425c-9048-1d0f2d85efd5.jpg",
+      "SourceId": "Restaurant.MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\",
+      "BasePath": "_content/Restaurant.MVC",
+      "RelativePath": "images/ff33f72a-40c1-425c-9048-1d0f2d85efd5.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\ff33f72a-40c1-425c-9048-1d0f2d85efd5.jpg"
     },
     {
       "Identity": "D:\\Program Files\\GitHub\\ProjectWork\\RestaurantProject\\Restaurant.MVC\\wwwroot\\img\\about-1.jpg",

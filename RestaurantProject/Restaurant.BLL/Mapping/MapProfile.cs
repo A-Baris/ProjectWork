@@ -26,6 +26,8 @@ namespace Restaurant.BLL.Mapping
             CreateMap<Reservation,ReservationDTO>().ReverseMap(); 
             CreateMap<Reservation,ReservationUpdateDTO>().ReverseMap();
             CreateMap<Reservation,ReservationVM>().ReverseMap(); 
+            CreateMap<Reservation,ReservationCreateVM>().ReverseMap(); 
+            
             CreateMap<Customer,CustomerDTO>().ReverseMap();
             CreateMap<Customer,CustomerVM>().ReverseMap();
             CreateMap<Order,OrderVM>().ReverseMap();

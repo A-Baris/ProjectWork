@@ -21,7 +21,9 @@ namespace Restaurant.MVC.Validators
              .MinimumLength(3).WithMessage("En az üç karakter olmalıdır");
 
             RuleFor(x => x.Phone)
-                .NotEmpty().WithMessage("Cep No boş bırakılamaz");
+                .NotEmpty().WithMessage("Cep No boş bırakılamaz")
+                .MinimumLength(10).MaximumLength(11).WithMessage("Cep No (535xxx) veya (0535xxx) şeklinde olmalıdır");
+            
 
 
 

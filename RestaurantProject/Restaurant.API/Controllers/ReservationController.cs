@@ -12,6 +12,8 @@ using Restaurant.DAL.Context;
 using Restaurant.Entity.DTOs;
 using Restaurant.Entity.Entities;
 using Restaurant.Entity.ViewModels;
+using Restaurant.MVC.Utility.ModelStateHelper;
+using Restaurant.MVC.Validators;
 
 namespace Restaurant.API.Controllers
 {
@@ -23,6 +25,7 @@ namespace Restaurant.API.Controllers
 
         private readonly ITableOfRestaurantService _tableOfRestaurant;
         private readonly ProjectContext _context;
+       
 
         public ReservationController(IReservationService reservationService, ICustomerService customerService, IMapper mapper, ITableOfRestaurantService tableOfRestaurant, ProjectContext context)
         {
@@ -32,6 +35,7 @@ namespace Restaurant.API.Controllers
 
             _tableOfRestaurant = tableOfRestaurant;
             _context = context;
+          
         }
 
 
@@ -40,8 +44,13 @@ namespace Restaurant.API.Controllers
 
         public async Task<IActionResult> PostReservation(ReservationCustomerDTO reservationCustomerDTO)
         {
+            if(reservationCustomerDTO.Reservation.ReservationDate == null || reservationCustomerDTO.Reservation.ReservationDate.DayOfYear<=DateTime.Today.AddDays(1).DayOfYear)
+            {
+                return StatusCode(400);
+            }
             try
             {
+
                 var reservationEntity = _mapper.Map<Reservation>(reservationCustomerDTO.Reservation);
                 var customer = _customerService.GetAll().Where(x => x.Email == reservationCustomerDTO.Customer.Email).FirstOrDefault();
                 if (customer.Adress == null || customer.Phone == null)
@@ -62,7 +71,7 @@ namespace Restaurant.API.Controllers
 
 
                         MailSender.SendEmail(customer.Email, @"Rezervasyon Bilgisi", $"Sayın {customer.Name} {customer.Surname}, rezervasyonunuz başarıyla oluşturulmuştur." +
-                                                             $" \nRezervasyon Tarihi : {reservationCustomerDTO.Reservation.ReservationDate}  \nNot: {reservationCustomerDTO.Reservation.Description}");
+                                                             $" \nRezervasyon Tarihi : {reservationCustomerDTO.Reservation.ReservationDate} \nMisafir Sayısı:{reservationCustomerDTO.Reservation.GuestNumber}  \nNot: {reservationCustomerDTO.Reservation.Description}");
 
                     }
                     catch
@@ -74,7 +83,7 @@ namespace Restaurant.API.Controllers
                 else
                 {
 
-                    return Conflict(); //409 kodu
+                    return StatusCode(409); //409 kodu conflict
                 }
             }
             catch (Exception ex)
@@ -109,14 +118,14 @@ namespace Restaurant.API.Controllers
                 var timeSinceReservation =reservation.ReservationDate - DateTime.UtcNow ;
                 if (timeSinceReservation.TotalHours < 24)
                 {
-                    return BadRequest("24 saatten az süre kalan rezervasyonlar günccellenemez.");
+                    return BadRequest();
                 }
 
                 return Ok(reservation);
             }
             else
             {
-                return BadRequest("Id hatalı");
+                return BadRequest();
             }
 
         }
@@ -124,8 +133,14 @@ namespace Restaurant.API.Controllers
      
         public async Task<IActionResult> UpdateReservation(ReservationCustomerUpdateDTO rcDTO)
         {
+
             try
             {
+                if (rcDTO.ReservationUpdateDTO.ReservationDate == null || rcDTO.ReservationUpdateDTO.ReservationDate.DayOfYear <= DateTime.Today.AddDays(1).DayOfYear)
+                {
+                    return StatusCode(400);
+                }
+
                 var reservation = await _reservationService.GetbyIdAsync(rcDTO.ReservationUpdateDTO.Id);
                 if (reservation != null)
                 {
@@ -149,7 +164,7 @@ namespace Restaurant.API.Controllers
                     else
                     {
 
-                        return Conflict(); //409 kodu
+                        return StatusCode(409);
                     }
 
                  
@@ -163,28 +178,37 @@ namespace Restaurant.API.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, "Sunucu Kaynaklı Hata");
+                return StatusCode(500);
             }
         }
 
         [HttpGet]
         public IActionResult GetReservationDate(DateTime date)
         {
-            var reservationQuery = (from r in _context.Reservations
-                                   join c in _context.Customers on r.CustomerId equals c.Id
-                                   select new
-                                   {
-                                       r.ReservationDate,
-                                       r.ReservationStatus,
-                                       c.Name,
-                                       c.Surname,
-                                       r.GuestNumber,
-                                       r.Description
-                                   }).ToList();
-            var reservationList = reservationQuery.Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
-       
+            try
+            {
 
-            return Ok(reservationList);
+
+                var reservationQuery = (from r in _context.Reservations
+                                        join c in _context.Customers on r.CustomerId equals c.Id
+                                        select new
+                                        {
+                                            r.ReservationDate,
+                                            r.ReservationStatus,
+                                            c.Name,
+                                            c.Surname,
+                                            r.GuestNumber,
+                                            r.Description
+                                        }).ToList();
+                var reservationList = reservationQuery.Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
+
+
+                return Ok(reservationList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
 
 
@@ -193,22 +217,28 @@ namespace Restaurant.API.Controllers
         [HttpGet]
         public IActionResult GetReservationDates(DateTime date)
         {
+            try
+            {
 
+                var query = from r in _context.Reservations
+                            join c in _context.Customers on r.CustomerId equals c.Id
+                            select new
+                            {
+                                r.ReservationDate,
+                                r.Description,
+                                r.GuestNumber,
+                                r.ReservationStatus,
+                                c.Name,
+                                c.Surname
+                            };
+                var reservationList = query.Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
 
-            var query = from r in _context.Reservations
-                        join c in _context.Customers on r.CustomerId equals c.Id
-                        select new
-                        {
-                            r.ReservationDate,
-                            r.Description,
-                            r.GuestNumber,
-                            r.ReservationStatus,
-                            c.Name,
-                            c.Surname
-                        };
-            var reservationList = query.Where(x => x.ReservationDate.DayOfYear == date.DayOfYear).ToList();
-
-            return Ok(reservationList);
+                return Ok(reservationList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
         }
     }

@@ -13,12 +13,12 @@
 <form id="updateForm" method="post">
     <div class="form-group">
         <label asp-for="ReservationDate"></label>
-        <input asp-for="ReservationDate" class="form-control" type="datetime-local" name="ReservationUpdateDTO.ReservationDate" value="@Model.ReservationDate" />
+        <input asp-for="ReservationDate" class="form-control" type="datetime-local" name="ReservationUpdateDTO.ReservationDate" value="@Model.ReservationDate" required />
         <span asp-validation-for="ReservationDate" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="GuestNumber"></label>
-        <input asp-for="GuestNumber" class="form-control" type="text" name="ReservationUpdateDTO.GuestNumber" value="@Model.GuestNumber" />
+        <input asp-for="GuestNumber" class="form-control" type="text" name="ReservationUpdateDTO.GuestNumber" value="@Model.GuestNumber" required />
         <span asp-validation-for="GuestNumber" class="text-danger"></span>
     </div>
 
@@ -29,13 +29,13 @@
     </div>
     <div class="form-group">
         <label asp-for="Phone"></label>
-        <input asp-for="Phone" class="form-control" type="tel" name="CustomerDTO.Phone" value="@Model.Phone" />
+        <input asp-for="Phone" class="form-control" type="tel" name="CustomerDTO.Phone" value="@Model.Phone" required/>
         <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Adress"></label>
-        <input asp-for="Adress" class="form-control" type="text" name="CustomerDTO.Adress" value="@Model.Adress" />
+        <input asp-for="Adress" class="form-control" type="text" name="CustomerDTO.Adress" value="@Model.Adress" required/>
         <span asp-validation-for="Adress" class="text-danger"></span>
     </div>
     <div class="form-group">
