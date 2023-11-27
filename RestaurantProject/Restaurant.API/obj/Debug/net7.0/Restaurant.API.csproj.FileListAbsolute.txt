@@ -81,3 +81,9 @@ D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\n
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
 D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\obj\Debug\net7.0\Restaurant.API.MvcApplicationPartsAssemblyInfo.cs
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+D:\Program Files\GitHub\ProjectWork\RestaurantProject\Restaurant.API\bin\Debug\net7.0\Microsoft.Extensions.Options.dll

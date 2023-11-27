@@ -13,36 +13,7 @@ namespace Restaurant.BLL.Services
 {
     public class CategoryService : BaseService<Category>, ICategoryService
     {
-        //private readonly IRepository<DishCategory> _repository;
-
-        //public DishCategoryService(IRepository<DishCategory> repository)
-        //{
-        //    _repository = repository;
-        //}
-        //public string Create(DishCategory entity)
-        //{
-        //    return _repository.Create(entity);
-        //}
-
-        //public IEnumerable<DishCategory> GetAll()
-        //{
-        //    return _repository.GetAll();
-        //}
-
-        //public Task<DishCategory> GetbyIdAsync(int id)
-        //{
-        //    return _repository.GetbyIdAsync(id);
-        //}
-
-        //public string Remove(DishCategory entity)
-        //{
-        //  return _repository.Remove(entity);
-        //}
-
-        //public string Update(DishCategory entity)
-        //{
-        //    return _repository.Update(entity);
-        //}
+     
         public CategoryService(IRepository<Category> repository) : base(repository)
         {
         }

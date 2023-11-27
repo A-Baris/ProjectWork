@@ -20,7 +20,8 @@ namespace Restaurant.MVC.Validators
                .MinimumLength(3).WithMessage("Minimum 3 karakterden oluşmalı");
 
             RuleFor(x => x.Password)
-             .NotEmpty().WithMessage("Şifre boş geçilemez");
+             .NotEmpty().WithMessage("Şifre boş geçilemez")
+             .MinimumLength(6).WithMessage("Şifre en az 6 karakterden oluşmalı");
 
             RuleFor(x => x.PasswordConfirmed)
              .NotEmpty().WithMessage("Şifre Tekrar boş geçilemez")

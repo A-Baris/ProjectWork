@@ -10,21 +10,25 @@ namespace Restaurant.Common
 {
     public class MailSender
     {
-        public static void SendEmail(string email,string subject,string body)
+        public static void SendEmail(string email, string subject, string body)
         {
             try
             {
                 MailMessage sender = new MailMessage();
-                sender.From = new MailAddress("MyRestaurant34@outlook.com", "MyRestaurant");
+                sender.From = new MailAddress("myrestaurant3434@gmail.com", "MyRestaurant");
                 sender.Subject = subject;
                 sender.Body = body;
                 sender.BodyEncoding = Encoding.UTF8;
                 sender.To.Add(email);
 
-                SmtpClient smtpClient = new SmtpClient();
-                smtpClient.Credentials = new NetworkCredential("MyRestaurant34@outlook.com", "sardirim3434");
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com"); //gmail ile mail gönderiyoruz
+                //smtpClient.Credentials = new NetworkCredential("MyRestaurant34@outlook.com", "*****");
+                //smtpClient.Port = 587;
+                //smtpClient.Host = "smtp-mail.outlook.com";
+                //smtpClient.EnableSsl = true;
                 smtpClient.Port = 587;
-                smtpClient.Host = "smtp-mail.outlook.com";
+                smtpClient.Credentials = new NetworkCredential("myrestaurant3434@gmail.com", "mmdi wcjv zvvv xbjm");
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpClient.EnableSsl = true;
 
                 smtpClient.Send(sender);
