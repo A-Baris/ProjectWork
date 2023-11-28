@@ -57,7 +57,7 @@
 - Temel controller içerisinde proje konusu olan Restoranımızın tanıtım sunumu için web sitesi için template  eklendi,kullanıcı kayıt , kullanıcı girişi,profil özelleştirme işlemleriyle beraber rezervasyon eylemleri gerçekleştirildi.
 - Area içerisinde Yönetici ve çalışanlar için oluşturulan Manager Dashboard ile beraber tüm restoran iç hizmetleri ayarlanmıştır.
 - Microsoft.AspNetCore.Authentication.Google paketi eklenerek kullanıcıların Google hesaplarıyla giriş ve kayıt işlemlerini otomatik gerçekleştirebilmeleri sağlandı.
--Validators yardımıyla kullanıcılara gerekli uyarılar gösterilerek düzenli bir yapıyla yönlendirme sağlanmıştır.
--Session ve Cookies yapılanmalarıyla da kullanıcalar authentication işlemleriyle yönlendirilmiştir.
--JWT (Json Web Tokens) ile kullanıcı onaylama ve parola yenileme işlemleri güvenlikle gerçekleşmiştir.
--Rezervasyon oluşturma,Sipariş oluşturma,Sipariş takip,Stok takip,Menu işlemleri,Ürün işlemleri,Hesap ve kasiyer işlemleri,Muhasebe paneli,Tedarikçi,borç-alacak takibi ve fatura işlemleri gibi gerekli hizmetler yönetim panelinde sağlanmıştır.
+- Validators yardımıyla kullanıcılara gerekli uyarılar gösterilerek düzenli bir yapıyla yönlendirme sağlanmıştır.
+- Session ve Cookies yapılanmalarıyla da kullanıcalar authentication işlemleriyle yönlendirilmiştir.
+- JWT (Json Web Tokens) ile kullanıcı onaylama ve parola yenileme işlemleri güvenlikle gerçekleşmiştir.
+- Rezervasyon oluşturma,Sipariş oluşturma,Sipariş takip,Stok takip,Menu işlemleri,Ürün işlemleri,Hesap ve kasiyer işlemleri,Muhasebe paneli,Tedarikçi,borç-alacak takibi ve fatura işlemleri gibi gerekli hizmetler yönetim panelinde sağlanmıştır.
